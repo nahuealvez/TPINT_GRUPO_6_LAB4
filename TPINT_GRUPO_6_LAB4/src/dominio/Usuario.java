@@ -5,12 +5,14 @@ public class Usuario {
 	private TipoUsuario tipoUsuario;
 	private String usuario;
 	private String contrasenia;
+	private boolean estado;
 	
-	public Usuario(int id, TipoUsuario tipoUsuario, String usuario, String contrasenia) {
+	public Usuario(int id, TipoUsuario tipoUsuario, String usuario, String contrasenia, boolean estado) {
 		this.id = id;
 		this.tipoUsuario = tipoUsuario;
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
+		this.estado = estado;
 	}
 	
 	public Usuario() {
@@ -49,9 +51,17 @@ public class Usuario {
 		this.contrasenia = contrasenia;
 	}
 
+	public boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", tipoUsuario=" + tipoUsuario + ", usuario=" + usuario + ", contrasenia="
-				+ contrasenia + "]";
+		return String.format("Usuario [id=%s, tipoUsuario=%s, usuario=%s, contrasenia=%s, estado=%s]", id, tipoUsuario,
+				usuario, contrasenia, estado);
 	}
 }
