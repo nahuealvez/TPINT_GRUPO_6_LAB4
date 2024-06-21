@@ -43,7 +43,6 @@ CREATE TABLE clientes (
     email VARCHAR(255) NOT NULL,
     telefono VARCHAR(30) NOT NULL,
     idUsuario INT NOT NULL,
-    estado BIT NOT NULL,
     FOREIGN KEY (idProvincia) REFERENCES provincias(id),
     FOREIGN KEY (idLocalidad) REFERENCES localidades(id),
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
