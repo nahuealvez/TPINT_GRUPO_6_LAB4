@@ -17,9 +17,8 @@ public class Cliente {
 	private String email;
 	private String telefono;
 	private Usuario usuario;
-	private boolean estado;
 	
-	public Cliente(int id, String dni, String cuil, String nombre, String apellido, char sexo, String nacionalidad, LocalDate fechaNacimiento, Provincia provincia, Localidad localidad, String direccion, String email, String telefono, Usuario usuario, boolean estado) {
+	public Cliente(int id, String dni, String cuil, String nombre, String apellido, char sexo, String nacionalidad, LocalDate fechaNacimiento, Provincia provincia, Localidad localidad, String direccion, String email, String telefono, Usuario usuario) {
 		this.id = id;
 		this.dni = dni;
 		this.cuil = cuil;
@@ -34,7 +33,6 @@ public class Cliente {
 		this.email = email;
 		this.telefono = telefono;
 		this.usuario = usuario;
-		this.estado = estado;
 	}
 	
 	public Cliente() {
@@ -153,19 +151,11 @@ public class Cliente {
 		this.usuario = usuario;
 	}
 
-	public boolean getEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-
 	@Override
 	public String toString() {
 		return String.format(
 				"Cliente [id=%s, dni=%s, cuil=%s, nombre=%s, apellido=%s, sexo=%s, nacionalidad=%s, fechaNacimiento=%s, provincia=%s, localidad=%s, direccion=%s, email=%s, telefono=%s, usuario=%s, estado=%s]",
 				id, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, provincia, localidad, direccion,
-				email, telefono, usuario, estado);
+				email, telefono, usuario);
 	}
 }
