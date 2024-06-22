@@ -30,39 +30,57 @@ public class ServletLogin extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		Usuario user = new Usuario();
 		
 		if(request.getParameter("btnIniciarSesion")!= null) {
 			
 			HttpSession session = request.getSession();
 			
-			String usuario = "";
-			String contrasenia = "";
-			
-			if(request.getParameter("txtUsuario")!= null) {
-				
-				usuario = request.getParameter("txtUsuario");
-				contrasenia = request.getParameter("txtPass");
-				
-			}
-			
-			user = usuarioNeg.verificarUsuario(usuario, contrasenia);
-			
+			String usuario = request.getParameter("txtUsuario");
+			String contrasenia = request.getParameter("txtPass");
+									
 			session.setAttribute("sessionUsuario", usuario);
-			session.setAttribute("sessionPass", contrasenia);
+			session.setAttribute("sessionPass", contrasenia);							
+							
+			try {
+				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
+				
+				if(user != null) {
+					System.out.println("Usuario: " + user.getUsuario());
+					System.out.println("Contraseña: " + user.getContrasenia());
+					
+					switch(user.getTipoUsuario().getId()) {
+						
+					case 1: 
+						RequestDispatcher reqAdmin = request.getRequestDispatcher("/AgregarCliente.jsp");
+						reqAdmin.forward(request, response);
+						break;
+						
+					case 2:
+						RequestDispatcher reqCliente = request.getRequestDispatcher("/FrontClientes.jsp");
+						reqCliente.forward(request, response);
+						break;
+					default:						
+						break;						
+					}
+				
+					
+				}else {
+					request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
+					RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
+					rd.forward(request, response);
+				}
 			
-			if(user.getTipoUsuario().getId() == 1) {
-				RequestDispatcher rd = request.getRequestDispatcher("/AgregarCliente.jsp");
-				rd.forward(request, response);
-			}else if(user.getTipoUsuario().getId() == 2) {
-				RequestDispatcher rd = request.getRequestDispatcher("/FrontClientes.jsp");
-				rd.forward(request, response);
-			}else {
-				RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
-				rd.forward(request, response);
+			}catch(NullPointerException e) {
+				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
+				System.out.println(e.getMessage());
+	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
+	            rd.forward(request, response);
 			}
-		}
+				
+			}
+											
 	}
 
 }

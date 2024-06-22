@@ -103,6 +103,14 @@
                 <div class="input-group">
                     <label for="password">Contraseña</label>
                     <input type="password" name="txtPass" placeholder="Ingrese su contraseña" required>
+                     <% 
+        				String loginError = (String) request.getAttribute("loginError");
+        					if (loginError != null) { 
+    				%>
+        					<p style="color: red;"><%= loginError %></p>
+   					 	<% 
+       						 } 
+   						 %>
                 </div>
                 <button type="submit" name="btnIniciarSesion" class="btn">Iniciar Sesión</button>
             </form>
