@@ -70,7 +70,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 	
 	@Override
-	public Usuario verificarUsuario(String usuario, String pass) {
+	public Usuario verificarUsuario(String usuario, String contrasenia) {
 		
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -79,7 +79,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		try {
 			statement = conexion.prepareStatement(readUsuario);
 			statement.setString(1, usuario);
-			statement.setString(2, pass);
+			statement.setString(2, contrasenia);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
