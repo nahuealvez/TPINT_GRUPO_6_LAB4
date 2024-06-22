@@ -44,28 +44,9 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	        try {
-	            if (conexion != null) {
-	                conexion.rollback();
-	            }
-	        } catch (SQLException e1) {
-	            e1.printStackTrace();
-	        }
-	    } finally {
-	        try {
-	            if (generatedKeys != null) {
-	                generatedKeys.close();
-	            }
-	            if (statement != null) {
-	                statement.close();
-	            }
-	            if (conexion != null) {
-	                conexion.close();
-	            }
-	        } catch (SQLException e2) {
-	            e2.printStackTrace();
-	        }
+
 	    }
+	    System.out.println(idNuevoUsuario);
 	    return idNuevoUsuario;
 	}
 	
