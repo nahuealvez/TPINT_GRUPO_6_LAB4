@@ -10,7 +10,7 @@ public class UsuarioNegImpl implements UsuarioNegocio {
 	private UsuarioDao usuarioDao = new UsuarioDaoImpl();
 	
 	@Override
-	public boolean crearUsuario(Usuario usuario) {
+	public int crearUsuario(Usuario usuario) {
 		return usuarioDao.crearUsuario(usuario);
 	}
 	

@@ -18,28 +18,55 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	
 	
 	@Override
-	public boolean crearUsuario(Usuario usuario) {
-		PreparedStatement statement;
-		Connection conexion = Conexion.getConexion().getSQLConexion();
-		
-		boolean isInsertExitoso = false;
-		
-		try {
-			statement = conexion.prepareStatement(insertUsuario);
-			statement.setInt(1, usuario.getTipoUsuario().getId());
-			statement.setString(2, usuario.getUsuario());
-			statement.setString(3, usuario.getContrasenia());
-			
-			if(statement.executeUpdate() > 0 ) {
-				conexion.commit();
-				isInsertExitoso = true;
-			}
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return isInsertExitoso;
+	public int crearUsuario(Usuario usuario) {
+		PreparedStatement statement = null;
+	    Connection conexion = Conexion.getConexion().getSQLConexion();
+	    ResultSet generatedKeys = null;
+	    int idNuevoUsuario = -1;
+
+	    try {
+	        
+	        statement = conexion.prepareStatement(insertUsuario, PreparedStatement.RETURN_GENERATED_KEYS); // Se utiliza RETURN_GENERATED_KEYS para que devuelva el id generado por la BBDD
+	        statement.setInt(1, usuario.getTipoUsuario().getId());
+	        statement.setString(2, usuario.getUsuario());
+	        statement.setString(3, usuario.getContrasenia());
+
+	        int affectedRows = statement.executeUpdate();
+
+	        if (affectedRows > 0) {
+	            conexion.commit();
+	            generatedKeys = statement.getGeneratedKeys();
+	            if (generatedKeys.next()) {
+	                idNuevoUsuario = generatedKeys.getInt(1);
+	            }
+	        } else {
+	            conexion.rollback();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        try {
+	            if (conexion != null) {
+	                conexion.rollback();
+	            }
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	    } finally {
+	        try {
+	            if (generatedKeys != null) {
+	                generatedKeys.close();
+	            }
+	            if (statement != null) {
+	                statement.close();
+	            }
+	            if (conexion != null) {
+	                conexion.close();
+	            }
+	        } catch (SQLException e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+	    return idNuevoUsuario;
 	}
 	
 	@Override

@@ -2,8 +2,8 @@ package dominio;
 
 import java.time.LocalDate;
 
-public class Cliente {
-	private int id;
+public class Cliente extends Usuario{
+	private int idCliente;
 	private String dni;
 	private String cuil;
 	private String nombre;
@@ -16,10 +16,10 @@ public class Cliente {
 	private String direccion;
 	private String email;
 	private String telefono;
-	private Usuario usuario;
 	
-	public Cliente(int id, String dni, String cuil, String nombre, String apellido, char sexo, String nacionalidad, LocalDate fechaNacimiento, Provincia provincia, Localidad localidad, String direccion, String email, String telefono, Usuario usuario) {
-		this.id = id;
+	public Cliente(int usuarioId, TipoUsuario tipoUsuario, String nombreUsuario, String contrasenia, boolean estado, int idCliente, String dni, String cuil, String nombre, String apellido, char sexo, String nacionalidad, LocalDate fechaNacimiento, Provincia provincia, Localidad localidad, String direccion, String email, String telefono) {
+		super(usuarioId, tipoUsuario, nombreUsuario, contrasenia, estado);
+		this.idCliente = idCliente;
 		this.dni = dni;
 		this.cuil = cuil;
 		this.nombre = nombre;
@@ -32,19 +32,19 @@ public class Cliente {
 		this.direccion = direccion;
 		this.email = email;
 		this.telefono = telefono;
-		this.usuario = usuario;
 	}
 	
 	public Cliente() {
-		
+		super();
 	}
 
-	public int getId() {
-		return id;
+	
+	public int getIdCliente() {
+		return idCliente;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	public String getDni() {
@@ -143,19 +143,11 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	@Override
 	public String toString() {
 		return String.format(
 				"Cliente [id=%s, dni=%s, cuil=%s, nombre=%s, apellido=%s, sexo=%s, nacionalidad=%s, fechaNacimiento=%s, provincia=%s, localidad=%s, direccion=%s, email=%s, telefono=%s, usuario=%s, estado=%s]",
-				id, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, provincia, localidad, direccion,
-				email, telefono, usuario);
+				idCliente, dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, provincia, localidad, direccion,
+				email, telefono);
 	}
 }
