@@ -47,8 +47,7 @@ public class ServletLogin extends HttpServlet {
 					System.out.println("Usuario: " + user.getUsuario());
 					System.out.println("Contrase�a: " + user.getContrasenia());
 					
-					session.setAttribute("sessionUsuario", usuario);
-					//session.setAttribute("sessionPass", contrasenia);							
+					session.setAttribute("sessionUsuario", usuario);						
 					response.sendRedirect("Index.jsp?tipoUsuario="+user.getTipoUsuario().getId());
 				
 					

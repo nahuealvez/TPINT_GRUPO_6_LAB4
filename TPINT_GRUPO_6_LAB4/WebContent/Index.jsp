@@ -13,4 +13,5 @@
     <p>Tipo de usuario no reconocido.</p>
 <% } %>
 
+
 <%@ include file="Footer.jsp"%>
