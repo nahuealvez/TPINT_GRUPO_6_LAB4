@@ -69,3 +69,26 @@ body {
 	font-size: 18px;
 	font-weight: 700;
 }
+
+.card-accesos {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	width: 140px;
+	height: 140px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+.card-accesos:hover {
+	background-color: #e9ecef;
+}
+
+.card-accesos p {
+	margin: 0;
+}
