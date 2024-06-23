@@ -13,6 +13,7 @@ import dominio.Usuario;
 public class UsuarioDaoImpl implements UsuarioDao{
 
 	private static final String insertUsuario = "INSERT INTO usuarios (idTipoUsuario, usuario, contrasenia, estado) values (?,?,?,1)";
+	private static final String actualizarEstadoUsuario = "UPDATE usuarios SET estado = ? WHERE id = ?";
 	private static final String readUsuario = "SELECT id, usuario, contrasenia, idTipoUsuario, estado FROM usuarios WHERE usuario = ? AND contrasenia = ?";	
 	
 	
@@ -79,6 +80,34 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		}
 		
 		return user;
+		
+	}
+
+	@Override
+	public boolean actualizarEstadoUsuario(int idUsuario, boolean nuevoEstado) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean actualizacionExitosa = false;
+		
+		try 
+		{
+			statement = conexion.prepareStatement(actualizarEstadoUsuario);
+			statement.setBoolean(1, nuevoEstado);
+			statement.setInt(2, idUsuario);
+			
+			int registrosActualizados = statement.executeUpdate();
+			
+			if(registrosActualizados > 0)
+			{
+				conexion.commit();
+				actualizacionExitosa = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return actualizacionExitosa;
 		
 	}
 

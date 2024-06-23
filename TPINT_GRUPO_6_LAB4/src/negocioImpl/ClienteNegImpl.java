@@ -16,6 +16,8 @@ public class ClienteNegImpl implements ClienteNegocio{
 	@Override
 	public boolean crearCliente(Cliente cliente) {
 		
+		boolean clienteCreado = false;
+		
 		if(!cDao.existeDni(cliente.getDni())) {
 			Usuario nuevoUsuario = new Usuario();
 			nuevoUsuario.setUsuario(cliente.getUsuario());
@@ -27,9 +29,23 @@ public class ClienteNegImpl implements ClienteNegocio{
 			if(idUsuario != -1) 
 			{
 				cliente.setId(idUsuario);
-				cDao.insert(cliente);
+				clienteCreado = cDao.insert(cliente);
 			}
 		}
-		return false;
+		return clienteCreado;
+	}
+
+	@Override
+	public boolean actualizarEstadoCliente(Cliente cliente) {
+		boolean actualizacionExitosa = false;
+		
+		if(cliente.getEstado()) 
+		{
+			actualizacionExitosa = uDao.actualizarEstadoUsuario(cliente.getId(), false);
+		}else {
+			actualizacionExitosa = uDao.actualizarEstadoUsuario(cliente.getId(), true);
+		}
+		
+		return actualizacionExitosa;
 	}
 }
