@@ -3,7 +3,6 @@
 	<%
     // Obtener el parámetro tipoUsuario
     String tipoUsuario = request.getParameter("tipoUsuario");
-    
 %>
 
 <% if ("1".equals(tipoUsuario)) { %>

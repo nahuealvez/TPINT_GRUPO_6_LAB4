@@ -40,7 +40,6 @@ public class ServletLogin extends HttpServlet {
 			String usuario = request.getParameter("txtUsuario");
 			String contrasenia = request.getParameter("txtPass");
 									
-							
 			try {
 				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
 				
