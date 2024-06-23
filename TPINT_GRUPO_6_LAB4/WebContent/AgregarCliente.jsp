@@ -33,7 +33,7 @@
             <h3>Agregar Cliente</h3>
         </div>
         <%--  Inicio de controles  --%>
-        <form class="row g-1 needs-validation" action="servletUsurio" method="get" novalidate>
+        <form class="row g-1 needs-validation" action="ServletCliente" method="get" novalidate>
             <div class="col-md-6 position-relative">
                 <label for="txtDni">Dni:</label>
                 <input type="text" 
@@ -41,7 +41,7 @@
                 	form-control-sm" 
                 	pattern="\d+" 
                 	id="txtDni" 
-                	name="Dni" 
+                	name="txtDni"
                 	value="" 
                 	minlength="7" 
                 	maxlength="9" 
@@ -53,7 +53,7 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtCuil" 
-                	name="Cuil" 
+                	name="txtCuil" 
                 	pattern="\d+" 
                 	minlength="11" 
                 	maxlength="11" 
@@ -65,7 +65,7 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtNombre" 
-                	name="Nombre" 
+                	name="txtNombre" 
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*" 
                 	minlength="1" 
                 	maxlength="45" 
@@ -77,7 +77,7 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtApellido" 
-                	name="Apellido"  
+                	name="txtApellido"  
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*"  
                 	minlength="1" maxlength="45" 
                 	placeholder="Ingrese apellido/s" 
@@ -87,17 +87,17 @@
                 <label for="txtFecha">Fecha de Nacimiento:</label>
                 <input type="date" 
                 	class="form-control form-control-sm" 
-                	id="txtFecha" 
-                	name="Fecha" 
+                	id="txtFechaNacimiento" 
+                	name="txtFechaNacimiento"
                 	placeholder="Ingrese Fecha de nacimiento"
                 required>
             </div>
             <div class="col-md-6 position-relative">
                 <label for="ddlGenero">Género:</label>
                 <select class="form-select form-select-sm" 
-                	id="ddlGenero" 
+                	id="ddlSexo" 
                 	aria-label="Default select example" 
-                	name="sexo" 
+                	name="ddlSexo"
                 required>
                     <option selected disabled value="">Seleccione su género</option>
                     <option value="1">Masculino</option>
@@ -109,7 +109,7 @@
                 <label for="ddlNacionalidad">Nacionalidad:</label>
                 <select class="form-select form-select-sm" 
                 	id="ddlNacionalidad" 
-                	name="nacionalidad" 
+                	name="ddlNacionalidad"  
                 required>
                     <option selected disabled value="">Seleccione su Nacionalidad</option>
                     <option value="1">Argentino</option>
@@ -122,19 +122,26 @@
                 <select class="form-select form-select-sm" 
                 	id="ddlProvincia" 
                 	aria-label="Default select example" 
-                	name="provincia" 
+                	name="ddlProvincia" 
                 required>
                     <option selected disabled value="">Seleccione su Provincia</option>
                     <option value="1">Buenos Aires</option>
-                    <option value="2">Otra</option>
+                    <option value="2">Buenos Aires-GBA</option>
+                    <option value="3">Capital Federal</option>
+                    <option value="4">Catamarca</option>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
                 <label for="ddlLocalidad">Localidad:</label>
-                <select class="form-select form-select-sm" id="ddlLocalidad" aria-label="Default select example" name="localidad" required>
+                <select class="form-select form-select-sm" 
+                id="ddlLocalidad" 
+                aria-label="Default select example" 
+                name="ddlLocalidad" 
+                required>
                     <option selected disabled value="">Seleccione Localidad</option>
-                    <option value="1">Tigre</option>
-                    <option value="2">Otra</option>
+                    <option value="1">25 de Mayo</option>
+                    <option value="2">3 de febrero</option>
+                    <option value="3">A. Alsina</option>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
@@ -142,7 +149,7 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtDireccion" 
-                	name="Direccion"
+                	name="txtDireccion"
                  	minlength="2" 
                  	maxlength="60"
                  	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+)*" 
@@ -154,7 +161,7 @@
                 	class="form-control form-control-sm" 
                 	placeholder="Ingrese correo electronico" 
                 	id="txtEmail" 
-                	name="Email" 
+                	name="txtEmail" 
                 	placeholder="name@example.com" 
                 	minlength="2" 
                 	maxlength="80"
@@ -167,7 +174,7 @@
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtTelefono" 
-                	name="telefono" 
+                	name="txtTelefono" 
                 	pattern="\d+" 
                 	minlength="8" 
                 	maxlength="20" 
@@ -180,7 +187,7 @@
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtUsuario" 
-                	name="usuario" 
+                	name="txtUsuario"
                 	minlength="8" 
                 	maxlength="14" 
                 	pattern="[A-Za-z0-9_]+" 
@@ -193,7 +200,7 @@
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtClave" 
-                	name="clave" 
+                	name="txtClave"
                 	minlength="8" 
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
@@ -202,10 +209,10 @@
             </div>
             <div class="col-md-6">
                 <br>
-                <input type="submit" value="Agregar" id="btnAgregarCliente" class="btn btn-outline-primary btn-sm">
-                <input type="submit" value="Modificar" id="btnModificarCliente" class="btn btn-outline-secondary btn-sm">
-                <input type="submit" value="Eliminar" id="btnEliminarCliente" class="btn btn-outline-danger btn-sm">
-                <label for="mensaje" class="form-label">Agregar un mensaje al usuario</label>
+                <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-outline-primary btn-sm">
+                <input type="submit" value="Modificar" id="btnModificarCliente" name="btnModificarCliente" class="btn btn-outline-secondary btn-sm">
+                <input type="submit" value="Eliminar" id="btnEliminarCliente" name="btnEliminarCliente" class="btn btn-outline-danger btn-sm">
+				
             </div>
         </form>
         <%--  Fin de controles  --%>
