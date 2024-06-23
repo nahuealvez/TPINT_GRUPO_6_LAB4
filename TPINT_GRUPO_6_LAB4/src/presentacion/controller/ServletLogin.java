@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Excepciones.ErrorUsuarioException;
 import dominio.Usuario;
 import negocio.UsuarioNegocio;
 import negocioImpl.UsuarioNegImpl;
@@ -42,29 +43,19 @@ public class ServletLogin extends HttpServlet {
 									
 			try {
 				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
-				
-				if(user != null) {
-					System.out.println("Usuario: " + user.getUsuario());
-					System.out.println("Contraseï¿½a: " + user.getContrasenia());
-					
+								
 					session.setAttribute("sessionUsuario", usuario);						
 					response.sendRedirect("Index.jsp?tipoUsuario="+user.getTipoUsuario().getId());
-				
-					
-				}else {
-					request.setAttribute("loginError", "Usuario o contraseï¿½a incorrectos.");
-					RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
-					rd.forward(request, response);
-				}
+
 			
-			}catch(NullPointerException e) {
-				request.setAttribute("loginError", "Usuario o contraseï¿½a incorrectos.");
+			}catch(ErrorUsuarioException e) {
+				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
 				System.out.println(e.getMessage());
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 	            rd.forward(request, response);
 			}
 				
-			}
+		}
 											
 	}
 

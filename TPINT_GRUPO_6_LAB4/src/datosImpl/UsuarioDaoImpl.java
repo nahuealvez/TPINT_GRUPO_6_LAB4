@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Excepciones.ErrorUsuarioException;
 import datos.Conexion;
 import datos.UsuarioDao;
 import dominio.TipoUsuario;
 import dominio.Usuario;
+
 
 public class UsuarioDaoImpl implements UsuarioDao{
 
@@ -52,11 +54,11 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 	
 	@Override
-	public Usuario verificarUsuario(String usuario, String contrasenia) {
+	public Usuario verificarUsuario(String usuario, String contrasenia) throws ErrorUsuarioException  {
 		
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
-		Usuario user = new Usuario();
+		Usuario user = null;
 		
 		try {
 			statement = conexion.prepareStatement(readUsuario);
@@ -65,7 +67,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				
+				user = new Usuario();
 				user.setId(rs.getInt("id"));
 				user.setUsuario(rs.getString("usuario"));
 				user.setContrasenia(rs.getString("contrasenia"));
@@ -79,6 +81,9 @@ public class UsuarioDaoImpl implements UsuarioDao{
 			e.printStackTrace();
 		}
 		
+		if(user==null) {
+			throw new ErrorUsuarioException();
+		}
 		return user;
 		
 	}
