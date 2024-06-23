@@ -1,5 +1,7 @@
 package negocioImpl;
 
+import java.util.List;
+
 import datos.ClienteDao;
 import datos.UsuarioDao;
 import datosImpl.ClienteDaoImpl;
@@ -34,6 +36,11 @@ public class ClienteNegImpl implements ClienteNegocio{
 		}
 		return clienteCreado;
 	}
+	
+	@Override
+	public List<Cliente> listarClientes() {
+		return cDao.listarClientes();
+	}
 
 	@Override
 	public boolean actualizarEstadoCliente(Cliente cliente) {
@@ -48,4 +55,5 @@ public class ClienteNegImpl implements ClienteNegocio{
 		
 		return actualizacionExitosa;
 	}
+
 }
