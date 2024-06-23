@@ -49,21 +49,8 @@ public class ServletLogin extends HttpServlet {
 					System.out.println("Contrase�a: " + user.getContrasenia());
 					
 					session.setAttribute("sessionUsuario", usuario);
-					session.setAttribute("sessionPass", contrasenia);							
-					switch(user.getTipoUsuario().getId()) {
-						
-					case 1: 
-						RequestDispatcher reqAdmin = request.getRequestDispatcher("/AgregarCliente.jsp");
-						reqAdmin.forward(request, response);
-						break;
-						
-					case 2:
-						RequestDispatcher reqCliente = request.getRequestDispatcher("/FrontClientes.jsp");
-						reqCliente.forward(request, response);
-						break;
-					default:						
-						break;						
-					}
+					//session.setAttribute("sessionPass", contrasenia);							
+					response.sendRedirect("Index.jsp?tipoUsuario="+user.getTipoUsuario().getId());
 				
 					
 				}else {
