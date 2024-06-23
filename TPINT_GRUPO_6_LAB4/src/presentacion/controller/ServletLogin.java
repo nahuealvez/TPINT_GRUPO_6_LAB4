@@ -40,16 +40,16 @@ public class ServletLogin extends HttpServlet {
 			String usuario = request.getParameter("txtUsuario");
 			String contrasenia = request.getParameter("txtPass");
 									
-			session.setAttribute("sessionUsuario", usuario);
-			session.setAttribute("sessionPass", contrasenia);							
 							
 			try {
 				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
 				
 				if(user != null) {
 					System.out.println("Usuario: " + user.getUsuario());
-					System.out.println("Contraseña: " + user.getContrasenia());
+					System.out.println("Contraseï¿½a: " + user.getContrasenia());
 					
+					session.setAttribute("sessionUsuario", usuario);
+					session.setAttribute("sessionPass", contrasenia);							
 					switch(user.getTipoUsuario().getId()) {
 						
 					case 1: 
@@ -67,13 +67,13 @@ public class ServletLogin extends HttpServlet {
 				
 					
 				}else {
-					request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
+					request.setAttribute("loginError", "Usuario o contraseï¿½a incorrectos.");
 					RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 					rd.forward(request, response);
 				}
 			
 			}catch(NullPointerException e) {
-				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
+				request.setAttribute("loginError", "Usuario o contraseï¿½a incorrectos.");
 				System.out.println(e.getMessage());
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 	            rd.forward(request, response);

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%> 
+<%-- <%@ page import="javax.servlet.http.HttpSession" %>  --%>
+<%-- <%@ page import="dominio.Usuario" %> --%>
+<%-- <% HttpSession session1 = request.getSession();  --%>
+<!-- // Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuario");  -->
+<%-- %> --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +26,7 @@
                     <a class="nav-link" href="#">Cuentas</a>
                     <a class="nav-link" href="#">Préstamos</a>
                 </div>
+<%--                 <div>Bienvenido, <%= usuarioLogueado != null ? usuarioLogueado.getUsuario() : "Invitado" %></div> --%>
             </div>
         </div>
     </nav>

@@ -10,6 +10,8 @@
 	<title>PiggyBank</title>
 </head>
 <body>
+	
+	
 	<header class="d-flex bg-body-tertiary bg-secondary p-2 align-items-center justify-content-between">
 		<div class="d-flex gap-2 flex-row align-items-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-piggy-bank-fill" viewBox="0 0 16 16">
