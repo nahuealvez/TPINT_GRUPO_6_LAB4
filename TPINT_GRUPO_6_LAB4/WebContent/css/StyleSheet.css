@@ -10,6 +10,48 @@ body {
 	font-family: var(--fuentePrimaria);
 }
 
+/* Login */
+
+.body-login {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.image-container-login {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image-container-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-container-login {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: white;
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* General */
+
 .title {
 	font-size: 24px;
 	font-weight: 700;
