@@ -14,3 +14,16 @@ body {
 	font-size: 24px;
 	font-weight: 700;
 }
+
+.container--main {
+	min-height: 505px;
+}
+
+.titleBienvenida {
+	font-weight: 800;
+}
+
+.userProfile {
+	font-size: 18px;
+	font-weight: 700;
+}

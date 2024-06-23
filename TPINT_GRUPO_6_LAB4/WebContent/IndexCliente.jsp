@@ -1,0 +1,1 @@
+	<h2 class="titleBienvenida">Bienvenido, Juan Doe</h2>
