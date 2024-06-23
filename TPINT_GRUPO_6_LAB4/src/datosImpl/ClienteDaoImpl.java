@@ -2,6 +2,7 @@ package datosImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import datos.ClienteDao;
@@ -11,7 +12,8 @@ import dominio.Cliente;
 public class ClienteDaoImpl implements ClienteDao{
 	
 	private static final String insert = "INSERT INTO clientes (`dni`, `cuil`, `nombre`, `apellido`, `sexo`, `nacionalidad`, `fechaNacimiento`, `idProvincia`, `idLocalidad`, `direccion`, `email`, `telefono`, `idUsuario`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+	private static final String checkDni = "SELECT COUNT(*) from clientes where dni = ?";
+	
 	@Override
 	public boolean insert(Cliente cliente) {
 		PreparedStatement statement;
@@ -49,6 +51,26 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	    }		
 		return isInsertExitoso;
+	}
+
+	@Override
+	public boolean existeDni(String dni) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			statement = conexion.prepareStatement(checkDni);
+			statement.setString(1, dni);
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				return resultSet.getInt(1) > 0;
+			}
+		}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		return false;
 	}
 
 }
