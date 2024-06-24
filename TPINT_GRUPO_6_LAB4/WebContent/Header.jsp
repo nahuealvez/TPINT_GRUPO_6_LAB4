@@ -4,6 +4,7 @@
 <%
  String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
  //String usuarioLogueado = "admin";
+ //String usuarioLogueado = "Juan Doe";
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,7 +18,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>PiggyBank</title>
 </head>
-<body>
+<body class="d-flex flex-column">
 
 	<header class="d-flex bg-body-tertiary bg-secondary py-2 ps-4 pe-4 align-items-center justify-content-between">
 		<div class="d-flex gap-2 flex-row align-items-center">
@@ -33,8 +34,6 @@
                     <a class="nav-link p-0" href="FrontClientes.jsp">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="#">Préstamos</a>
-                    <br>
-                    
                 </div>
             </div>
 	        <div class="dropdown d-flex align-items-center gap-3">
@@ -46,6 +45,10 @@
 					  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
 					</svg>
 	          	</a>
+	          	<ul class="dropdown-menu">
+				    <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+				    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+  				</ul>
     		</div>
     	</nav>
     	

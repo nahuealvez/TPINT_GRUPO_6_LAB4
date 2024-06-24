@@ -6,8 +6,9 @@
 	--fuentePrimaria: 'Inter', sans-serif;
 }
 
-body {
+body, html {
 	font-family: var(--fuentePrimaria);
+	height: 100%;	
 }
 
 /* Login */
@@ -52,13 +53,17 @@ body {
 
 /* General */
 
+a {
+	text-decoration: none;
+}
+
 .title {
 	font-size: 24px;
 	font-weight: 700;
 }
 
 .container--main {
-	min-height: 505px;
+	flex: 1 0 auto;
 }
 
 .titleBienvenida {
@@ -85,10 +90,18 @@ body {
 	cursor: pointer;
 }
 
+.card-accesos p {
+	text-align: center;
+}
+
 .card-accesos:hover {
 	background-color: #e9ecef;
 }
 
 .card-accesos p {
 	margin: 0;
+}
+
+.footer {
+	height: 50px;
 }
