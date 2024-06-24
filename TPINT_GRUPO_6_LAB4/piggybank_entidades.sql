@@ -2533,3 +2533,6 @@ VALUES
 	(2380, 25, 'Yánima'),
 	(2381, 25, 'Yerba Buena'),
 	(2382, 25, 'Yerba Buena (S)');
+    
+INSERT INTO usuarios (idTipoUsuario, usuario, contrasenia, estado)
+VALUES (1, admin, admin, 1);
