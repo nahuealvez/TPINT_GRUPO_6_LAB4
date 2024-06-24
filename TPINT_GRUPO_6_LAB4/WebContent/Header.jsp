@@ -2,8 +2,8 @@
  <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="dominio.Usuario" %>
 <%
- String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
- //String usuarioLogueado = "admin";
+ //String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
+ String usuarioLogueado = "admin";
  //String usuarioLogueado = "Juan Doe";
 %>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
 		<nav class="navbar navbar-expand-lg g-1 d-flex align-items-center gap-3">
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav d-flex gap-3">    
-                    <a class="nav-link p-0" href="#">Inicio</a>
+                    <a class="nav-link p-0" href="Index.jsp">Inicio</a>
                     <a class="nav-link p-0" href="FrontClientes.jsp">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="#">Préstamos</a>

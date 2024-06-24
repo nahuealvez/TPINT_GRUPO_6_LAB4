@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Header.jsp"%>
 	<%
-    // Obtener el parámetro tipoUsuario
-    String tipoUsuario = request.getParameter("tipoUsuario");
-	//String tipoUsuario = "1";
+    // Obtener el parÃ¡metro tipoUsuario
+    //String tipoUsuario = request.getParameter("tipoUsuario");
+	String tipoUsuario = "1";
 	//String tipoUsuario = "2";
 %>
 
