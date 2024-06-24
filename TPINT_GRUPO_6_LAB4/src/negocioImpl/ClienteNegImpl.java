@@ -56,4 +56,22 @@ public class ClienteNegImpl implements ClienteNegocio{
 		return actualizacionExitosa;
 	}
 
+	@Override
+	public boolean modificarCliente(Cliente cliente) {
+	    boolean clienteModificado = false;
+
+	    try {
+	        if (!cDao.existeDni(cliente.getDni(), cliente.getId())) {
+	            clienteModificado = cDao.update(cliente);
+	        } else {
+	        	//POSIBLE MEJORA AGREGANDO UNA EXCEPCION PARTICULAR
+	            System.out.println("El DNI ya está registrado para otro cliente.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();        
+	    }
+	    return clienteModificado;
+	}
+
+
 }
