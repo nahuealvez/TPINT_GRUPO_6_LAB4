@@ -5,13 +5,18 @@
 
 <%@ include file="Header.jsp" %>
 
-	<%
-		ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
-		ArrayList<Provincia> provincias = provinciaNeg.listarProvincias();
+	<%	
+		ArrayList<Provincia> provincias = null;
+		if (request.getAttribute("provincias") != null) {
+			provincias = (ArrayList<Provincia>)request.getAttribute("provincias");
+		}
+		else {
+			provincias = new ArrayList<Provincia>();
+		}
 	%>
 
     <div class="container mt-2 p-1">
-        <h2 class="mb-3">Agregar cliente</h2>
+        <h3 class="mb-3">Agregar cliente</h2>
         <%--  Inicio de controles  --%>
         <form class="row g-2 needs-validation" action="ServletCliente" method="get" novalidate>
             <div class="col-md-6 position-relative">

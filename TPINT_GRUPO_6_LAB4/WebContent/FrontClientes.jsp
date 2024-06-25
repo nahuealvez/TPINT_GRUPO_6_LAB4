@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav">    
                     <a class="nav-link" href="#">Inicio</a>
-                    <a class="nav-link" href="FronClientes.jsp">Clientes</a>
+                    <a class="nav-link" href="FrontClientes.jsp">Clientes</a>
                     <a class="nav-link" href="ServletCliente?Param=1">ServletCliente</a>
                     <a class="nav-link" href="#">Cuentas</a>
                     <a class="nav-link" href="#">Préstamos</a>
@@ -41,7 +41,7 @@
 <br>
 <%--  Controles  --%>
 <div style="margin-left: 1150px;">
-    <a class="btn btn-primary" href="AgregarCliente.jsp">Agregar</a>
+    <a class="btn btn-primary" href="ServletProvinciaLocalidad?cargarCampos=1.jsp">Agregar</a>
 </div>
 
 <%--  Tabla Controles  --%>
