@@ -162,7 +162,7 @@
                 	name="txtUsuario"
                 	minlength="8" 
                 	maxlength="14" 
-                	pattern="[A-Za-z0-9_]+" 
+                	pattern="^[A-Za-z0-9_]+$"
                 	placeholder="Ingrese nuevo usuario" 
                 required>
             </div>
@@ -181,6 +181,14 @@
             </div>
             <div class="col-md-6 mt-3">
                 <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-outline-primary btn-sm">
+                <%
+                if(request.getAttribute("txtMensajeAgregarCliente")!=null)
+                {
+                %>
+                <label for="mensaje" class="form-label alert alert-success" role="alert" name="txtMensajeAgregarCliente"> <%= request.getAttribute("txtMensajeAgregarCliente")%> </label>
+            	<% 
+                }
+            	%>
             </div>
         </form>
         <%--  Fin de controles  --%>

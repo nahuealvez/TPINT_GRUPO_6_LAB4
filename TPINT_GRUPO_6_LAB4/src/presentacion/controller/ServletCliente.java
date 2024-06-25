@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import datos.ClienteDao;
 import datosImpl.ClienteDaoImpl;
@@ -71,18 +72,49 @@ public class ServletCliente extends HttpServlet {
 	        System.out.println("Telefono: " + cliente.getTelefono());
 	        System.out.println("Usuario: " + cliente.getUsuario());
 	        System.out.println("Contraseña: " + cliente.getContrasenia());
-	        
-	        
+	        	        
+	     	        
 	        ClienteNegocio negocioC= new ClienteNegImpl();
-	        negocioC.crearCliente(cliente);  
+	        boolean aux=negocioC.crearCliente(cliente);  
+	        if(aux) {
+	            String resultado = "Agregado con Exito!";
+	            request.setAttribute("txtMensajeAgregarCliente", resultado);
+	        } else {
+	            String resultado = "Error al agregar el cliente.";
+	            request.setAttribute("txtMensajeAgregarCliente", resultado);
+	        }
 	        
 	     // Redireccionar hacia AgregarCliente.jsp
 	        request.getRequestDispatcher("/AgregarCliente.jsp").forward(request, response);
 		}
+		
+		if (request.getParameter("Param")!= null ) 
+		{
+			ClienteNegocio negC= new ClienteNegImpl();
+			ArrayList<Cliente> listadoCli = new ArrayList<Cliente>();
+			listadoCli= (ArrayList<Cliente>) negC.listarClientes();
+			
+			request.setAttribute("listaC", listadoCli);
+			request.getRequestDispatcher("/FrontClientes.jsp").forward(request, response);
+		}
+		
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("btnModificarCliente")!= null)
+		{
+			String aux= request.getParameter("idCliente").toString();
+			System.out.println(aux);
+			int id = Integer.parseInt(request.getParameter("idCliente").toString());
+			
+			ClienteNegocio negC = new ClienteNegImpl();
+			Cliente cliente = new Cliente();
+			//cliente= negC.
+			
+			request.getRequestDispatcher("/AgregarCliente.jsp").forward(request, response);
+		}
 		
 	}
 

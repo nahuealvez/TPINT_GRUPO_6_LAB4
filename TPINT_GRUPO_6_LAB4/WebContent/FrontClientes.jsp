@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="dominio.Cliente" %>
+<%@page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,6 +27,7 @@
                 <div class="navbar-nav">    
                     <a class="nav-link" href="#">Inicio</a>
                     <a class="nav-link" href="FronClientes.jsp">Clientes</a>
+                    <a class="nav-link" href="ServletCliente?Param=1">ServletCliente</a>
                     <a class="nav-link" href="#">Cuentas</a>
                     <a class="nav-link" href="#">Préstamos</a>
                 </div>
@@ -40,58 +43,51 @@
 <div style="margin-left: 1150px;">
     <a class="btn btn-primary" href="AgregarCliente.jsp">Agregar</a>
 </div>
-<%--  Tabla Controles  --%>
-<%-- 
-<div class="container text-center">
-<hr>
-  <div class="row">
-    <div class="col font-weight-bold">#</div>
-    <div class="col font-weight-bold">Dni</div>
-    <div class="col">Usuario</div>
-    <div class="col">Apellido</div>
-    <div class="col">Nombre</div>
-    <div class="col">email</div>
-    <div class="col">Acciones</div>
-  </div>
-<hr>
-</div>
---%>
 
-<%-- Fin de tabla Controles  --%>
+<%--  Tabla Controles  --%>
 <div class="container mt-2 border border-dark rounded p-1 bg-body-tertiary">
-<table id="myTable" class="display"><font></font>
-    <thead>
-        <tr>
-            <th>#</th><font></font>
-            <th>Dni</th><font></font>
-            <th>Usuario</th><font></font>
-            <th>Nombre</th><font></font>
-            <th>Apellido</th><font></font>
-            <th>fede@email.com</th><font></font>
-            <th>Acciones</th><font></font>
-        </tr>
-    </thead>
-    <tbody><font></font>
-        <tr><font></font>
-           <th>02</th><font></font>
-            <th>1122334455</th><font></font>
-            <th>TomasDoc17@</th><font></font>
-            <th>Tomas</th><font></font>
-            <th>Docteur</th><font></font>
-            <th>tomas2@gmail.com</th><font></font>
-            <th><input type="submit" value="Modificar" id="btnModificar" class="btn btn-outline-primary btn-sm"></th><font></font>
-        </tr><font></font>
-        <tr><font></font>
-           <th>01</th><font></font>
-            <th>1122334455</th><font></font>
-            <th>FedeDoc17@</th><font></font>
-            <th>Federico</th><font></font>
-            <th>Docteur</th><font></font>
-            <th>email</th><font></font>
-            <th><input type="submit" value="Modificar" id="btnModificar" class="btn btn-outline-primary btn-sm"></th><font></font>
-        </tr><font></font>
-    </tbody><font></font>
-</table><font></font>
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Dni</th>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+            ArrayList<Cliente> listaCliente = null;
+            if (request.getAttribute("listaC") != null) {
+                listaCliente = (ArrayList<Cliente>) request.getAttribute("listaC");
+            } else {
+                listaCliente = new ArrayList<>();
+            }
+
+            for (Cliente cliente : listaCliente) {
+            %>
+                <tr>
+                    <td><%= cliente.getIdCliente() %></td>
+                    <td><%= cliente.getDni() %></td>
+                    <td><%= cliente.getUsuario() %></td>
+                    <td><%= cliente.getNombre() %></td>
+                    <td><%= cliente.getApellido() %></td>
+                    <td><%= cliente.getEmail() %></td>
+                    <td>
+                    <form action="ServletCliente" method="post">
+                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
+                            <input type="submit" value="Modificar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">
+                    </form>
+                    </td>
+                </tr>
+            <%
+            }
+            %>
+        </tbody>
+    </table>
 </div>
 <br>
 <!-- Pie de página -->
