@@ -44,12 +44,12 @@ public class ServletLogin extends HttpServlet {
 			try {
 				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
 								
-					session.setAttribute("sessionUsuario", usuario);						
-					response.sendRedirect("Index.jsp?tipoUsuario="+user.getTipoUsuario().getId());
+					session.setAttribute("sessionUsuario", user);						
+					response.sendRedirect("Index.jsp");
 
 			
 			}catch(ErrorUsuarioException e) {
-				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
+				request.setAttribute("loginError", "Usuario o contraseÃ±a incorrectos.");
 				System.out.println(e.getMessage());
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 	            rd.forward(request, response);

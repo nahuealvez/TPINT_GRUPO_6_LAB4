@@ -2,9 +2,15 @@
  <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="dominio.Usuario" %>
 <%
- String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
- //String usuarioLogueado = "admin";
- //String usuarioLogueado = "Juan Doe";
+HttpSession sessionLogueada = request.getSession(false);
+ Usuario usuarioLogueado = null;
+ 
+ if(sessionLogueada!= null){
+	 usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
+ }
+ if(usuarioLogueado== null){
+	 response.sendRedirect("Login.jsp");
+ }
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,7 +44,7 @@
             </div>
 	        <div class="dropdown d-flex align-items-center gap-3">
 	        	<span class="userProfile">|</span>
- 	        	<span class="userProfile"><%= usuarioLogueado != null ? usuarioLogueado : "Invitado" %></span>
+ 	        	<span class="userProfile"><%= usuarioLogueado != null ? usuarioLogueado.getUsuario() : "Invitado" %></span>
 	    		<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
 		            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -47,7 +53,7 @@
 	          	</a>
 	          	<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" href="#">Ver perfil</a></li>
-				    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+				    <li><a class="dropdown-item" href="ServletLogout?action=logout">Cerrar sesión</a></li>
   				</ul>
     		</div>
     	</nav>
