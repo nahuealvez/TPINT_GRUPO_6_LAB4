@@ -55,3 +55,4 @@
 	</header>
 
 	<main class="container container--main pb-4 pt-4">
+		<h2 class="titleBienvenida">Bienvenido/a, <%= usuarioLogueado %></h2>

@@ -1,5 +1,4 @@
 	<div class="d-flex flex-column gap-3">
-		<h2 class="titleBienvenida">Bienvenido, <%= usuarioLogueado %></h2>
 		<div class="d-flex flex-column gap-4">
 			<section>
 				<h3 class="pb-2">Cuentas</h3>
