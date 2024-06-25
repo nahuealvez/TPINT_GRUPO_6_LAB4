@@ -2,8 +2,8 @@
  <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="dominio.Usuario" %>
 <%
- //String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
- String usuarioLogueado = "admin";
+ String usuarioLogueado = session.getAttribute("sessionUsuario").toString();
+ //String usuarioLogueado = "admin";
  //String usuarioLogueado = "Juan Doe";
 %>
 <!DOCTYPE html>

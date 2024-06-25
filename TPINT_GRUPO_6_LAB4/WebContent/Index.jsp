@@ -2,8 +2,8 @@
 <%@ include file="Header.jsp"%>
 	<%
     // Obtener el parámetro tipoUsuario
-    //String tipoUsuario = request.getParameter("tipoUsuario");
-	String tipoUsuario = "1";
+    String tipoUsuario = request.getParameter("tipoUsuario");
+	//String tipoUsuario = "1";
 	//String tipoUsuario = "2";
 %>
 
