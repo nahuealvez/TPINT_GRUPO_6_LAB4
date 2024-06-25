@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="dominio.Provincia" %>
+<%@ page import="negocioImpl.ProvinciaNegImpl" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ include file="Header.jsp" %>
+
+	<%
+		ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
+		ArrayList<Provincia> provincias = provinciaNeg.listarProvincias();
+	%>
 
     <div class="container mt-2 p-1">
         <h2 class="mb-3">Agregar cliente</h2>
@@ -72,9 +80,9 @@
                 	name="ddlSexo"
                 required>
                     <option selected disabled value="">Seleccione su género</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">No binario</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="X">No binario</option>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
@@ -97,10 +105,9 @@
                 	name="ddlProvincia" 
                 required>
                     <option selected disabled value="">Seleccione su Provincia</option>
-                    <option value="1">Buenos Aires</option>
-                    <option value="2">Buenos Aires-GBA</option>
-                    <option value="3">Capital Federal</option>
-                    <option value="4">Catamarca</option>
+                    <% for (Provincia provincia : provincias) { %>
+                    	<option value="<%= provincia.getId() %> %>"><%= provincia.getNombre() %></option>
+                    <% } %>
                 </select>
             </div>
             <div class="col-md-6 position-relative">

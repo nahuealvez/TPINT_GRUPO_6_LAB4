@@ -8,8 +8,10 @@
 %>
 
 <% if ("1".equals(tipoUsuario)) { %>
+	<h2 class="titleBienvenida">Bienvenido/a, <%= usuarioLogueado %></h2>
     <%@ include file="IndexBanco.jsp" %>
 <% } else if ("2".equals(tipoUsuario)) { %>
+	<h2 class="titleBienvenida">Bienvenido/a, <%= usuarioLogueado %></h2>
     <%@ include file="IndexCliente.jsp" %>
 <% } else { %>
     <p>Tipo de usuario no reconocido.</p>
