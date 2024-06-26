@@ -40,7 +40,7 @@ HttpSession sessionLogueada = request.getSession(false);
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav d-flex gap-3">    
                     <a class="nav-link p-0" href="Index.jsp">Inicio</a>
-                    <a class="nav-link p-0" href="Clientes.jsp">Clientes</a>
+                    <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="#">Préstamos</a>
                 </div>

@@ -15,12 +15,6 @@
 		}
 		
 		ArrayList<Localidad> localidades = null;
-		if (request.getAttribute("localidades") != null) {
-			localidades = (ArrayList<Localidad>)request.getAttribute("localidades");
-		}
-		else {
-			localidades = new ArrayList<Localidad>();
-		}
 		
 	%>
 	
@@ -61,7 +55,7 @@
                 	name="txtDni"
                 	value="" 
                 	minlength="7" 
-                	maxlength="9" 
+                	maxlength="8" 
                 	placeholder="Ingrese N° de documento" 
                 required>
             </div>
@@ -129,8 +123,8 @@
                 	name="ddlNacionalidad"  
                 required>
                     <option selected disabled value="">Seleccione su Nacionalidad</option>
-                    <option value="1">Argentino</option>
-                    <option value="2">Extranjero</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Extranjera">Extranjera</option>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
@@ -221,18 +215,10 @@
                 required>
             </div>
             <div class="col-md-6 mt-3">
-                <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-outline-primary btn-sm">
-                <%
-                if(request.getAttribute("txtMensajeAgregarCliente")!=null)
-                {
-                %>
-                <label for="mensaje" class="form-label alert alert-success" role="alert" name="txtMensajeAgregarCliente"> <%= request.getAttribute("txtMensajeAgregarCliente")%> </label>
-            	<% 
-                }
-            	%>
+            	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
+                <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-success btn-sm">
             </div>
         </form>
-        <%--  Fin de controles  --%>
     </div>
 
 <%@ include file="Footer.jsp" %>

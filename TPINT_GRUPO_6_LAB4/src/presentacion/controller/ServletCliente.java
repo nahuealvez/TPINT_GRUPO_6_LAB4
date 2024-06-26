@@ -1,6 +1,8 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,6 +53,7 @@ public class ServletCliente extends HttpServlet {
 	        cliente.setTelefono(request.getParameter("txtTelefono"));
 	        cliente.setUsuario(request.getParameter("txtUsuario"));       
 	        cliente.setContrasenia(request.getParameter("txtClave"));
+	        cliente.setEstado(true);
 	        
 	        tipoUsuario.setId(2);
 	        cliente.setTipoUsuario(tipoUsuario);
@@ -72,34 +75,49 @@ public class ServletCliente extends HttpServlet {
 	        System.out.println("Telefono: " + cliente.getTelefono());
 	        System.out.println("Usuario: " + cliente.getUsuario());
 	        System.out.println("Contraseña: " + cliente.getContrasenia());
-	        	        
-	     	        
-	        ClienteNegocio negocioC= new ClienteNegImpl();
-	        boolean aux=negocioC.crearCliente(cliente);  
-	        if(aux) {
-	            String resultado = "Agregado con Exito!";
-	            request.setAttribute("txtMensajeAgregarCliente", resultado);
-	        } else {
-	            String resultado = "Error al agregar el cliente.";
-	            request.setAttribute("txtMensajeAgregarCliente", resultado);
-	        }
+	        System.out.println("Estado: " + cliente.getEstado());
 	        
-	     // Redireccionar hacia AgregarCliente.jsp
-	        request.getRequestDispatcher("/AgregarCliente.jsp").forward(request, response);
+	        String mensaje = null;
+	        String claseMensaje = null;
+	        
+	     	try {
+	     		ClienteNegocio negocioC= new ClienteNegImpl();
+		        boolean aux=negocioC.crearCliente(cliente);
+		        
+		        mensaje = "El cliente fue agregado correctamente a la base";
+		        claseMensaje = "alert alert-success";
+	     	}
+	     	catch (Exception e) {
+	     		mensaje = "El cliente no se pudo agregar | " + e.getMessage();
+	     		claseMensaje = "alert alert-danger";
+	     	}
+	        
+	     	request.setAttribute("txtMensajeAgregarCliente", mensaje);
+            request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
+	     	
+            ArrayList<Cliente> clientes = cargarListaClientes();
+            
+            request.setAttribute("listaC", clientes);
+	        request.getRequestDispatcher("/Clientes.jsp").forward(request, response);
 		}
 		
 		if (request.getParameter("Param")!= null ) 
 		{
-			ClienteNegocio negC= new ClienteNegImpl();
-			ArrayList<Cliente> listadoCli = new ArrayList<Cliente>();
-			listadoCli= (ArrayList<Cliente>) negC.listarClientes();
+			ArrayList<Cliente> clientes = cargarListaClientes();
 			
-			request.setAttribute("listaC", listadoCli);
+			request.setAttribute("listaC", clientes);
 			request.getRequestDispatcher("/Clientes.jsp").forward(request, response);
 		}
 		
 	}
 
+	private ArrayList<Cliente> cargarListaClientes() {
+		ClienteNegocio negC= new ClienteNegImpl();
+		ArrayList<Cliente> listadoCli = new ArrayList<Cliente>();
+		listadoCli= (ArrayList<Cliente>) negC.listarClientes();
+		
+		return listadoCli;
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

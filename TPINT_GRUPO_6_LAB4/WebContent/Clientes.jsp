@@ -4,12 +4,35 @@
 
 <%@ include file="Header.jsp" %>
 
+	<%
+	
+		boolean existeMensaje = false;
+		String mensaje = null;
+		String claseMensaje = null;
+	
+		if (request.getAttribute("txtMensajeAgregarCliente") != null) {
+			mensaje = (String)request.getAttribute("txtMensajeAgregarCliente");
+			existeMensaje = true;
+		}
+	
+		if (request.getAttribute("claseMensajeAgregarCliente") != null) {
+			claseMensaje = (String)request.getAttribute("claseMensajeAgregarCliente");
+			existeMensaje = true;
+		}
+	
+	%>
+
 	<h3>Clientes</h3>
 	<div class="card">
 	  <div class="card-header d-flex justify-content-end">
 	  	<a class="btn btn-primary" href="ServletProvincia?cargarCampos=1.jsp">Agregar</a>
 	  </div>
 	  <div class="card-body">
+	  	<% if (existeMensaje) { %>
+		  	<div id="alert" class="<%= claseMensaje %>" role="alert">
+	  			<%= mensaje %>
+			</div>
+		<% } %>
 	    <table id="tablaClientes" class="table table-striped" style="width:100%">
 	        <thead>
 	            <tr>
