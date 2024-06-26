@@ -68,7 +68,7 @@
 	                    <td class="d-flex justify-content-center align-items-center gap-2">
 		                    <form action="ServletCliente" method="post">
 		                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
-		                            <input type="submit" value="Editar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">
+		                            <input type="submit" value="Modificar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">
 		                    </form>
 		                    <form action="ServletCliente" method="post">
 		                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
