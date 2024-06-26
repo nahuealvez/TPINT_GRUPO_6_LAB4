@@ -53,7 +53,6 @@ public class ServletCliente extends HttpServlet {
 	        cliente.setTelefono(request.getParameter("txtTelefono"));
 	        cliente.setUsuario(request.getParameter("txtUsuario"));       
 	        cliente.setContrasenia(request.getParameter("txtClave"));
-	        cliente.setEstado(true);
 	        
 	        tipoUsuario.setId(2);
 	        cliente.setTipoUsuario(tipoUsuario);
@@ -75,7 +74,6 @@ public class ServletCliente extends HttpServlet {
 	        System.out.println("Telefono: " + cliente.getTelefono());
 	        System.out.println("Usuario: " + cliente.getUsuario());
 	        System.out.println("Contraseña: " + cliente.getContrasenia());
-	        System.out.println("Estado: " + cliente.getEstado());
 	        
 	        String mensaje = null;
 	        String claseMensaje = null;

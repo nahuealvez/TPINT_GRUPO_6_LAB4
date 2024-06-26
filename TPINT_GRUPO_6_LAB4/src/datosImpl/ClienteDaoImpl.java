@@ -17,7 +17,7 @@ import dominio.TipoUsuario;
 
 public class ClienteDaoImpl implements ClienteDao{
 	
-	private static final String insert = "INSERT INTO clientes (`dni`, `cuil`, `nombre`, `apellido`, `sexo`, `nacionalidad`, `fechaNacimiento`, `idProvincia`, `idLocalidad`, `direccion`, `email`, `telefono`, `idUsuario`, `estado`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO clientes (`dni`, `cuil`, `nombre`, `apellido`, `sexo`, `nacionalidad`, `fechaNacimiento`, `idProvincia`, `idLocalidad`, `direccion`, `email`, `telefono`, `idUsuario`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String listarActivos = "SELECT c.id AS Id, c.dni AS DNI, c.cuil AS CUIL, c.nombre AS Nombre, c.apellido AS Apellido, c.sexo AS Sexo, c.nacionalidad AS Nacionalidad, c.fechaNacimiento AS FechaNacimiento, c.idProvincia AS IdProvincia, p.nombre AS NombreProvincia, c.idLocalidad AS IdLocalidad, l.nombre AS NombreLocalidad, c.direccion AS Direccion, c.email AS Email, c.telefono AS Telefono, c.idUsuario AS IdUsuario, u.usuario AS NombreUsuario, u.idTipoUsuario AS IdTipoUsuario, t.descripcion AS DescripcionTipoUsuario, u.estado AS Estado FROM clientes c INNER JOIN usuarios u ON c.idUsuario = u.id INNER JOIN tiposUsuarios t ON u.idTipoUsuario = t.id INNER JOIN localidades l ON c.idLocalidad = l.id INNER JOIN provincias p ON c.idProvincia = p.id WHERE u.estado = 1 AND u.idTipoUsuario = 2";
 	private static final String actualizarRegistro = "UPDATE clientes SET dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, nacionalidad = ?, fechaNacimiento = ?, idProvincia = ?, idLocalidad = ?, direccion = ?, email = ?, telefono = ? WHERE idUsuario = ?";
 	private static final String existeDniConsulta = "SELECT COUNT(*) from clientes where dni = ?";
@@ -46,7 +46,6 @@ public class ClienteDaoImpl implements ClienteDao{
 			statement.setString(11, cliente.getEmail());
 			statement.setString(12, cliente.getTelefono());
 			statement.setInt(13, cliente.getId());
-			statement.setBoolean(14, cliente.getEstado());
 			
 			int filasAfectadas = statement.executeUpdate();
 			
