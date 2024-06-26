@@ -129,7 +129,7 @@ public class ServletCliente extends HttpServlet {
 			Cliente cliente = new Cliente();
 			//cliente= negC.
 			
-			request.getRequestDispatcher("/AgregarCliente.jsp").forward(request, response);
+			request.getRequestDispatcher("/ModificarCliente.jsp").forward(request, response);
 		}
 		
 	}
