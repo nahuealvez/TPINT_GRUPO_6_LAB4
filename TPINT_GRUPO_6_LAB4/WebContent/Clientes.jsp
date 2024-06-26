@@ -36,13 +36,13 @@
 	    <table id="tablaClientes" class="table table-striped" style="width:100%">
 	        <thead>
 	            <tr>
-	                <th>#</th>
-	                <th>Dni</th>
-	                <th>Usuario</th>
-	                <th>Nombre</th>
-	                <th>Apellido</th>
-	                <th>Estado</th>
-	                <th>Acciones</th>
+	                <th scope="col">#</th>
+	                <th scope="col">Dni</th>
+	                <th scope="col">Usuario</th>
+	                <th scope="col">Nombre</th>
+	                <th scope="col">Apellido</th>
+	                <th scope="col">Estado</th>
+	                <th scope="col">Acciones</th>
 	            </tr>
 	        </thead>
 	        <tbody>
@@ -62,8 +62,10 @@
 	                    <td><%= cliente.getUsuario() %></td>
 	                    <td><%= cliente.getNombre() %></td>
 	                    <td><%= cliente.getApellido() %></td>
-	                    <td><%= cliente.getEstado() %></td>
 	                    <td>
+	                    	<%= cliente.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
+	                    </td>
+	                    <td class="d-flex justify-content-center align-items-center gap-2">
 		                    <form action="ServletCliente" method="post">
 		                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
 		                            <input type="submit" value="Editar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">

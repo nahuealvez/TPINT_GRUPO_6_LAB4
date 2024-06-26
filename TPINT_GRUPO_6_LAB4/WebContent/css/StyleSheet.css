@@ -2,6 +2,10 @@
 
 /* Estilo para la cabecera de la tabla */
 
+table {
+	font-size: 14px;
+}
+
 :root {
 	--fuentePrimaria: 'Inter', sans-serif;
 }
