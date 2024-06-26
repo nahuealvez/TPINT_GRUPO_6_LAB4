@@ -15,4 +15,9 @@ public class LocalidadNegImpl implements LocalidadNegocio {
 		return localidadDao.listarLocalidades();
 	}
 
+	@Override
+	public ArrayList<Localidad> listarLocalidadesPorProvincia(int idProvincia) {
+		return localidadDao.listarLocalidadesPorProvincia(idProvincia);
+	}
+
 }

@@ -13,6 +13,7 @@ import dominio.Provincia;
 
 public class LocalidadDaoImpl implements LocalidadDao {
 	private static final String listarLocalidades = "SELECT L.Id, L.IdProvincia, L.Nombre FROM Localidades AS L";
+	private static final String listarLocalidadesPorProvincia = "SELECT L.Id, L.IdProvincia, L.Nombre FROM Localidades AS L WHERE L.IdProvincia = ?";
 	
 	@Override
 	public ArrayList<Localidad> listarLocalidades() {
@@ -25,6 +26,38 @@ public class LocalidadDaoImpl implements LocalidadDao {
 			Conexion conexion = Conexion.getConexion();
 			
 			st = conexion.getSQLConexion().prepareStatement(listarLocalidades);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				Localidad localidad = new Localidad();
+				localidad.setId(rs.getInt("L.Id"));
+				Provincia provincia = new Provincia();
+				provincia = provinciaDao.obtenerProvinciaPorId(rs.getInt("L.IdProvincia"));
+				localidad.setProvincia(provincia);
+				localidad.setNombre(rs.getString("L.Nombre"));
+				localidades.add(localidad);
+			}
+			
+			conexion.cerrarConexion();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return localidades;
+	}
+
+	@Override
+	public ArrayList<Localidad> listarLocalidadesPorProvincia(int idProvincia) {
+		ArrayList<Localidad> localidades = new ArrayList<Localidad>();
+		ProvinciaDao provinciaDao = new ProvinciaDaoImpl();
+		
+		try {
+			PreparedStatement st;
+			ResultSet rs;
+			Conexion conexion = Conexion.getConexion();
+			
+			st = conexion.getSQLConexion().prepareStatement(listarLocalidadesPorProvincia);
+			st.setInt(1,  idProvincia);
 			rs = st.executeQuery();
 			while (rs.next()) {
 				Localidad localidad = new Localidad();

@@ -41,7 +41,7 @@
 <br>
 <%--  Controles  --%>
 <div style="margin-left: 1150px;">
-    <a class="btn btn-primary" href="ServletProvinciaLocalidad?cargarCampos=1.jsp">Agregar</a>
+    <a class="btn btn-primary" href="ServletProvincia?cargarCampos=1.jsp">Agregar</a>
 </div>
 
 <%--  Tabla Controles  --%>

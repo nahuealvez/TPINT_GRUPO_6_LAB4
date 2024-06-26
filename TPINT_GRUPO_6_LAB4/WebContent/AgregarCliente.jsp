@@ -23,6 +23,29 @@
 		}
 		
 	%>
+	
+	<script>
+	    $(document).ready(function() {
+	        $('#ddlProvincia').change(function() {
+	            var idProvincia = $(this).val();
+	            if (idProvincia) {
+	                $.ajax({
+	                    type: 'GET',
+	                    url: 'ServletLocalidad', // Cambia esto a la URL correcta de tu servlet
+	                    data: { idProvincia: idProvincia },
+	                    success: function(response) {
+	                        $('#ddlLocalidad').html(response);
+	                    },
+	                    error: function() {
+	                        alert('Error al cargar localidades');
+	                    }
+	                });
+	            } else {
+	                $('#ddlLocalidad').html('<option selected disabled value="">Seleccione Localidad</option>');
+	            }
+	        });
+	    });
+	</script>
 
     <div class="container mt-2 p-1">
         <h3 class="mb-3">Agregar cliente</h2>
@@ -132,9 +155,6 @@
                 name="ddlLocalidad" 
                 required>
                     <option selected disabled value="">Seleccione Localidad</option>
-                    <% for (Localidad localidad : localidades) { %>
-                    	<option value="<%= localidad.getId() %>"><%= localidad.getNombre() %></option>
-                    <% } %>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
@@ -214,6 +234,5 @@
         </form>
         <%--  Fin de controles  --%>
     </div>
-    <br>
 
 <%@ include file="Footer.jsp" %>

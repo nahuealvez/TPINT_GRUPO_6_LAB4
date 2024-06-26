@@ -23,6 +23,7 @@ HttpSession sessionLogueada = request.getSession(false);
 	<link rel="stylesheet" type="text/css" href="css/StyleSheet.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>PiggyBank</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body class="d-flex flex-column">
 

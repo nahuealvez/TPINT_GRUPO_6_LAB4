@@ -1,9 +1,9 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,21 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Localidad;
-import dominio.Provincia;
 import negocioImpl.LocalidadNegImpl;
-import negocioImpl.ProvinciaNegImpl;
 
 /**
- * Servlet implementation class ServletProvinciaLocalidad
+ * Servlet implementation class ServletLocalidades
  */
-@WebServlet("/ServletProvinciaLocalidad")
-public class ServletProvinciaLocalidad extends HttpServlet {
+@WebServlet("/ServletLocalidad")
+public class ServletLocalidad extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletProvinciaLocalidad() {
+    public ServletLocalidad() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +32,17 @@ public class ServletProvinciaLocalidad extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("cargarCampos") != null) {
-			ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
-			ArrayList<Provincia> provincias = provinciaNeg.listarProvincias();
-			
-			LocalidadNegImpl localidadNeg = new LocalidadNegImpl();
-			ArrayList<Localidad> localidades = localidadNeg.listarLocalidades();
-			
-			request.setAttribute("provincias", provincias);
-			request.setAttribute("localidades", localidades);
-			RequestDispatcher rd = request.getRequestDispatcher("/AgregarCliente.jsp");
-	        rd.forward(request, response);
-		}
+		LocalidadNegImpl localidadNeg = new LocalidadNegImpl();
+		int idProvincia = Integer.parseInt(request.getParameter("idProvincia"));
+		ArrayList<Localidad> localidades = localidadNeg.listarLocalidadesPorProvincia(idProvincia);
+		
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println("<option selected disabled value=''>Seleccione Localidad</option>");
+		for (Localidad localidad : localidades) {
+            out.println("<option value='" + localidad.getId() + "'>" + localidad.getNombre() + "</option>");
+        }
+		out.close();
 	}
 
 	/**
@@ -55,5 +52,4 @@ public class ServletProvinciaLocalidad extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
