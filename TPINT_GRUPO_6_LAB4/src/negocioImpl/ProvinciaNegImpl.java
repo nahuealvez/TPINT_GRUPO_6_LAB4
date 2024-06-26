@@ -14,5 +14,10 @@ public class ProvinciaNegImpl implements ProvinciaNegocio{
 	public ArrayList<Provincia> listarProvincias() {
 		return provinciaDao.listarProvincias();
 	}
+
+	@Override
+	public Provincia obtenerProvinciaPorId(int id) {
+		return provinciaDao.obtenerProvinciaPorId(id);
+	}
 	
 }
