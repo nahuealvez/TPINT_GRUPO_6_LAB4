@@ -49,7 +49,7 @@ public class ServletLogin extends HttpServlet {
 
 			
 			}catch(ErrorUsuarioException e) {
-				request.setAttribute("loginError", "Usuario o contraseÃ±a incorrectos.");
+				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
 				System.out.println(e.getMessage());
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 	            rd.forward(request, response);
