@@ -24,6 +24,8 @@ HttpSession sessionLogueada = request.getSession(false);
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>PiggyBank</title>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+	<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 </head>
 <body class="d-flex flex-column">
 
@@ -38,7 +40,7 @@ HttpSession sessionLogueada = request.getSession(false);
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav d-flex gap-3">    
                     <a class="nav-link p-0" href="Index.jsp">Inicio</a>
-                    <a class="nav-link p-0" href="FrontClientes.jsp">Clientes</a>
+                    <a class="nav-link p-0" href="Clientes.jsp">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="#">Préstamos</a>
                 </div>
