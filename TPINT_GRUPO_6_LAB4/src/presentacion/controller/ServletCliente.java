@@ -95,7 +95,7 @@ public class ServletCliente extends HttpServlet {
 			listadoCli= (ArrayList<Cliente>) negC.listarClientes();
 			
 			request.setAttribute("listaC", listadoCli);
-			request.getRequestDispatcher("/FrontClientes.jsp").forward(request, response);
+			request.getRequestDispatcher("/Clientes.jsp").forward(request, response);
 		}
 		
 	}
