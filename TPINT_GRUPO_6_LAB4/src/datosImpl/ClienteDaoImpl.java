@@ -194,7 +194,9 @@ public class ClienteDaoImpl implements ClienteDao{
 			{
 				conexion.commit();
 				modificarExitoso = true;
-			}
+			}else {
+	            conexion.rollback();
+	        }
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
