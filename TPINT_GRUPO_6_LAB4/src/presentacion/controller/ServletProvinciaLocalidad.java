@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dominio.Localidad;
 import dominio.Provincia;
+import negocioImpl.LocalidadNegImpl;
 import negocioImpl.ProvinciaNegImpl;
 
 /**
@@ -35,7 +37,12 @@ public class ServletProvinciaLocalidad extends HttpServlet {
 		if (request.getParameter("cargarCampos") != null) {
 			ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
 			ArrayList<Provincia> provincias = provinciaNeg.listarProvincias();
+			
+			LocalidadNegImpl localidadNeg = new LocalidadNegImpl();
+			ArrayList<Localidad> localidades = localidadNeg.listarLocalidades();
+			
 			request.setAttribute("provincias", provincias);
+			request.setAttribute("localidades", localidades);
 			RequestDispatcher rd = request.getRequestDispatcher("/AgregarCliente.jsp");
 	        rd.forward(request, response);
 		}

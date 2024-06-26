@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dominio.Provincia" %>
-<%@ page import="negocioImpl.ProvinciaNegImpl" %>
+<%@ page import="dominio.Localidad" %>
 <%@ page import="java.util.ArrayList" %>
 
 <%@ include file="Header.jsp" %>
@@ -13,6 +13,15 @@
 		else {
 			provincias = new ArrayList<Provincia>();
 		}
+		
+		ArrayList<Localidad> localidades = null;
+		if (request.getAttribute("localidades") != null) {
+			localidades = (ArrayList<Localidad>)request.getAttribute("localidades");
+		}
+		else {
+			localidades = new ArrayList<Localidad>();
+		}
+		
 	%>
 
     <div class="container mt-2 p-1">
@@ -111,7 +120,7 @@
                 required>
                     <option selected disabled value="">Seleccione su Provincia</option>
                     <% for (Provincia provincia : provincias) { %>
-                    	<option value="<%= provincia.getId() %> %>"><%= provincia.getNombre() %></option>
+                    	<option value="<%= provincia.getId() %>"><%= provincia.getNombre() %></option>
                     <% } %>
                 </select>
             </div>
@@ -123,9 +132,9 @@
                 name="ddlLocalidad" 
                 required>
                     <option selected disabled value="">Seleccione Localidad</option>
-                    <option value="1">25 de Mayo</option>
-                    <option value="2">3 de febrero</option>
-                    <option value="3">A. Alsina</option>
+                    <% for (Localidad localidad : localidades) { %>
+                    	<option value="<%= localidad.getId() %>"><%= localidad.getNombre() %></option>
+                    <% } %>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
