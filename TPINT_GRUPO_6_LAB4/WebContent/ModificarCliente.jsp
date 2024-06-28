@@ -1,3 +1,4 @@
+<%@page import="dominio.Cliente"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dominio.Provincia" %>
 <%@ page import="dominio.Localidad" %>
@@ -6,6 +7,7 @@
 <%@ include file="Header.jsp" %>
 
 	<%	
+		Cliente cliente = (Cliente) request.getAttribute("clienteAModificar");
 		ArrayList<Provincia> provincias = null;
 		if (request.getAttribute("provincias") != null) {
 			provincias = (ArrayList<Provincia>)request.getAttribute("provincias");
@@ -53,7 +55,7 @@
                 	pattern="\d+" 
                 	id="txtDni" 
                 	name="txtDni"
-                	value="" 
+                	value="<%= cliente.getDni() %>"
                 	minlength="7" 
                 	maxlength="8" 
                 	placeholder="Ingrese N° de documento" 
@@ -64,7 +66,8 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtCuil" 
-                	name="txtCuil" 
+                	name="txtCuil"
+                	value="<%= cliente.getCuil() %>" 
                 	pattern="\d+" 
                 	minlength="11" 
                 	maxlength="11" 
@@ -76,7 +79,8 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtNombre" 
-                	name="txtNombre" 
+                	name="txtNombre"
+                	value="<%= cliente.getNombre() %>" 
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*" 
                 	minlength="1" 
                 	maxlength="45" 
@@ -88,7 +92,8 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtApellido" 
-                	name="txtApellido"  
+                	name="txtApellido"
+                	value="<%= cliente.getApellido() %>"   
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*"  
                 	minlength="1" maxlength="45" 
                 	placeholder="Ingrese apellido/s" 
@@ -100,33 +105,34 @@
                 	class="form-control form-control-sm" 
                 	id="txtFechaNacimiento" 
                 	name="txtFechaNacimiento"
+                	value="<%= cliente.getFechaNacimiento() %>"   
                 	placeholder="Ingrese Fecha de nacimiento"
                 required>
             </div>
-            <div class="col-md-6 position-relative">
-                <label for="ddlGenero">Género:</label>
-                <select class="form-select form-select-sm" 
-                	id="ddlSexo" 
-                	aria-label="Default select example" 
-                	name="ddlSexo"
-                required>
-                    <option selected disabled value="">Seleccione su género</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                    <option value="X">No binario</option>
-                </select>
-            </div>
-            <div class="col-md-6 position-relative">
-                <label for="ddlNacionalidad">Nacionalidad:</label>
-                <select class="form-select form-select-sm" 
-                	id="ddlNacionalidad" 
-                	name="ddlNacionalidad"  
-                required>
-                    <option selected disabled value="">Seleccione su Nacionalidad</option>
-                    <option value="Argentina">Argentina</option>
-                    <option value="Extranjera">Extranjera</option>
-                </select>
-            </div>
+			<div class="col-md-6 position-relative">
+			    <label for="ddlGenero">Género:</label>
+			    <select class="form-select form-select-sm" 
+			            id="ddlSexo" 
+			            aria-label="Default select example" 
+			            name="ddlSexo"
+			            required>
+			        <option disabled value="">Seleccione su género</option>
+			        <option value="M" <%= cliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
+			        <option value="F" <%= cliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
+			        <option value="X" <%= cliente.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
+			    </select>
+			</div>    
+			<div class="col-md-6 position-relative">
+			    <label for="ddlNacionalidad">Nacionalidad:</label>
+			    <select class="form-select form-select-sm" 
+			            id="ddlNacionalidad" 
+			            name="ddlNacionalidad"  
+			            required>
+			        <option disabled value="">Seleccione su Nacionalidad</option>
+			        <option value="Argentina" <%= cliente.getNacionalidad().equals("Argentina") ? "selected" : "" %>>Argentina</option>
+			        <option value="Extranjera" <%= cliente.getNacionalidad().equals("Extranjera") ? "selected" : "" %>>Extranjera</option>
+			    </select>
+			</div>
             <div class="col-md-6 position-relative">
                 <!-- A esta hay que adaptarlo para que cargue una lista de Provincias -->
                 <label for="ddlProvincia">Provincia:</label>
@@ -136,8 +142,8 @@
                 	name="ddlProvincia" 
                 required>
                     <option selected disabled value="">Seleccione su Provincia</option>
-                    <% for (Provincia provincia : provincias) { %>
-                    	<option value="<%= provincia.getId() %>"><%= provincia.getNombre() %></option>
+                      <% for (Provincia provincia : provincias) { %>
+                    	<option value="<%= provincia.getId() %>" <%= provincia.getId() == cliente.getProvincia().getId() ? "selected" : "" %>><%= provincia.getNombre() %></option>
                     <% } %>
                 </select>
             </div>
@@ -156,7 +162,8 @@
                 <input type="text" 
                 	class="form-control form-control-sm" 
                 	id="txtDireccion" 
-                	name="txtDireccion"
+                	name="txtDireccion"       	
+                	value="<%= cliente.getDireccion() %>"
                  	minlength="2" 
                  	maxlength="60"
                  	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+)*" 
@@ -169,6 +176,7 @@
                 	placeholder="Ingrese correo electronico" 
                 	id="txtEmail" 
                 	name="txtEmail" 
+                	value="<%= cliente.getEmail() %>"
                 	placeholder="name@example.com" 
                 	minlength="2" 
                 	maxlength="80"
@@ -181,13 +189,15 @@
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtTelefono" 
-                	name="txtTelefono" 
+                	name="txtTelefono"
+                	value="<%= cliente.getTelefono() %>" 
                 	pattern="\d+" 
                 	minlength="8" 
                 	maxlength="20" 
                 	placeholder="Ingrese numero de celular" 
                 required>
             </div>
+            <input type="hidden" name="nombreUsuario" value="<%= cliente.getUsuario() %>">
             <div class="col-md-6 position-relative">
                 <label for="txtUsuario">Usuario:</label>
                 <input type="text" 
@@ -195,11 +205,13 @@
                 	form-control-sm" 
                 	id="txtUsuario" 
                 	name="txtUsuario"
+                	value="<%= cliente.getUsuario() %>"
                 	minlength="8" 
                 	maxlength="14" 
                 	pattern="^[A-Za-z0-9_]+$"
                 	placeholder="Ingrese nuevo usuario" 
-                required>
+                	required
+                	disabled>
             </div>
             <div class="col-md-6 position-relative">
                 <label for="txtClave">Clave:</label>
@@ -208,6 +220,7 @@
                 	form-control-sm" 
                 	id="txtClave" 
                 	name="txtClave"
+                	value="<%= cliente.getContrasenia() %>" 
                 	minlength="8" 
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
@@ -216,7 +229,7 @@
             </div>
             <div class="col-md-6 mt-3">
             	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
-                <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-success btn-sm">
+                <input type="submit" value="Modificar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-success btn-sm">
             </div>
         </form>
     </div>

@@ -48,8 +48,19 @@ public class ServletProvincia extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		// Aquí se ejecuta la lógica cuando se presiona el botón "Modificar" en el JSP
+	    // Cargar las provincias
+		int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+	    ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
+	    ArrayList<Provincia> provincias = provinciaNeg.listarProvincias();
+	    
+	    // Setear las provincias como atributo del request
+	    request.setAttribute("provincias", provincias);
+	    request.setAttribute("idCliente", idCliente);
+	    
+
+	    RequestDispatcher rd = request.getRequestDispatcher("/ServletCliente");
+	    rd.forward(request, response);
 	}
 
 }
