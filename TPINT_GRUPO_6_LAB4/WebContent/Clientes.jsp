@@ -66,7 +66,8 @@
 	                    	<%= cliente.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
 	                    </td>
 	                    <td class="d-flex justify-content-center align-items-center gap-2">
-		                    <form action="ServletCliente" method="post">
+	                    
+		                    <form action="ServletProvincia" method="post">
 		                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
 		                            <input type="submit" value="Modificar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">
 		                    </form>

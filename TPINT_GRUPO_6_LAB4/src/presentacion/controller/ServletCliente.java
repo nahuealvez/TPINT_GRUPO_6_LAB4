@@ -121,13 +121,14 @@ public class ServletCliente extends HttpServlet {
 		
 		if(request.getParameter("btnModificarCliente")!= null)
 		{
-			String aux= request.getParameter("idCliente").toString();
-			System.out.println(aux);
-			int id = Integer.parseInt(request.getParameter("idCliente").toString());
+			int idCliente = (int) request.getAttribute("idCliente");
+		    ArrayList<Provincia> provincias = (ArrayList<Provincia>) request.getAttribute("provincias");
 			
 			ClienteNegocio negC = new ClienteNegImpl();
-			Cliente cliente = new Cliente();
-			//cliente= negC.
+			Cliente cliente = negC.listarClienteXId(idCliente);
+
+			request.setAttribute("clienteAModificar", cliente);
+			request.setAttribute("provincias", provincias);
 			
 			request.getRequestDispatcher("/ModificarCliente.jsp").forward(request, response);
 		}

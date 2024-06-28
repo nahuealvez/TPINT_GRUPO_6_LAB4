@@ -43,6 +43,11 @@ public class ClienteNegImpl implements ClienteNegocio{
 	}
 
 	@Override
+	public Cliente listarClienteXId(int idCliente) {
+		return cDao.listarClienteXId(idCliente);
+	}
+	
+	@Override
 	public boolean actualizarEstadoCliente(Cliente cliente) {
 		boolean actualizacionExitosa = false;
 		
@@ -72,6 +77,7 @@ public class ClienteNegImpl implements ClienteNegocio{
 	    }
 	    return clienteModificado;
 	}
+
 
 
 }
