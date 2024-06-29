@@ -70,6 +70,7 @@ public class ClienteNegImpl implements ClienteNegocio{
 	            clienteModificado = cDao.update(cliente);
 	        } else {
 	        	//POSIBLE MEJORA AGREGANDO UNA EXCEPCION PARTICULAR
+	        	
 	            System.out.println("El DNI ya est� registrado para otro cliente.");
 	        }
 	    } catch (Exception e) {
