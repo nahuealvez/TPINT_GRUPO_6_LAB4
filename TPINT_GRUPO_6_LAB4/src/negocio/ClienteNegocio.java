@@ -10,4 +10,5 @@ public interface ClienteNegocio {
 	public Cliente listarClienteXId(int idCliente);
 	public boolean modificarCliente (Cliente cliente);
 	public boolean actualizarEstadoCliente (Cliente cliente);
+	public Cliente buscarClienteXDNI(String dni);
 }

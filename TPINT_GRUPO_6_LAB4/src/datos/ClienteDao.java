@@ -12,4 +12,5 @@ public interface ClienteDao {
 	public boolean update (Cliente cliente);
 	public boolean existeDni (String dni);
 	public boolean existeDni (String dni, int idUsuario);
+	public Cliente buscarClienteXDNI(String dni);
 }
