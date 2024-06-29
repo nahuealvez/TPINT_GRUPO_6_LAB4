@@ -25,7 +25,7 @@
 	            if (idProvincia) {
 	                $.ajax({
 	                    type: 'GET',
-	                    url: 'ServletLocalidad', // Cambia esto a la URL correcta de tu servlet
+	                    url: 'ServletLocalidad',
 	                    data: { accion: 'agregar', idProvincia: idProvincia },
 	                    success: function(response) {
 	                        $('#ddlLocalidad').html(response);

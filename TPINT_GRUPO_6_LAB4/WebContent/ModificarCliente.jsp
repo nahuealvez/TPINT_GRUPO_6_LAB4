@@ -22,24 +22,23 @@
 	
 	<script>
 	    $(document).ready(function() {
-	        $('#ddlProvincia').change(function() {
-	            var idProvincia = $(this).val();
-	            if (idProvincia) {
-	                $.ajax({
-	                    type: 'GET',
-	                    url: 'ServletLocalidad', // Cambia esto a la URL correcta de tu servlet
-	                    data: { idProvincia: idProvincia },
-	                    success: function(response) {
-	                        $('#ddlLocalidad').html(response);
-	                    },
-	                    error: function() {
-	                        alert('Error al cargar localidades');
-	                    }
-	                });
-	            } else {
-	                $('#ddlLocalidad').html('<option selected disabled value="">Seleccione Localidad</option>');
-	            }
-	        });
+            var idProvincia = $('#ddlProvincia').val();
+            var idLocalidadSeleccionada = $('#idLocalidadSeleccionada').val();
+            if (idProvincia) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'ServletLocalidad',
+                    data: { accion: 'modificar', idProvincia: idProvincia, idLocalidadSeleccionada: idLocalidadSeleccionada, },
+                    success: function(response) {
+                        $('#ddlLocalidad').html(response);
+                    },
+                    error: function() {
+                        alert('Error al cargar localidades');
+                    }
+                });
+            } else {
+                $('#ddlLocalidad').html('<option selected disabled value="">Seleccione Localidad</option>');
+            }
 	    });
 	</script>
 
@@ -148,6 +147,7 @@
                 </select>
             </div>
             <div class="col-md-6 position-relative">
+            	<input type="hidden" id="idLocalidadSeleccionada" value="<%= cliente.getLocalidad().getId() %>" />
                 <label for="ddlLocalidad">Localidad:</label>
                 <select class="form-select form-select-sm" 
                 id="ddlLocalidad" 
