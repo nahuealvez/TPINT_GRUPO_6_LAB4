@@ -58,12 +58,14 @@ CREATE TABLE cuentas(
     idCliente INT NOT NULL,
     fechaCreacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     idTipoCuenta INT NOT NULL,
-    cbu VARCHAR(21) NOT NULL,
+    cbu VARCHAR(22) UNIQUE NOT NULL,
     saldo DECIMAL(10,2) NOT NULL,
     estado BIT NOT NULL,
     FOREIGN KEY (idCliente) REFERENCES clientes(id),
 	FOREIGN KEY (idTipoCuenta) REFERENCES tiposCuentas(id)
 );
+
+ALTER TABLE cuentas AUTO_INCREMENT = 100000;
 
 CREATE TABLE prestamos(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2535,4 +2537,4 @@ VALUES
 	(2382, 25, 'Yerba Buena (S)');
     
 INSERT INTO usuarios (idTipoUsuario, usuario, contrasenia, estado)
-VALUES (1, admin, admin, 1);
+VALUES (1, 'admin', 'admin', 1);
