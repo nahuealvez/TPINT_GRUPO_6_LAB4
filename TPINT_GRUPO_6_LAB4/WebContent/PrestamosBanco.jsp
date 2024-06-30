@@ -2,8 +2,17 @@
 
 	<h3>Préstamos</h3>
 	<div class="card">
-	  <div class="card-header d-flex justify-content-end">
-	  	<a class="btn btn-primary" href="ServletProvincia?cargarCampos=1.jsp">Agregar</a>
+	  <div class="card-header d-flex justify-content-start gap-2">
+	  	<div>
+	  		<select class="form-select col-sm-3">
+		  		<option selected>Seleccionar Estado</option>
+	      		<option value="">Pendiente</option>
+	      		<option value="1">Aprobado</option>
+	      		<option value="0">Rechazado</option>
+	  		</select>
+	  	</div>
+	  	<a class="btn btn-primary" href="#">Filtrar</a>
+	  	<a class="btn btn-dark" href="#">Quitar filtros</a>
 	  </div>
 	  <div class="card-body">
 	    <table id="tablaPrestamosBanco" class="table table-striped" style="width:100%">
