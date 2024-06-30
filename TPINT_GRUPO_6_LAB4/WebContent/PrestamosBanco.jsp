@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<h3>Préstamos</h3>
+	<h3>Préstamos</h3>
 	<div class="card">
 	  <div class="card-header d-flex justify-content-end">
 	  	<a class="btn btn-primary" href="ServletProvincia?cargarCampos=1.jsp">Agregar</a>
