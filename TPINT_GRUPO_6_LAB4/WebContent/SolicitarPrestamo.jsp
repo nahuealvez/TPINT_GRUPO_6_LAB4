@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-4">
             	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
-                <button class="btn btn-success btn-sm">Solicitar</button>
+                <button class="btn btn-primary btn-sm">Solicitar</button>
                 <button class="btn btn-success btn-sm">Confirmar</button>
             </div>
     </div>
