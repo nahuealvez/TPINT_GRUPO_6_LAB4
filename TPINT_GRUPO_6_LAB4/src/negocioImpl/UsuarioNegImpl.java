@@ -21,5 +21,10 @@ public class UsuarioNegImpl implements UsuarioNegocio {
 		return usuarioDao.verificarUsuario(usuario, pass);
 	}
 
+	@Override
+	public boolean actualizarContraseniaUsuario(int idUsurio, String contrasenia) {
+		return usuarioDao.actualizarContraseniaUsuario(idUsurio, contrasenia);
+
+	}
 
 }

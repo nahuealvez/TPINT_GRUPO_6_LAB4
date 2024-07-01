@@ -4,6 +4,24 @@
 <%@ page import="java.util.ArrayList" %>
 
 <%@ include file="Header.jsp" %>
+<script >
+	//Para validar que las contraseñas coincidan antes de enviar el formulario
+	function validarContrasenias() {
+    	var clave = document.getElementById("txtClave").value;
+    	var validarClave = document.getElementById("txtValidarClave").value;
+    		if (clave !== validarClave) 
+    		{
+        		alert("Las contraseñas no coinciden. Por favor, inténtelo de nuevo.");
+        	return false;
+    		}
+    return true;
+	}
+	// limitar fecha maxima.
+	document.addEventListener('DOMContentLoaded', (event) => {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('txtFechaNacimiento').setAttribute('max', today);
+	});
+</script>
 
 	<%	
 		ArrayList<Provincia> provincias = null;
@@ -44,7 +62,7 @@
     <div class="container mt-2 p-1">
         <h3 class="mb-3">Agregar cliente</h2>
         <%--  Inicio de controles  --%>
-        <form class="row g-2 needs-validation" action="ServletCliente" method="get" novalidate>
+        <form class="row g-2 needs-validation" action="ServletCliente" method="get" onsubmit="return validarContrasenias()" novalidate>
             <div class="col-md-6 position-relative">
                 <label for="txtDni">Dni:</label>
                 <input type="text" 
@@ -100,6 +118,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtFechaNacimiento" 
                 	name="txtFechaNacimiento"
+                	min="1910-01-01"
                 	placeholder="Ingrese Fecha de nacimiento"
                 required>
             </div>
@@ -202,6 +221,8 @@
                 required>
             </div>
             <div class="col-md-6 position-relative">
+        	</div>
+            <div class="col-md-6 position-relative">
                 <label for="txtClave">Clave:</label>
                 <input type="text" 
                 	class="form-control 
@@ -213,6 +234,19 @@
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
                 required>
+            </div>
+            <div class="col-md-6 position-relative">
+             	<label for="txtValidarClave">Validar Clave:</label>
+            	<input type="text" 
+                	class="form-control 
+                	form-control-sm" 
+                	id="txtValidarClave" 
+                	name="txtValidarClave" 
+                	minlength="8" 
+                	maxlength="14" 
+                	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
+                	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
+            	required>
             </div>
             <div class="col-md-6 mt-3">
             	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
