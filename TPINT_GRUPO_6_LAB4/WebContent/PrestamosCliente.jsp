@@ -3,7 +3,7 @@
 	<h3>Préstamos</h3>
 	<div class="card">
 	  <div class="card-header d-flex justify-content-end">
-	  	<a class="btn btn-primary" href="ServletProvincia?cargarCampos=1.jsp">Solicitar</a>
+	  	<a class="btn btn-primary" href="SolicitarPrestamo.jsp">Solicitar</a>
 	  </div>
 	  <div class="card-body">
 	    <table id="tablaPrestamosBanco" class="table table-striped" style="width:100%">
