@@ -43,6 +43,7 @@ HttpSession sessionLogueada = request.getSession(false);
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
+                    <a class="nav-link p-0" href="Transferencias.jsp">Transferencias</a>
                 </div>
             </div>
 	        <div class="dropdown d-flex align-items-center gap-3">

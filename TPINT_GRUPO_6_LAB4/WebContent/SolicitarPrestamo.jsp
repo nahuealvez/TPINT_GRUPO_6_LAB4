@@ -47,6 +47,7 @@
             	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
                 <button class="btn btn-primary btn-sm">Solicitar</button>
                 <button class="btn btn-success btn-sm">Confirmar</button>
+                <a class="btn btn-danger btn-sm" href="Index.jsp">Cancelar</a>
             </div>
     </div>
 
