@@ -9,8 +9,8 @@ public class Conexion {
 	private Connection connection;
 	
 	private String bd = "jdbc:mysql://localhost:3306/piggybank";
-	private String usuario = "root";
-	private String contrasenia = "root";
+	private String usuario = "admin";
+	private String contrasenia = "admin";
 	
 	private Conexion() {
 		try {

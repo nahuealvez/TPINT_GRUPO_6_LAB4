@@ -15,6 +15,10 @@ body, html {
 	height: 100%;	
 }
 
+h2 {
+	font-size: 28px; 
+}
+
 /* Login */
 
 .body-login {
