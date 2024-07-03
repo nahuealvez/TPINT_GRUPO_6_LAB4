@@ -83,6 +83,15 @@ CREATE TABLE prestamos(
     FOREIGN KEY (idCuenta) REFERENCES cuentas(id)
 );
 
+CREATE TABLE cuotas(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idPrestamo INT NOT NULL,
+    nroCuota INT NOT NULL,
+    fechaVencimiento DATE NOT NULL,
+    estadoPago BIT NOT NULL,
+    idMovimiento INT NOT NULL
+);
+
 CREATE TABLE tiposMovimientos(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     descripcion VARCHAR(20) NOT NULL
