@@ -27,4 +27,9 @@ public class UsuarioNegImpl implements UsuarioNegocio {
 
 	}
 
+	@Override
+	public boolean actualizarEstadoUsuario(int idUsuario, boolean nuevoEstado) {
+		return usuarioDao.actualizarEstadoUsuario(idUsuario, nuevoEstado);
+	}
+
 }
