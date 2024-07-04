@@ -46,12 +46,14 @@ public class ServletCuenta extends HttpServlet {
 					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
 
 					if (listaDeCuentas.size() < 3) {
+						String cbu= cuentaNeg.nuevoCbu();
+						request.setAttribute("cbuGenerado", cbu);
 						request.setAttribute("clienteServlet", clienteServlet);
 						request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
 					} else {
 						request.setAttribute("listaDeCuentas", listaDeCuentas);
 						request.setAttribute("clienteServlet", clienteServlet);
-						request.setAttribute("error", "El cliente ya tiene tres o más cuentas.");
+						request.setAttribute("error", "El cliente ya tiene tres o mï¿½s cuentas.");
 						request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
 					}
 				} else {
@@ -82,8 +84,7 @@ public class ServletCuenta extends HttpServlet {
 				TipoCuenta tipodecuenta = new TipoCuenta();
 				tipodecuenta.setId(Integer.parseInt(request.getParameter("ddlTipoCuenta")));
 				
-				String cbu = cuentaNeg.nuevoCbu();
-				cuentagregada.setCbu(cbu);
+				
 
 				cuentagregada.setCliente(cliente);
 				cuentagregada.setFechaCreacion(LocalDateTime.now());
@@ -156,7 +157,7 @@ public class ServletCuenta extends HttpServlet {
 
 			} catch (NullPointerException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "Ocurrió un error al cambiar el estado de la cuenta.");
+				request.setAttribute("error", "Ocurriï¿½ un error al cambiar el estado de la cuenta.");
 				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 			}
 

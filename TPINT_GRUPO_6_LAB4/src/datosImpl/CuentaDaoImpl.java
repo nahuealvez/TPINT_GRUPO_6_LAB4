@@ -35,9 +35,6 @@ public class CuentaDaoImpl implements CuentaDao {
 			TipoCuenta tipocuentacreada= new TipoCuenta();
 			tipocuentacreada.setId(cuenta.getTipoCuenta().getId());
 			
-			String cbu = nuevoCbu();
-			cuenta.setCbu(cbu);
-			
 			statement.setInt(1,cuenta.getCliente().getIdCliente());
 			statement.setTimestamp(2, Timestamp.valueOf(cuenta.getFechaCreacion()));
 			statement.setInt(3,tipocuentacreada.getId());
