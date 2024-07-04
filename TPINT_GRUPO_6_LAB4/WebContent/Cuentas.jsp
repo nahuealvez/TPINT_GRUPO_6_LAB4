@@ -23,7 +23,7 @@
     if (clienteServlet != null) { %>
     
    <div class="card-header d-flex justify-content-end">
-     <a class="btn btn-primary" href="ServletCuenta?opcion=agregarCuenta&dniCliente=<%= clienteServlet.getDni() %>">Agregar</a>
+     <a class="btn btn-primary" href="ServletCuenta?opcion=agregar&dniCliente=<%= clienteServlet.getDni() %>">Agregar</a>
    </div>
       
    <div class="alert alert-success" role="alert">
