@@ -21,6 +21,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String cuentasxCliente = "  SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ?";
 	private static final String actualizarEstado = "UPDATE cuentas set estado=? WHERE id=?";
 	private static final String verificarCbu = "SELECT 1 FROM cuentas where cbu=?";
+	private static final String verificarEstado= "SELECT estado FROM cuentas WHERE id=?";
 	
 	@Override
 	public boolean insert(Cuenta cuenta) {
@@ -156,6 +157,41 @@ public class CuentaDaoImpl implements CuentaDao {
 			cbu = cbuRandom.toString();
 		}while(cuentaDao.verificarCbu(cbu));
 		return cbu;
+	}
+
+	@Override
+	public boolean verificarEstado(int idCuenta) {
+		
+		PreparedStatement statement;
+		ResultSet rs;
+		try {
+		Connection conexion= Conexion.getConexion().getSQLConexion();
+		statement= conexion.prepareStatement(verificarEstado);
+		statement.setInt(1, idCuenta);
+		rs= statement.executeQuery();
+		if(rs.next()) {
+			return rs.getBoolean("estado");
+			
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
+	@Override
+	public int contarCuentas(List<Cuenta> listaCuentas) {
+		
+		CuentaDao cuentaux=new CuentaDaoImpl();
+		  int aux = 0;
+		    for (Cuenta cuenta : listaCuentas) {
+		        if ( cuentaux.verificarEstado(cuenta.getId())==true) {
+		            aux++;
+		        }
+		    }
+		
+		return aux;
 	}
 
 }

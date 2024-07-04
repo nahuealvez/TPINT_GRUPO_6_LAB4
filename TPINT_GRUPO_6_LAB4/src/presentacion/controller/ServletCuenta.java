@@ -23,7 +23,7 @@ import negocioImpl.CuentaNegocioImpl;
 public class ServletCuenta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
+	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();		
 	private ClienteNegocio clienteNeg = new ClienteNegImpl();
 
 	public ServletCuenta() {
@@ -38,14 +38,15 @@ public class ServletCuenta extends HttpServlet {
 		if ("agregar".equals(opcion)) {
 			try {
 				String dni = request.getParameter("dniCliente");
-				System.out.println("DNI recibido en doGet: " + dni);
+				
 
 				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
-
+				
 				if (clienteServlet != null) {
+					System.out.println("entre al primer if");
 					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-
-					if (listaDeCuentas.size() < 3) {
+				
+					if (cuentaNeg.contarCuentas(listaDeCuentas)<3 ) {
 						String cbu= cuentaNeg.nuevoCbu();
 						request.setAttribute("cbuGenerado", cbu);
 						request.setAttribute("clienteServlet", clienteServlet);

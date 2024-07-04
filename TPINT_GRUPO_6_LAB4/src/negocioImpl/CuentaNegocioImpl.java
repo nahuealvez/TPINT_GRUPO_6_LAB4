@@ -42,4 +42,16 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		return cuentaDao.nuevoCbu();
 	}
 
+	@Override
+	public boolean verificarEstado(int idCuenta) {
+		
+		return cuentaDao.verificarEstado(idCuenta);
+	}
+
+	@Override
+	public int contarCuentas(List<Cuenta> listaCuentas) {
+		
+		return cuentaDao.contarCuentas(listaCuentas);
+	}
+
 }
