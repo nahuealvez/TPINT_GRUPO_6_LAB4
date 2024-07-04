@@ -12,13 +12,16 @@ import javax.servlet.http.HttpSession;
 
 import Excepciones.ErrorUsuarioException;
 import dominio.Usuario;
+import negocio.CuentaNegocio;
 import negocio.UsuarioNegocio;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.UsuarioNegImpl;
 
 @WebServlet("/ServletLogin")
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioNegocio usuarioNeg = new UsuarioNegImpl();
+	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
    
     public ServletLogin() {
         super();
@@ -43,12 +46,21 @@ public class ServletLogin extends HttpServlet {
 									
 			try {
 				user = usuarioNeg.verificarUsuario(usuario, contrasenia);
-								
-					session.setAttribute("sessionUsuario", user);						
+				
+				session.setAttribute("sessionUsuario", user);		
+				
+				// para enviar datos del cliente y de la cuenta a la sesión
+				if (user.getTipoUsuario().getId() == 2) {
+					int loginCliente = 1;
+					request.setAttribute("loginCliente", loginCliente);
+					RequestDispatcher rd = request.getRequestDispatcher("/ServletIndex");
+				    rd.forward(request, response);
+				}
+				else {
 					response.sendRedirect("Index.jsp");
-
-			
-			}catch(ErrorUsuarioException e) {
+				}			
+			}
+			catch(ErrorUsuarioException e) {
 				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
 				System.out.println(e.getMessage());
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");

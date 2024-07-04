@@ -142,6 +142,13 @@ public class Cliente extends Usuario{
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+	
+	public String getNombreApellido() {
+		String[] nombre = this.nombre.split(" ");
+		String[] apellido = this.apellido.split(" ");
+		
+		return nombre[0] + " " + apellido[0];
+	}
 
 	@Override
 	public String toString() {

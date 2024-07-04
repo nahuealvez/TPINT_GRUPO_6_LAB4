@@ -24,6 +24,7 @@ public class ClienteDaoImpl implements ClienteDao{
 	private static final String existeDniConsulta = "SELECT COUNT(*) from clientes where dni = ?";
 	private static final String existeDniConsultaModificar = "SELECT COUNT(*) FROM clientes WHERE dni = ? AND idUsuario != ?";
 	private static final String buscarClientexDni = "SELECT c.id AS Id, c.dni AS DNI, c.cuil AS CUIL, c.nombre AS Nombre, c.apellido AS Apellido, c.sexo AS Sexo, c.nacionalidad AS Nacionalidad, c.fechaNacimiento AS FechaNacimiento, c.idProvincia AS IdProvincia,  p.nombre AS NombreProvincia, c.idLocalidad AS IdLocalidad, l.nombre AS NombreLocalidad, c.direccion AS Direccion,  c.email AS Email, c.telefono AS Telefono, c.idUsuario AS IdUsuario, u.usuario AS NombreUsuario, u.idTipoUsuario AS IdTipoUsuario,  t.descripcion AS DescripcionTipoUsuario, u.estado AS Estado FROM clientes c  INNER JOIN usuarios u ON c.idUsuario = u.id  iNNER JOIN tiposUsuarios t ON u.idTipoUsuario = t.id INNER JOIN localidades l ON c.idLocalidad = l.id  INNER JOIN provincias p ON c.idProvincia = p.id  WHERE c.dni = ?";
+	private static final String buscarClientexIdUsuario = "SELECT c.id AS Id, c.dni AS DNI, c.cuil AS CUIL, c.nombre AS Nombre, c.apellido AS Apellido, c.sexo AS Sexo, c.nacionalidad AS Nacionalidad, c.fechaNacimiento AS FechaNacimiento, c.idProvincia AS IdProvincia,  p.nombre AS NombreProvincia, c.idLocalidad AS IdLocalidad, l.nombre AS NombreLocalidad, c.direccion AS Direccion,  c.email AS Email, c.telefono AS Telefono, c.idUsuario AS IdUsuario, u.usuario AS NombreUsuario, u.idTipoUsuario AS IdTipoUsuario,  t.descripcion AS DescripcionTipoUsuario, u.estado AS Estado FROM clientes c  INNER JOIN usuarios u ON c.idUsuario = u.id  iNNER JOIN tiposUsuarios t ON u.idTipoUsuario = t.id INNER JOIN localidades l ON c.idLocalidad = l.id  INNER JOIN provincias p ON c.idProvincia = p.id  WHERE c.idUsuario = ?";
 	
 	@Override
 	public boolean insert(Cliente cliente) {
@@ -290,6 +291,70 @@ public class ClienteDaoImpl implements ClienteDao{
 			
 			e.printStackTrace();			
 		}
+		return cliente;
+	}
+
+	@Override
+	public Cliente buscarClienteXidUsuario(int idUsuario) throws SQLException {
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		Cliente cliente= null;
+		
+		try {
+			statement= conexion.prepareStatement(buscarClientexIdUsuario);
+			statement.setInt(1, idUsuario);
+			rs= statement.executeQuery();
+			
+			if(rs.next()) {
+				cliente = new Cliente();
+				
+				//SE CREAN LOS OBJETOS QUE COMPONEN AL CLIENTE
+				
+				// TIPO USUARIO
+				TipoUsuario tipoUsuario = new TipoUsuario();
+				tipoUsuario.setId(rs.getInt("idTipoUsuario"));
+				tipoUsuario.setDescripcion(rs.getString("DescripcionTipoUsuario"));
+				
+				//PROVINCIA
+				Provincia provincia = new Provincia();
+				provincia.setId(rs.getInt("IdProvincia"));
+				provincia.setNombre(rs.getString("NombreProvincia"));
+				
+				//LOCALIDAD
+				Localidad localidad = new Localidad();
+				localidad.setId(rs.getInt("IdLocalidad"));
+				localidad.setNombre(rs.getString("NombreLocalidad"));
+				localidad.setProvincia(provincia);
+				
+				cliente.setIdCliente(rs.getInt("Id"));
+				cliente.setDni(rs.getString("DNI"));
+				cliente.setCuil(rs.getString("CUIL"));
+				cliente.setNombre(rs.getString("Nombre"));
+				cliente.setApellido(rs.getString("Apellido"));
+				cliente.setSexo(rs.getString("Sexo").charAt(0));
+				cliente.setNacionalidad(rs.getString("Nacionalidad"));
+				cliente.setFechaNacimiento(rs.getDate("FechaNacimiento").toLocalDate());
+				cliente.setProvincia(provincia);
+				cliente.setLocalidad(localidad);
+				cliente.setDireccion(rs.getString("Direccion"));
+				cliente.setEmail(rs.getString("Email"));
+				cliente.setTelefono(rs.getString("Telefono"));
+				cliente.setId(rs.getInt("IdUsuario"));
+				cliente.setUsuario(rs.getString("NombreUsuario"));
+				cliente.setTipoUsuario(tipoUsuario);
+				cliente.setEstado(rs.getBoolean("Estado"));	
+			}
+			
+		}
+		catch(SQLException ex) {
+			throw ex;
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
 		return cliente;
 	}
 

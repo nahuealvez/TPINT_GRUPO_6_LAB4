@@ -1,5 +1,6 @@
 package datos;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dominio.Cliente;
@@ -13,5 +14,5 @@ public interface ClienteDao {
 	public boolean existeDni (String dni);
 	public boolean existeDni (String dni, int idUsuario);
 	public Cliente buscarClienteXDNI(String dni);
-	
+	public Cliente buscarClienteXidUsuario(int idUsuario) throws SQLException;
 }

@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dominio.Cliente;
@@ -11,5 +12,5 @@ public interface ClienteNegocio {
 	public boolean modificarCliente (Cliente cliente);
 	public boolean actualizarEstadoCliente (Cliente cliente);
 	public Cliente buscarClienteXDNI(String dni);
-	
+	public Cliente buscarClienteXidUsuario(int idUsuario) throws SQLException;
 }
