@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dominio.Cliente"%>
+<%@ page import="dominio.Cuenta"%>
 <%@ include file="Header.jsp"%>
 
 <div class="container mt-2 p-1">
@@ -35,10 +36,11 @@
                     </select>
                 </div>
 
-                <div class="col-md-6 position-relative">
-                    <label for="txtCbu">Cbu:</label>
-                    <input type="text" class="form-control form-control-sm" id="txtCbu" name="txtCbu" minlength="22" maxlength="22" placeholder="cbu" required>
-                </div>
+<div class="col-md-6 position-relative">
+    <label for="txtCbu">Cbu:</label>
+    <input type="text" class="form-control form-control-sm" id="txtCbu" name="txtCbu" minlength="22" maxlength="22" readonly
+           value="<%= request.getAttribute("Cuentacreada") != null ? ((dominio.Cuenta) request.getAttribute("Cuentacreada")).getCbu() : "" %>">
+</div>
 
                 <div class="col-md-6 position-relative">
                     <label for="txtSaldo">Saldo:</label>

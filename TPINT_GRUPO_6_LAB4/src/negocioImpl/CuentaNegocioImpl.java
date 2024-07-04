@@ -24,4 +24,22 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		return cuentaDao.cuentasXCliente(idCliente);
 	}
 
+	@Override
+	public boolean actualizarEstado(int idCuenta, boolean estado) {
+		
+		return cuentaDao.actualizarEstado(idCuenta, estado);
+	}
+
+	@Override
+	public boolean verificarCbu(String cbu) {
+		
+		return cuentaDao.verificarCbu(cbu);
+	}
+
+	@Override
+	public String nuevoCbu() {
+		
+		return cuentaDao.nuevoCbu();
+	}
+
 }

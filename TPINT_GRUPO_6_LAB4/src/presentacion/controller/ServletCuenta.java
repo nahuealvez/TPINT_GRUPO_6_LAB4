@@ -32,42 +32,38 @@ public class ServletCuenta extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String opcion = request.getParameter("opcion");
-        
 
-        if ("agregar".equals(opcion)) {
-            System.out.println("Botón Agregar Cuenta presionado en doGet");
-            try {
-                String dni = request.getParameter("dniCliente");
-                System.out.println("DNI recibido en doGet: " + dni);
+		if ("agregar".equals(opcion)) {
+			try {
+				String dni = request.getParameter("dniCliente");
+				System.out.println("DNI recibido en doGet: " + dni);
 
-                Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
+				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
 
-                if (clienteServlet != null) {
-                    List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-                    
+				if (clienteServlet != null) {
+					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
 
-                    if (listaDeCuentas.size() < 3) {
-                        request.setAttribute("clienteServlet", clienteServlet);
-                        request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("listaDeCuentas", listaDeCuentas);
-                        request.setAttribute("clienteServlet", clienteServlet);
-                        request.setAttribute("error", "El cliente ya tiene tres o más cuentas.");
-                        request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("error", "Cliente no encontrado.");
-                    request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                request.setAttribute("error", "Ocurrió un error al buscar el cliente.");
-                request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
-            }
-        }
-    }
+					if (listaDeCuentas.size() < 3) {
+						request.setAttribute("clienteServlet", clienteServlet);
+						request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
+					} else {
+						request.setAttribute("listaDeCuentas", listaDeCuentas);
+						request.setAttribute("clienteServlet", clienteServlet);
+						request.setAttribute("error", "El cliente ya tiene tres o m�s cuentas.");
+						request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
+					}
+				} else {
+					request.setAttribute("error", "Cliente no encontrado.");
+					request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
+			}
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -76,8 +72,8 @@ public class ServletCuenta extends HttpServlet {
 
 		switch (opcion) {
 		case "agregarCuenta":
-			System.out.println("Botón Agregar Cuenta presionado");
 			Cuenta cuentagregada = new Cuenta();
+			
 			try {
 
 				Cliente cliente = new Cliente();
@@ -85,6 +81,9 @@ public class ServletCuenta extends HttpServlet {
 
 				TipoCuenta tipodecuenta = new TipoCuenta();
 				tipodecuenta.setId(Integer.parseInt(request.getParameter("ddlTipoCuenta")));
+				
+				String cbu = cuentaNeg.nuevoCbu();
+				cuentagregada.setCbu(cbu);
 
 				cuentagregada.setCliente(cliente);
 				cuentagregada.setFechaCreacion(LocalDateTime.now());
@@ -105,16 +104,13 @@ public class ServletCuenta extends HttpServlet {
 				}
 			} catch (NullPointerException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "Parámetros nulos recibidos. Verifica los campos ingresados.");
 				request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
 			}
 			break;
 
 		case "buscarCliente":
-			System.out.println("Botón Buscar Cliente presionado");
 
 			String dni = request.getParameter("dniCliente");
-			System.out.println("DNI recibido en doPost: " + dni);
 
 			try {
 				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
@@ -137,12 +133,37 @@ public class ServletCuenta extends HttpServlet {
 			}
 			break;
 
-		case "desactivarCuenta":
-			// Implement the logic for deactivating an account if needed.
+		case "cambiarEstado":
+
+			int idCuenta = Integer.parseInt(request.getParameter("idCuenta"));
+			boolean estado = !Boolean.parseBoolean(request.getParameter("estado"));
+			
+
+			try {
+
+				boolean estadoActualizado = cuentaNeg.actualizarEstado(idCuenta, estado);
+
+				if (estadoActualizado) {
+					if (estado == false) {
+						request.setAttribute("mensaje", "Cuenta desactivada");
+					} else {
+						request.setAttribute("mensaje", "Cuenta reactivada");
+					}
+				}else {
+					request.getRequestDispatcher("ServletCuenta?opcion=buscarCliente&dniCliente=" + request.getParameter("dniCliente")).forward(request, response);
+				}
+				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				request.setAttribute("error", "Ocurri� un error al cambiar el estado de la cuenta.");
+				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+			}
+
 			break;
 
 		default:
-			// Handle default case if needed.
+
 			break;
 		}
 	}
