@@ -1,5 +1,7 @@
 package negocioImpl;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import datos.CuentaDao;
@@ -54,4 +56,8 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 		return cuentaDao.contarCuentas(listaCuentas);
 	}
 
+	@Override
+	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException {
+		return cuentaDao.cuentasPorClienteActivas(idCliente);
+	}
 }

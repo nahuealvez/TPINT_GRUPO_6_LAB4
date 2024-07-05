@@ -48,7 +48,7 @@ public class ServletIndex extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getAttribute("loginCliente") != null) {
 			Cliente cliente = new Cliente();
-			ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
+			ArrayList<Cuenta> cuentasPorCliente = new ArrayList<Cuenta>();
 			ClienteNegocio clienteNegocio = new ClienteNegImpl();
 			CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
 			
@@ -59,7 +59,8 @@ public class ServletIndex extends HttpServlet {
 			    usuarioLogueado = (Usuario)sessionLogueada.getAttribute("sessionUsuario");
 			    try {
 			    	cliente = clienteNegocio.buscarClienteXidUsuario(usuarioLogueado.getId());
-			    	cuentas = (ArrayList<Cuenta>) cuentaNegocio.cuentasXCliente(cliente.getId());
+			    	int id = cliente.getId();
+			    	cuentasPorCliente = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(id);
 			    }
 			    catch (SQLException ex) {
 			    	ex.printStackTrace();
@@ -69,7 +70,7 @@ public class ServletIndex extends HttpServlet {
 			    }
 			    
 			    sessionLogueada.setAttribute("cliente", cliente);
-			    request.setAttribute("cuentas", cuentas);
+			    request.setAttribute("cuentasPorCliente", cuentasPorCliente);
 		    }
 		    
 		    RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");

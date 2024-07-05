@@ -1,5 +1,7 @@
 package datos;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Cuenta;
@@ -13,4 +15,5 @@ public interface CuentaDao {
 	public String nuevoCbu();
 	public boolean verificarEstado (int idCuenta);
 	public int contarCuentas (List<Cuenta> listaCuentas);
+	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException;
 }

@@ -38,6 +38,9 @@ public class Cliente extends Usuario{
 		super();
 	}
 
+	public int getId() {
+		return idCliente;
+	}
 	
 	public int getIdCliente() {
 		return idCliente;

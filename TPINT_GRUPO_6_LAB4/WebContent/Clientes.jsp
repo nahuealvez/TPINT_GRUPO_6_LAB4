@@ -63,21 +63,21 @@
 	                    <td><%= cli.getNombre() %></td>
 	                    <td><%= cli.getApellido() %></td>
 	                    <td>
-	                    	<%= cliente.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
+	                    	<%= cli.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
 	                    </td>
 	                    <td class="d-flex justify-content-center align-items-center gap-2">
 	                    
 		                    <form action="ServletProvincia" method="post">
-		                    		<input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
+		                    		<input type="hidden" name="idCliente" value="<%= cli.getIdCliente() %>">
 		                            <input type="submit" value="Modificar" id="btnModificarCliente"  name="btnModificarCliente"class="btn btn-outline-primary btn-sm">
 		                    </form>
 		                      <form action="ServletCliente" method="post">
-                            <% if (cliente.getEstado()) { %>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#mdlDesactivarCliente<%= cliente.getIdCliente() %>">
+                            <% if (cli.getEstado()) { %>
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#mdlDesactivarCliente<%= cli.getIdCliente() %>">
                                 Desactivar
                             </button>
                             <!-- Modal para Desactivar -->
-                             <div class="modal fade" id="mdlDesactivarCliente<%= cliente.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                             <div class="modal fade" id="mdlDesactivarCliente<%= cli.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <form action="ServletCliente" method="post">
-                                                <input type="hidden" name="idClienteDesactivar" value="<%= cliente.getId() %>">    
+                                                <input type="hidden" name="idClienteDesactivar" value="<%= cli.getId() %>">    
                                                 <input type="submit" value="Desactivar" class="btn btn-danger" id="btnDesactivarCliente" name="btnDesactivarCliente">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                             </form>
@@ -98,11 +98,11 @@
                                 </div>
                             </div>
                             <% } else { %>
-                            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#mdlActivarCliente<%= cliente.getIdCliente() %>">
+                            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#mdlActivarCliente<%= cli.getIdCliente() %>">
                                 Activar.......
                             </button>
                             <!-- Modal para Activar -->
-                            <div class="modal fade" id="mdlActivarCliente<%= cliente.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="mdlActivarCliente<%= cli.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -114,7 +114,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <form action="ServletCliente" method="post">
-                                                <input type="hidden" name="idClienteActivar" value="<%= cliente.getId() %>">                                             
+                                                <input type="hidden" name="idClienteActivar" value="<%= cli.getId() %>">                                             
                                                 <input type="submit" value="Activar" class="btn btn-success" id="btnActivarCliente" name="btnActivarCliente">                                                
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                             </form>

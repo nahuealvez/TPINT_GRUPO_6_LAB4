@@ -194,4 +194,46 @@ public class CuentaDaoImpl implements CuentaDao {
 		return aux;
 	}
 
+	@Override
+	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException {
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		ArrayList<Cuenta> listaCuentas = new ArrayList<Cuenta> (); 
+		
+		try {
+			statement= conexion.prepareStatement(cuentasxCliente);
+			statement.setInt(1, idCliente);
+			rs=statement.executeQuery();
+			
+			while(rs.next()) {
+				Cuenta cuenta = new Cuenta();
+				Cliente cliente = new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+				
+				TipoCuenta tipoCuenta= new TipoCuenta();
+				tipoCuenta.setDescripcion(rs.getString("tipoCuenta"));
+				
+				cuenta.setId(rs.getInt("id"));
+				cuenta.setCliente(cliente);
+				cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+				cuenta.setTipoCuenta(tipoCuenta);
+				cuenta.setCbu(rs.getString("cbu"));
+				cuenta.setSaldo(rs.getBigDecimal("saldo"));
+				cuenta.setEstado(rs.getBoolean("estado"));
+				
+				if (cuenta.isEstado() == true) {
+					listaCuentas.add(cuenta);
+				}
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+			
+		return listaCuentas;
+	}
 }
