@@ -2,6 +2,12 @@
 
 <%@ include file="Header.jsp" %>
 
+<%	
+		Cliente verCliente = (Cliente) request.getAttribute("verCliente");
+		
+		
+	%>
+
 	<div class="container p-1">
         <h2 class="mb-3">Datos del cliente</h2>
         <div class="row g-2">
@@ -13,7 +19,7 @@
                 	form-control-sm"  
                 	id="txtDni" 
                 	name="txtDni"
-                	value=""
+                	value="<%= verCliente.getDni() %>"
                 	readonly 
                 required>
             </div>
@@ -23,7 +29,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtCuil" 
                 	name="txtCuil"
-                	value="" 
+                	value="<%= verCliente.getCuil() %>"
                 	readonly 
                 required>
             </div>
@@ -33,7 +39,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtNombre" 
                 	name="txtNombre"
-                	value=""                 	
+                	value="<%= verCliente.getNombre() %>"               	
                 	readonly 
                 required>
             </div>
@@ -43,7 +49,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtApellido" 
                 	name="txtApellido"
-                	value=""   
+                	value="<%= verCliente.getApellido() %>"  
                 	readonly 
                 required>
             </div>
@@ -53,7 +59,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtFechaNacimiento" 
                 	name="txtFechaNacimiento"
-                	value=""   
+                	value="<%= verCliente.getFechaNacimiento() %>"   
                 	readonly
                 required>
             </div>
@@ -62,7 +68,7 @@
 			    <input class="form-control form-control-sm" 
 			            id="ddlSexo"  
 			            name="ddlSexo"
-			            value=""
+			            value="<%= verCliente.getSexo() %>" 
 			            readonly
 			            required>
 			</div>    
@@ -102,7 +108,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtDireccion" 
                 	name="txtDireccion"       	
-                	value=""
+                	value="<%= cliente.getDireccion() %>"
                  	readonly 
                  required>
             </div>
@@ -112,7 +118,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtEmail" 
                 	name="txtEmail" 
-                	value=""
+                	value="<%= cliente.getEmail() %>"
                 	readonly  
                 required>
             </div>
@@ -123,7 +129,7 @@
                 	form-control-sm" 
                 	id="txtTelefono" 
                 	name="txtTelefono"
-                	value="" 
+                	value="<%= cliente.getTelefono() %>"
                 	readonly 
                 required>
             </div>
@@ -134,7 +140,7 @@
                 	form-control-sm" 
                 	id="txtUsuario" 
                 	name="txtUsuario"
-                	value=""
+                	value="<%= cliente.getUsuario() %>"
                 	required
                 readonly>
             </div>

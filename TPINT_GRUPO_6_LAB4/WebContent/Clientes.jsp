@@ -54,14 +54,14 @@
 	                listaCliente = new ArrayList<>();
 	            }
 	
-	            for (Cliente cliente : listaCliente) {
+	            for (Cliente cli : listaCliente) {
 	            %>
 	                <tr>
-	                    <td><%= cliente.getIdCliente() %></td>
-	                    <td><%= cliente.getDni() %></td>
-	                    <td><%= cliente.getUsuario() %></td>
-	                    <td><%= cliente.getNombre() %></td>
-	                    <td><%= cliente.getApellido() %></td>
+	                    <td><%= cli.getIdCliente() %></td>
+	                    <td><%= cli.getDni() %></td>
+	                    <td><%= cli.getUsuario() %></td>
+	                    <td><%= cli.getNombre() %></td>
+	                    <td><%= cli.getApellido() %></td>
 	                    <td>
 	                    	<%= cliente.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
 	                    </td>

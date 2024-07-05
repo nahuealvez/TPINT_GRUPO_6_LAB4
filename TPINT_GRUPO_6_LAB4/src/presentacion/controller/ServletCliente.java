@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import dominio.Cliente;
 import dominio.Localidad;
 import dominio.Provincia;
 import dominio.TipoUsuario;
+import dominio.Usuario;
 import negocio.ClienteNegocio;
 import negocio.UsuarioNegocio;
 import negocioImpl.ClienteNegImpl;
@@ -29,14 +31,41 @@ public class ServletCliente extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String paramValue = request.getParameter("Param");
 		
 		if(request.getParameter("btnAgregarCliente")!= null)
 		{
 			eventobtnAgregarCliente(request, response);
 		}
-		if (request.getParameter("Param")!= null ) 
+		if ("1".equals(paramValue))
 		{
 			cargarListaClientes(request, response);
+		}
+		else if ("2".equals(paramValue))
+		{
+			HttpSession session = request.getSession(false); // Obtiene la sesion sin crear una nueva si no existe
+			if (session != null) 
+			{
+				Usuario usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
+				
+			    if (usuarioLogueado != null)
+			    {
+			    	System.out.println("El id es!: " + usuarioLogueado.getId());
+			    	ClienteNegocio negC = new ClienteNegImpl();
+			   
+			    	try 
+			    	{
+			    		Cliente verCliente= negC.buscarClienteXidUsuario(usuarioLogueado.getId());
+			    		request.setAttribute("verCliente", verCliente);
+			    	
+					} 
+			    	catch (Exception e) 
+			    	{
+						// TODO: handle exception
+					}
+			    } 
+			request.getRequestDispatcher("/VerCliente.jsp").forward(request, response);
+			}
 		}
 	}
 

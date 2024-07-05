@@ -64,7 +64,7 @@
 					</svg>
 	          	</a>
 	          	<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" href="#">Ver perfil</a></li>
+				    <li><a class="dropdown-item" href="ServletCliente?Param=2">Ver perfil</a></li>
 				    <li><a class="dropdown-item" href="ServletLogout?action=logout">Cerrar sesión</a></li>
   				</ul>
     		</div>
