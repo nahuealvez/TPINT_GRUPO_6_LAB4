@@ -7,7 +7,7 @@
 <%@ include file="Header.jsp" %>
 
 	<%	
-		Cliente cliente = (Cliente) request.getAttribute("clienteAModificar");
+		Cliente clienteModificar = (Cliente) request.getAttribute("clienteAModificar");
 		ArrayList<Provincia> provincias = null;
 		if (request.getAttribute("provincias") != null) {
 			provincias = (ArrayList<Provincia>)request.getAttribute("provincias");
@@ -62,8 +62,8 @@
         <h3 class="mb-3">Modificar cliente</h2>
         <%--  Inicio de controles  --%>
         <form class="row g-2 needs-validation" action="ServletCliente" method="post" onsubmit="return validarContrasenias();" novalidate>
-        <input type="hidden" id="clienteId" name="clienteId" value="<%= cliente.getIdCliente() %>">
-    	<input type="hidden" id="UsuarioID" name="usuarioId" value="<%= cliente.getId() %>">
+        <input type="hidden" id="clienteId" name="clienteId" value="<%= clienteModificar.getIdCliente() %>">
+    	<input type="hidden" id="UsuarioID" name="usuarioId" value="<%= clienteModificar.getId() %>">
             <div class="col-md-6 position-relative">
                 <label for="txtDni">Dni:</label>
                 <input type="text" 
@@ -72,7 +72,7 @@
                 	pattern="\d+" 
                 	id="txtDni" 
                 	name="txtDni"
-                	value="<%= cliente.getDni() %>"
+                	value="<%= clienteModificar.getDni() %>"
                 	minlength="7" 
                 	maxlength="8" 
                 	placeholder="Ingrese N° de documento" 
@@ -84,7 +84,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtCuil" 
                 	name="txtCuil"
-                	value="<%= cliente.getCuil() %>" 
+                	value="<%= clienteModificar.getCuil() %>" 
                 	pattern="\d+" 
                 	minlength="11" 
                 	maxlength="11" 
@@ -97,7 +97,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtNombre" 
                 	name="txtNombre"
-                	value="<%= cliente.getNombre() %>" 
+                	value="<%= clienteModificar.getNombre() %>" 
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*" 
                 	minlength="1" 
                 	maxlength="45" 
@@ -110,7 +110,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtApellido" 
                 	name="txtApellido"
-                	value="<%= cliente.getApellido() %>"   
+                	value="<%= clienteModificar.getApellido() %>"   
                 	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*"  
                 	minlength="1" maxlength="45" 
                 	placeholder="Ingrese apellido/s" 
@@ -123,7 +123,7 @@
                 	id="txtFechaNacimiento" 
                 	name="txtFechaNacimiento"
                 	min="1910-01-01"
-                	value="<%= cliente.getFechaNacimiento() %>"   
+                	value="<%= clienteModificar.getFechaNacimiento() %>"   
                 	placeholder="Ingrese Fecha de nacimiento"
                 required>
             </div>
@@ -135,9 +135,9 @@
 			            name="ddlSexo"
 			            required>
 			        <option disabled value="">Seleccione su género</option>
-			        <option value="M" <%= cliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
-			        <option value="F" <%= cliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
-			        <option value="X" <%= cliente.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
+			        <option value="M" <%= clienteModificar.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
+			        <option value="F" <%= clienteModificar.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
+			        <option value="X" <%= clienteModificar.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
 			    </select>
 			</div>    
 			<div class="col-md-6 position-relative">
@@ -147,8 +147,8 @@
 			            name="ddlNacionalidad"  
 			            required>
 			        <option disabled value="">Seleccione su Nacionalidad</option>
-			        <option value="Argentina" <%= cliente.getNacionalidad().equals("Argentina") ? "selected" : "" %>>Argentina</option>
-			        <option value="Extranjera" <%= cliente.getNacionalidad().equals("Extranjera") ? "selected" : "" %>>Extranjera</option>
+			        <option value="Argentina" <%= clienteModificar.getNacionalidad().equals("Argentina") ? "selected" : "" %>>Argentina</option>
+			        <option value="Extranjera" <%= clienteModificar.getNacionalidad().equals("Extranjera") ? "selected" : "" %>>Extranjera</option>
 			    </select>
 			</div>
             <div class="col-md-6 position-relative">
@@ -161,12 +161,12 @@
                 required>
                     <option selected disabled value="">Seleccione su Provincia</option>
                       <% for (Provincia provincia : provincias) { %>
-                    	<option value="<%= provincia.getId() %>" <%= provincia.getId() == cliente.getProvincia().getId() ? "selected" : "" %>><%= provincia.getNombre() %></option>
+                    	<option value="<%= provincia.getId() %>" <%= provincia.getId() == clienteModificar.getProvincia().getId() ? "selected" : "" %>><%= provincia.getNombre() %></option>
                     <% } %>
                 </select>
             </div>
             <div class="col-md-6 position-relative">
-            	<input type="hidden" id="idLocalidadSeleccionada" value="<%= cliente.getLocalidad().getId() %>" />
+            	<input type="hidden" id="idLocalidadSeleccionada" value="<%= clienteModificar.getLocalidad().getId() %>" />
                 <label for="ddlLocalidad">Localidad:</label>
                 <select class="form-select form-select-sm" 
                 id="ddlLocalidad" 
@@ -182,7 +182,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtDireccion" 
                 	name="txtDireccion"       	
-                	value="<%= cliente.getDireccion() %>"
+                	value="<%= clienteModificar.getDireccion() %>"
                  	minlength="2" 
                  	maxlength="60"
                  	pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+([ ]?[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]+)*" 
@@ -195,7 +195,7 @@
                 	placeholder="Ingrese correo electronico" 
                 	id="txtEmail" 
                 	name="txtEmail" 
-                	value="<%= cliente.getEmail() %>"
+                	value="<%= clienteModificar.getEmail() %>"
                 	placeholder="name@example.com" 
                 	minlength="2" 
                 	maxlength="80"
@@ -209,14 +209,14 @@
                 	form-control-sm" 
                 	id="txtTelefono" 
                 	name="txtTelefono"
-                	value="<%= cliente.getTelefono() %>" 
+                	value="<%= clienteModificar.getTelefono() %>" 
                 	pattern="\d+" 
                 	minlength="8" 
                 	maxlength="20" 
                 	placeholder="Ingrese numero de celular" 
                 required>
             </div>
-            <input type="hidden" name="nombreUsuario" value="<%= cliente.getUsuario() %>">
+            <input type="hidden" name="nombreUsuario" value="<%= clienteModificar.getUsuario() %>">
             <div class="col-md-6 position-relative">
                 <label for="txtUsuario">Usuario:</label>
                 <input type="text" 
@@ -224,7 +224,7 @@
                 	form-control-sm" 
                 	id="txtUsuario" 
                 	name="txtUsuario"
-                	value="<%= cliente.getUsuario() %>"
+                	value="<%= clienteModificar.getUsuario() %>"
                 	minlength="8" 
                 	maxlength="14" 
                 	pattern="^[A-Za-z0-9_]+$"
@@ -241,7 +241,7 @@
                 	form-control-sm" 
                 	id="txtClave" 
                 	name="txtClave"
-                	value="<%= cliente.getContrasenia() %>" 
+                	value="<%= clienteModificar.getContrasenia() %>" 
                 	minlength="8" 
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
@@ -255,7 +255,7 @@
                 	form-control-sm" 
                 	id="txtValidarClave" 
                 	name="txtValidarClave"
-                	value="<%= cliente.getContrasenia() %>" 
+                	value="<%= clienteModificar.getContrasenia() %>" 
                 	minlength="8" 
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
