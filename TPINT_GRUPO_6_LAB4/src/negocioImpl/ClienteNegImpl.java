@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import datos.ClienteDao;
@@ -83,6 +84,19 @@ public class ClienteNegImpl implements ClienteNegocio{
 	public Cliente buscarClienteXDNI(String dni) {
 		
 		return cDao.buscarClienteXDNI(dni);
+	}
+
+	@Override
+	public Cliente buscarClienteXidUsuario(int idUsuario) throws SQLException {
+		try {
+			return cDao.buscarClienteXidUsuario(idUsuario);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 

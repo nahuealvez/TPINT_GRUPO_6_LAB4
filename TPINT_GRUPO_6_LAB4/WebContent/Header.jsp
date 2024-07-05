@@ -1,16 +1,24 @@
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
- <%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="dominio.Usuario" %>
+<%@ page import="dominio.Cliente" %>
+
 <%
-HttpSession sessionLogueada = request.getSession(false);
- Usuario usuarioLogueado = null;
- 
- if(sessionLogueada!= null){
-	 usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
- }
- if(usuarioLogueado== null){
-	 response.sendRedirect("Login.jsp");
- }
+	HttpSession sessionLogueada = request.getSession(false);
+	Usuario usuarioLogueado = null;
+	Cliente cliente = null;
+	
+	if (sessionLogueada != null){
+		usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
+	}
+	
+	if (usuarioLogueado == null){
+		response.sendRedirect("Login.jsp");
+	}
+	
+	if (sessionLogueada != null) {
+		cliente = (Cliente)session.getAttribute("cliente");
+	}
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,7 +56,7 @@ HttpSession sessionLogueada = request.getSession(false);
             </div>
 	        <div class="dropdown d-flex align-items-center gap-3">
 	        	<span class="userProfile">|</span>
- 	        	<span class="userProfile"><%= usuarioLogueado != null ? usuarioLogueado.getUsuario() : "Invitado" %></span>
+ 	        	<span class="userProfile"><%= usuarioLogueado.getTipoUsuario().getId() == 1 ? usuarioLogueado.getUsuario() : cliente.getNombreApellido() %></span>
 	    		<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
 		            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 					  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
