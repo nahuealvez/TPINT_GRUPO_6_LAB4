@@ -72,7 +72,6 @@ public class ServletIndex extends HttpServlet {
 			    request.setAttribute("cuentas", cuentas);
 		    }
 		    
-		    
 		    RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");
             rd.forward(request, response);
 		}
