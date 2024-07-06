@@ -78,7 +78,7 @@
 	                <select class="form-select form-select-sm" 
 	                	id="ddlCuentasCliente" 
 	                	aria-label="Default select example" 
-	                	name="ddlProvincia" 
+	                	name="ddlCuentasCliente" 
                 	required>
 		                <option selected disabled value="">Seleccione cuenta destino...</option>
 	                    <% for (Cuenta cuenta : cuentasCliente) { %>
@@ -100,6 +100,7 @@
             <div class="col-md-4">
             	<button id="volverBtn" class="btn btn-dark btn-sm" type="button" onclick="volverPantallaAnterior()">Volver</button>
                 <button id="solicitarBtn" class="btn btn-primary btn-sm" type="button" onclick="mostrarConfirmacion()">Solicitar</button>
+                <input type="hidden" name="idCliente" value="<%= cliente.getIdCliente() %>">
 	            <button id="confirmarBtn" class="btn btn-success btn-sm" type="submit" name="confirmarBtn">Confirmar</button>
 	            <a id="cancelarBtn" class="btn btn-danger btn-sm" href="Index.jsp">Cancelar</a>
             </div>

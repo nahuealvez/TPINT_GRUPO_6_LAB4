@@ -1,6 +1,7 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -66,10 +67,63 @@ public class ServletPrestamo extends HttpServlet {
 		
 		if(request.getParameter("confirmarBtn")!= null)
 		{
-			System.out.println("SALUDOS DESDE CONFIRMAR");
-			
-			
+			eventoBtnConfirmarSolicitudCliente(request, response);		
 		}
+	}
+	
+	//------------------------FUNCIONES SOBRE EVENTOS--------------------
+	private void eventoBtnConfirmarSolicitudCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		Prestamo prestamo = new Prestamo();
+		Cliente cliente = new Cliente();
+		Cuenta cuenta = new Cuenta();
+		
+		float tasaInteres = 20.0f;
+		BigDecimal importePedido = new BigDecimal(request.getParameter("txtImporteSolicitado"));
+		int cuotas = (Integer.parseInt(request.getParameter("txtCuotas")));
+
+		BigDecimal tasaDecimal = BigDecimal.valueOf(tasaInteres).divide(BigDecimal.valueOf(100));
+
+		BigDecimal importeInteres = importePedido.multiply(tasaDecimal);
+		
+		BigDecimal importeTotalAPagar = importePedido.add(importeInteres);
+
+		BigDecimal importeMensual = importeTotalAPagar.divide(BigDecimal.valueOf(cuotas));
+		
+		cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
+		prestamo.setCliente(cliente);
+		
+		cuenta.setId(Integer.parseInt(request.getParameter("ddlCuentasCliente")));
+		prestamo.setCuenta(cuenta);
+		
+		prestamo.setImporteAPagar(importeTotalAPagar);
+		prestamo.setImportePedido(importePedido);
+		prestamo.setCuotas(cuotas);
+		prestamo.setImporteMensual(importeMensual);
+		
+        String mensaje = null;
+        String claseMensaje = null;
+        
+        try {
+        	prestamoNeg.crearPrestamo(prestamo);
+			
+	        mensaje = "La solicitud fue generada exitosamente.";
+	        claseMensaje = "alert alert-success";
+	        
+	        System.out.println(prestamo.getCliente().getIdCliente());
+	        System.out.println(prestamo.getCuenta().getId());
+	        System.out.println(prestamo.getImporteAPagar());
+	        System.out.println(prestamo.getImportePedido());
+	        System.out.println(prestamo.getCuotas());
+	        System.out.println(prestamo.getImporteMensual());
+	        
+		} catch (Exception e) {
+     		mensaje = "La solicitud no pudo ser generada. Intentelo nuevamente. | " + e.getMessage();
+     		claseMensaje = "alert alert-danger";
+		}
+        
+     	request.setAttribute("txtMensajeAgregarCliente", mensaje);
+        request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
 	}
 
 }
