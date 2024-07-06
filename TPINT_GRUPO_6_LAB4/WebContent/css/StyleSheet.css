@@ -101,6 +101,7 @@ a {
 	text-decoration: none;
 	color: black;
 	cursor: pointer;
+	background-color: white;
 }
 
 .card-accesos p {
