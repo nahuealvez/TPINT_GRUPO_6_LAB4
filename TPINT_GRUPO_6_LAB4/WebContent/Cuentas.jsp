@@ -5,11 +5,34 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ include file="Header.jsp"%>
 
+<%
+	
+		boolean existeMensaje = false;
+		String mensaje = null;
+		String claseMensaje = null;
+	
+		if (request.getAttribute("txtMensajeCuenta") != null) {
+			mensaje = (String)request.getAttribute("txtMensajeCuenta");
+			existeMensaje = true;
+		}
+	
+		if (request.getAttribute("claseMensajeCuenta") != null) {
+			claseMensaje = (String)request.getAttribute("claseMensajeCuenta");
+			existeMensaje = true;
+		}
+	
+	%>
 
 	
 <h3>Cuentas</h3>
 
 <div class="card">
+  <% if (existeMensaje) { %>
+            <div class="<%= claseMensaje %>" role="alert">
+                <%= mensaje %>
+            </div>
+        <% } %>
+
 	<div
 		class="card-header d-flex justify-content-between align-items-center">
 		<h4>Buscar Cliente por DNI</h4>
