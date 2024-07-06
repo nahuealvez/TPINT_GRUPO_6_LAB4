@@ -1,10 +1,18 @@
+<%@page import="dominio.Cliente"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+	<%Cliente clienteLogueado = (Cliente) session.getAttribute("cliente");%>
+	
 	<h3>Préstamos</h3>
 	<div class="card">
 	  <div class="card-header d-flex justify-content-end">
-	  	<a class="btn btn-primary" href="SolicitarPrestamo.jsp">Solicitar</a>
+	  
+	  	<form action="ServletPrestamo" method="post">
+	  		<input type="hidden" name="idCliente" value="<%=clienteLogueado.getIdCliente()%>">
+	  		<input type="submit" value="Solicitar" id="btnSolicitarPrestamo"  name="btnSolicitarPrestamo"class="btn btn-primary">
+	  	</form>
 	  </div>
+		                    	  
 	  <div class="card-body">
 	    <table id="tablaPrestamosBanco" class="table table-striped" style="width:100%">
 	        <thead>

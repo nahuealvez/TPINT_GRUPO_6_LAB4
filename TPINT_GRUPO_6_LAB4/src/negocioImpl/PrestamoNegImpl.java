@@ -13,5 +13,10 @@ public class PrestamoNegImpl implements PrestamoNegocio{
 	public boolean crearPrestamo(Prestamo prestamo) {
 		return pDao.insert(prestamo);
 	}
-	
+
+	@Override
+	public boolean actualizarEstadoSolicitud(int idPrestamo, boolean estadoSolicitud) {
+		return pDao.updateEstado(idPrestamo, estadoSolicitud);
+	}
+
 }

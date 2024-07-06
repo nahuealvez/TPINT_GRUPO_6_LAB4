@@ -48,7 +48,8 @@ public class ServletProvincia extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Aquí se ejecuta la lógica cuando se presiona el botón "Modificar" en el JSP
+
+		//Logica para cargar provincias al hacer click en "MODIFICAR CLIENTE"
 	    // Cargar las provincias
 		int idCliente = Integer.parseInt(request.getParameter("idCliente"));
 	    ProvinciaNegImpl provinciaNeg = new ProvinciaNegImpl();
