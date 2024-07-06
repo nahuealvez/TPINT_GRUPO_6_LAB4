@@ -52,7 +52,7 @@ public class ServletLogin extends HttpServlet {
 				// para enviar datos del cliente y de la cuenta a la sesión
 				if (user.getTipoUsuario().getId() == 2) {
 					int loginCliente = 1;
-					request.setAttribute("loginCliente", loginCliente);
+					request.setAttribute("indexCliente", loginCliente);
 					RequestDispatcher rd = request.getRequestDispatcher("/ServletIndex");
 				    rd.forward(request, response);
 				}

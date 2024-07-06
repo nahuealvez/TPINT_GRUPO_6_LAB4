@@ -3,7 +3,7 @@
 <%@ include file="Header.jsp"%>
 
 	<div class="container mt-2 p-1">
-        <h3 class="mb-3">Transferencias</h2>
+        <h2 class="mb-3">Transferencias</h2>
         <form class="d-flex flex-column gap-3 needs-validation" action="ServletCliente" method="get" novalidate>
             <div class="col-md-4 position-relative">
                 <label for="txtDni">Importe a transferir:</label>
@@ -13,7 +13,7 @@
                 	id="txtImporteSolicitado" 
                 	name="txtImporteSolicitado"
                 	value="" 
-                	placeholder="Ingrese el importe a solicitar" 
+                	placeholder="Ingrese el importe a transferir" 
                 required>
             </div>
             <div class="col-md-4 position-relative">
@@ -22,7 +22,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtCuotas" 
                 	name="txtCuotas"
-                	placeholder="Ingrese cantidad de cuotas" 
+                	placeholder="Ingrese el CBU de destino" 
                 required>
             </div>
             <div class="col-md-4 position-relative">

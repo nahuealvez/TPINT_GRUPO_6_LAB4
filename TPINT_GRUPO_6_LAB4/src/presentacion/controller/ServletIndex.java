@@ -46,7 +46,38 @@ public class ServletIndex extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getAttribute("loginCliente") != null) {
+		if (request.getAttribute("indexCliente") != null) {
+			Cliente cliente = new Cliente();
+			ArrayList<Cuenta> cuentasPorCliente = new ArrayList<Cuenta>();
+			ClienteNegocio clienteNegocio = new ClienteNegImpl();
+			CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+			
+			HttpSession sessionLogueada = request.getSession(false);
+			Usuario usuarioLogueado = null;
+			
+		    if(sessionLogueada != null){
+			    usuarioLogueado = (Usuario)sessionLogueada.getAttribute("sessionUsuario");
+			    try {
+			    	cliente = clienteNegocio.buscarClienteXidUsuario(usuarioLogueado.getId());
+			    	int id = cliente.getId();
+			    	cuentasPorCliente = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(id);
+			    }
+			    catch (SQLException ex) {
+			    	ex.printStackTrace();
+			    }
+			    catch (Exception ex) {
+			    	ex.printStackTrace();
+			    }
+			    
+			    sessionLogueada.setAttribute("cliente", cliente);
+			    request.setAttribute("cuentasPorCliente", cuentasPorCliente);
+		    }
+		    
+		    RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");
+            rd.forward(request, response);
+		}
+		
+		if (request.getParameter("indexClienteNav") != null) {
 			Cliente cliente = new Cliente();
 			ArrayList<Cuenta> cuentasPorCliente = new ArrayList<Cuenta>();
 			ClienteNegocio clienteNegocio = new ClienteNegImpl();

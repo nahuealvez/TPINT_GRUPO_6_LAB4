@@ -46,8 +46,15 @@
 		</div>
 		<nav class="navbar navbar-expand-lg g-1 d-flex align-items-center gap-3">
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
-                <div class="navbar-nav d-flex gap-3">    
-                    <a class="nav-link p-0" href="Index.jsp">Inicio</a>
+                <div class="navbar-nav d-flex flex-row gap-3">    
+                    <% if (usuarioLogueado.getTipoUsuario().getId() == 1) { %>
+                    	<a class="nav-link p-0" href="Index.jsp">Inicio</a>
+                    <% }
+                       else { %>
+                        <form class="m-0" action="ServletIndex" method="post">
+                        	<button class="nav-link p-0" name="indexClienteNav" type="submit">Inicio</button>
+                        </form>
+                    <% } %>
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
