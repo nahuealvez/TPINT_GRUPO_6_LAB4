@@ -24,7 +24,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String verificarEstado= "SELECT estado FROM cuentas WHERE id=?";
 	
 	@Override
-	public boolean insert(Cuenta cuenta) {
+	public boolean insert(Cuenta cuenta) throws SQLException{
 		PreparedStatement statement;
 		Connection conexion= Conexion.getConexion().getSQLConexion();
 		
@@ -55,12 +55,15 @@ public class CuentaDaoImpl implements CuentaDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		catch (Exception ex) {
+			throw ex;
+		}
 		
 		return cuentaCreada;
 	}
 
 	@Override
-	public List<Cuenta> cuentasXCliente(int idCliente) {
+	public List<Cuenta> cuentasXCliente(int idCliente) throws SQLException{
 		
 		PreparedStatement statement;
 		ResultSet rs;
@@ -97,11 +100,14 @@ public class CuentaDaoImpl implements CuentaDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		catch (Exception ex) {
+			throw ex;
+		}
 		return listaCuentas;
 	}
 
 	@Override
-	public boolean actualizarEstado(int idCuenta, boolean estado) {
+	public boolean actualizarEstado(int idCuenta, boolean estado)throws SQLException {
 		
 		PreparedStatement statement;
 		  Connection conexion= Conexion.getConexion().getSQLConexion();
@@ -120,13 +126,16 @@ public class CuentaDaoImpl implements CuentaDao {
 		  }catch(SQLException e) {
 		   e.printStackTrace();
 		  }
+		  catch (Exception ex) {
+				throw ex;
+			}
 		  
 		  return false;
 		
 	}
 
 	@Override
-	public boolean verificarCbu(String cbu) {
+	public boolean verificarCbu(String cbu)throws SQLException {
 		
 		PreparedStatement statement;
 		ResultSet rs;
@@ -141,12 +150,16 @@ public class CuentaDaoImpl implements CuentaDao {
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }
+		catch (Exception ex) {
+			throw ex;
+		}
 		return false;
 	}
 
 	@Override
-	public String nuevoCbu() {
+	public String nuevoCbu() throws SQLException{
 		String cbu;
+		try {
 		CuentaDao cuentaDao = new CuentaDaoImpl();
 		do {
 			Random rd = new Random();
@@ -156,11 +169,17 @@ public class CuentaDaoImpl implements CuentaDao {
 			}
 			cbu = cbuRandom.toString();
 		}while(cuentaDao.verificarCbu(cbu));
+		
+		}catch(SQLException ex) {
+			throw ex;
+		}catch (Exception ex) {
+			throw ex;
+		}
 		return cbu;
 	}
 
 	@Override
-	public boolean verificarEstado(int idCuenta) {
+	public boolean verificarEstado(int idCuenta)throws SQLException {
 		
 		PreparedStatement statement;
 		ResultSet rs;
@@ -175,22 +194,31 @@ public class CuentaDaoImpl implements CuentaDao {
 		}
 		}catch(SQLException e) {
 			e.printStackTrace();
+			
+		}catch (Exception ex) {
+			throw ex;
 		}
 		return false;
 		
 	}
 
 	@Override
-	public int contarCuentasActivas(List<Cuenta> listaCuentas) {
+	public int contarCuentasActivas(List<Cuenta> listaCuentas)throws SQLException{
 		
 		CuentaDao cuentaux=new CuentaDaoImpl();
 		  int aux = 0;
+		  try {
 		    for (Cuenta cuenta : listaCuentas) {
 		        if ( cuentaux.verificarEstado(cuenta.getId())==true) {
 		            aux++;
 		        }
 		    }
-		
+		  }catch(SQLException ex) {
+			  throw ex;
+		  }
+		  catch (Exception ex) {
+				throw ex;
+			}
 		return aux;
 	}
 

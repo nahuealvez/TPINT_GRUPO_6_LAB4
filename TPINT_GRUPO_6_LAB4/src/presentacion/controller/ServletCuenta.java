@@ -105,7 +105,6 @@ public class ServletCuenta extends HttpServlet {
 				cuentagregada.setEstado(true);
 
 				boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
-				System.out.println("Cuenta creada: " + cuentaCreada);
 
 				if (cuentaCreada) {
 					mensaje = "La cuenta fue creada con éxito";
@@ -120,6 +119,9 @@ public class ServletCuenta extends HttpServlet {
 				claseMensaje = "alert alert-danger";
 				e.printStackTrace();
 
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
 			} 
 			request.setAttribute("txtMensajeCuenta", mensaje);
 			request.setAttribute("claseMensajeCuenta", claseMensaje);
@@ -149,6 +151,9 @@ public class ServletCuenta extends HttpServlet {
 				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 			} catch (NullPointerException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				
 				e.printStackTrace();
 			}
 			break;
@@ -185,7 +190,7 @@ public class ServletCuenta extends HttpServlet {
 					if (!estado) {
 						
 						mensaje = "Cuenta desactivada";
-						claseMensaje = "alert alert-danger";
+						claseMensaje = "alert alert-success";
 						request.setAttribute("txtMensajeCuenta", mensaje);
 						request.setAttribute("claseMensajeCuenta", claseMensaje);
 
@@ -209,6 +214,9 @@ public class ServletCuenta extends HttpServlet {
 				claseMensaje = "alert alert-danger";				
 				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
 			}
 
 			break;
