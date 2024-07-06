@@ -33,6 +33,10 @@ public class ServletCliente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramValue = request.getParameter("Param");
 		
+		if (request.getParameter("btnVerCliente") != null) 
+		{
+			eventobtnbtnVerCliente(request, response);
+		}
 		if(request.getParameter("btnAgregarCliente")!= null)
 		{
 			eventobtnAgregarCliente(request, response);
@@ -43,29 +47,7 @@ public class ServletCliente extends HttpServlet {
 		}
 		else if ("2".equals(paramValue))
 		{
-			HttpSession session = request.getSession(false); // Obtiene la sesion sin crear una nueva si no existe
-			if (session != null) 
-			{
-				Usuario usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
-				
-			    if (usuarioLogueado != null)
-			    {
-			    	System.out.println("El id es!: " + usuarioLogueado.getId());
-			    	ClienteNegocio negC = new ClienteNegImpl();
-			   
-			    	try 
-			    	{
-			    		Cliente verCliente= negC.buscarClienteXidUsuario(usuarioLogueado.getId());
-			    		request.setAttribute("verCliente", verCliente);
-			    	
-					} 
-			    	catch (Exception e) 
-			    	{
-						// TODO: handle exception
-					}
-			    } 
-			request.getRequestDispatcher("/VerCliente.jsp").forward(request, response);
-			}
+			eventoVerPerfilParam2(request, response);
 		}
 	}
 
@@ -95,7 +77,7 @@ public class ServletCliente extends HttpServlet {
 			} 
 			catch (Exception e) 
 			{
-				
+				 e.printStackTrace();
 			}
 			cargarListaClientes(request, response);
 		}
@@ -114,7 +96,7 @@ public class ServletCliente extends HttpServlet {
 			} 
 			catch (Exception e) 
 			{
-				
+				 e.printStackTrace();
 			}
 			
 			cargarListaClientes(request, response);
@@ -259,5 +241,47 @@ public class ServletCliente extends HttpServlet {
         
         cargarListaClientes(request, response);
 	}
+	public void eventobtnbtnVerCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		 int idVerCliente = Integer.parseInt(request.getParameter("IdVerCliente"));
+		    ClienteNegocio negC = new ClienteNegImpl();
+
+		    try 
+		    {
+		        Cliente verCliente = negC.buscarClienteXidUsuario(idVerCliente);
+		        request.setAttribute("verCliente", verCliente);
+		    } 
+		    catch 
+		    (Exception e) 
+		    {
+		        e.printStackTrace();
+		    }
+		    request.getRequestDispatcher("/VerCliente.jsp").forward(request, response);
+	}
+	
+	public void eventoVerPerfilParam2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		HttpSession session = request.getSession(false); // Obtiene la sesion sin crear una nueva si no existe
+		if (session != null) 
+		{
+			Usuario usuarioLogueado= (Usuario)session.getAttribute("sessionUsuario");
+		    if (usuarioLogueado != null)
+		    {
+		    	System.out.println("El id es!: " + usuarioLogueado.getId());
+		    	ClienteNegocio negC = new ClienteNegImpl();
+		    	try 
+		    	{
+		    		Cliente verCliente= negC.buscarClienteXidUsuario(usuarioLogueado.getId());
+		    		request.setAttribute("verCliente", verCliente);
+				} 
+		    	catch (Exception e) 
+		    	{
+		    		 e.printStackTrace();
+				}
+		    } 
+		request.getRequestDispatcher("/VerCliente.jsp").forward(request, response);
+		}
+	}
+
 	
 }

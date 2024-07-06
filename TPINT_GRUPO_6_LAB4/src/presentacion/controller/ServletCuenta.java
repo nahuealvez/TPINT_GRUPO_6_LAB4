@@ -46,7 +46,7 @@ public class ServletCuenta extends HttpServlet {
 					System.out.println("entre al primer if");
 					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
 				
-					if (cuentaNeg.contarCuentas(listaDeCuentas)<3 ) {
+					if (cuentaNeg.contarCuentasActivas(listaDeCuentas)<3 ) {
 						String cbu= cuentaNeg.nuevoCbu();
 						request.setAttribute("cbuGenerado", cbu);
 						request.setAttribute("clienteServlet", clienteServlet);
@@ -137,30 +137,55 @@ public class ServletCuenta extends HttpServlet {
 
 		case "cambiarEstado":
 
+
 			int idCuenta = Integer.parseInt(request.getParameter("idCuenta"));
 			boolean estado = !Boolean.parseBoolean(request.getParameter("estado"));
+			String dni2 = request.getParameter("dniCliente");
+			System.out.println("dni de cambiarestado: " + dni2);
+			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni2);
+			System.out.println("cliente: " + clienteServlet.getApellido());
 			
-
 			try {
-
+				System.out.println("entro al try");
+				List<Cuenta> cuentasActivas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
+				int aux = cuentaNeg.contarCuentasActivas(cuentasActivas);
+				System.out.println("aux " + aux);
+				if(estado) {
+					System.out.println("entro al primer if");
+					
+					if(aux >= 3) {
+						System.out.println("entro a contarcuentas ");
+						System.out.println(cuentaNeg.contarCuentasActivas(cuentasActivas));
+						request.setAttribute("mensaje", "El cliente ya posee 3 cuentas activas");
+						request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+						return;
+					}
+					System.out.println(cuentaNeg.contarCuentasActivas(cuentasActivas));
+				}
 				boolean estadoActualizado = cuentaNeg.actualizarEstado(idCuenta, estado);
-
+				
 				if (estadoActualizado) {
-					if (estado == false) {
+					System.out.println("entro al segundo if");
+					if (!estado) {
+						System.out.println("entro al tercer if");
 						request.setAttribute("mensaje", "Cuenta desactivada");
 					} else {
 						request.setAttribute("mensaje", "Cuenta reactivada");
 					}
+					
 				}else {
 					request.getRequestDispatcher("ServletCuenta?opcion=buscarCliente&dniCliente=" + request.getParameter("dniCliente")).forward(request, response);
 				}
+				System.out.println("estoy por salir");
 				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+				
 
 			} catch (NullPointerException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "Ocurri� un error al cambiar el estado de la cuenta.");
+				request.setAttribute("error", "Ocurrio un error al cambiar el estado de la cuenta.");
 				request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 			}
+
 
 			break;
 
