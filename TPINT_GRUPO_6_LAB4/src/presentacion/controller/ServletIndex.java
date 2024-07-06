@@ -59,7 +59,7 @@ public class ServletIndex extends HttpServlet {
 			    usuarioLogueado = (Usuario)sessionLogueada.getAttribute("sessionUsuario");
 			    try {
 			    	cliente = clienteNegocio.buscarClienteXidUsuario(usuarioLogueado.getId());
-			    	int id = cliente.getId();
+			    	int id = cliente.getIdCliente();
 			    	cuentasPorCliente = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(id);
 			    }
 			    catch (SQLException ex) {
@@ -90,7 +90,7 @@ public class ServletIndex extends HttpServlet {
 			    usuarioLogueado = (Usuario)sessionLogueada.getAttribute("sessionUsuario");
 			    try {
 			    	cliente = clienteNegocio.buscarClienteXidUsuario(usuarioLogueado.getId());
-			    	int id = cliente.getId();
+			    	int id = cliente.getIdCliente();
 			    	cuentasPorCliente = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(id);
 			    }
 			    catch (SQLException ex) {
