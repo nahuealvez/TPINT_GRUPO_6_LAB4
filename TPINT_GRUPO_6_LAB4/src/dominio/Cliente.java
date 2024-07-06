@@ -37,11 +37,11 @@ public class Cliente extends Usuario{
 	public Cliente() {
 		super();
 	}
-
+/*
 	public int getId() {
 		return idCliente;
 	}
-	
+*/	
 	public int getIdCliente() {
 		return idCliente;
 	}

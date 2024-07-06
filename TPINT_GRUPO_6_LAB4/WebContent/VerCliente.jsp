@@ -21,6 +21,7 @@
                 	name="txtDni"
                 	value="<%= verCliente.getDni() %>"
                 	readonly 
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -30,7 +31,8 @@
                 	id="txtCuil" 
                 	name="txtCuil"
                 	value="<%= verCliente.getCuil() %>"
-                	readonly 
+                	readonly
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -41,6 +43,7 @@
                 	name="txtNombre"
                 	value="<%= verCliente.getNombre() %>"               	
                 	readonly 
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -51,6 +54,7 @@
                 	name="txtApellido"
                 	value="<%= verCliente.getApellido() %>"  
                 	readonly 
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -61,24 +65,31 @@
                 	name="txtFechaNacimiento"
                 	value="<%= verCliente.getFechaNacimiento() %>"   
                 	readonly
+                	disabled
                 required>
-            </div>
+            </div>	
 			<div class="col-md-6 position-relative">
 			    <label for="ddlGenero">Género:</label>
-			    <input class="form-control form-control-sm" 
-			            id="ddlSexo"  
+			    <select class="form-select form-select-sm" 
+			            id="ddlSexo" 
+			            aria-label="Default select example" 
 			            name="ddlSexo"
-			            value="<%= verCliente.getSexo() %>" 
-			            readonly
+			            disabled
 			            required>
-			</div>    
+			        <option disabled value="">Seleccione su género</option>
+			        <option value="M" <%= cliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
+			        <option value="F" <%= cliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
+			        <option value="X" <%= cliente.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
+			    </select>
+			</div>        
 			<div class="col-md-6 position-relative">
 			    <label for="ddlNacionalidad">Nacionalidad:</label>
 			    <input class="form-control form-control-sm" 
 			            id="ddlNacionalidad" 
 			            name="ddlNacionalidad"
-			            value=""
+			            value="<%= verCliente.getNacionalidad() %>"  
 			            readonly  
+			            disabled
 			            required>
 			</div>
             <div class="col-md-6 position-relative">
@@ -88,8 +99,9 @@
                 	id="ddlProvincia" 
                 	aria-label="Default select example" 
                 	name="ddlProvincia"
-                	value=""
+                	value="<%= verCliente.getProvincia().getNombre() %>"  
                 	readonly 
+                	disabled
                 	required>
             </div>
             <div class="col-md-6 position-relative">
@@ -98,8 +110,9 @@
                 id="ddlLocalidad" 
                 aria-label="Default select example" 
                 name="ddlLocalidad"
-                value=""
+                value="<%= verCliente.getLocalidad().getNombre() %>"  
                 readonly 
+                disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -110,6 +123,7 @@
                 	name="txtDireccion"       	
                 	value="<%= cliente.getDireccion() %>"
                  	readonly 
+                 	disabled
                  required>
             </div>
             <div class="col-md-6 position-relative">
@@ -120,6 +134,7 @@
                 	name="txtEmail" 
                 	value="<%= cliente.getEmail() %>"
                 	readonly  
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -131,6 +146,7 @@
                 	name="txtTelefono"
                 	value="<%= cliente.getTelefono() %>"
                 	readonly 
+                	disabled
                 required>
             </div>
             <div class="col-md-6 position-relative">
@@ -142,6 +158,7 @@
                 	name="txtUsuario"
                 	value="<%= cliente.getUsuario() %>"
                 	required
+                	disabled
                 readonly>
             </div>
 		</div>
