@@ -14,6 +14,6 @@ public interface CuentaNegocio {
 	public boolean verificarCbu (String cbu);
 	public String nuevoCbu();
 	public boolean verificarEstado (int idCuenta);
-	public int contarCuentas(List<Cuenta> listaCuentas);
+	public int contarCuentasActivas(List<Cuenta> listaCuentas);
 	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException;
 }

@@ -181,7 +181,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	}
 
 	@Override
-	public int contarCuentas(List<Cuenta> listaCuentas) {
+	public int contarCuentasActivas(List<Cuenta> listaCuentas) {
 		
 		CuentaDao cuentaux=new CuentaDaoImpl();
 		  int aux = 0;

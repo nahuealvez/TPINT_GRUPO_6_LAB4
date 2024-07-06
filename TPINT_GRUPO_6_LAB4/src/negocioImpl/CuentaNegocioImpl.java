@@ -51,9 +51,9 @@ public class CuentaNegocioImpl implements CuentaNegocio {
 	}
 
 	@Override
-	public int contarCuentas(List<Cuenta> listaCuentas) {
+	public int contarCuentasActivas(List<Cuenta> listaCuentas) {
 		
-		return cuentaDao.contarCuentas(listaCuentas);
+		return cuentaDao.contarCuentasActivas(listaCuentas);
 	}
 
 	@Override
