@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="dominio.Cuenta" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ include file="Header.jsp"%>
+	
+	<%
+		ArrayList<Cuenta> cuentas = null;
+		cuentas = (ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente");
+	%>
 
 	<div class="container mt-2 p-1">
         <h2 class="mb-3">Transferencias</h2>
@@ -28,7 +35,10 @@
             <div class="col-md-4 position-relative">
                 <label for="cuentaDestino">Cuenta saliente:</label>
                 <select id="cuentaDestino" class="form-select form-select-sm" required>
-                	<option selected disabled value="">Seleccione cuenta destino...</option>
+                	<option selected disabled value="">Seleccione cuenta saliente...</option>
+                	<% for (Cuenta cuenta : cuentas) { %>
+                    	<option value="<%= cuenta.getId() %>"><%= cuenta.toStringResumido() %></option>
+                    <% } %>
                 </select>
             </div>
             <div class="col-md-4 position-relative alert alert-primary mb-0">

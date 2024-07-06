@@ -58,7 +58,9 @@
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
                     <a class="nav-link p-0" href="#">Cuentas</a>
                     <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
-                    <a class="nav-link p-0" href="Transferencias.jsp">Transferencias</a>
+                    <form class="m-0" action="ServletTransferencia" method="post">
+                       	<button class="nav-link p-0" name="btnTransferencia" type="submit">Transferencias</button>
+                    </form>
                     <a class="nav-link p-0" href="Reportes.jsp">Reportes</a>
                 </div>
             </div>
