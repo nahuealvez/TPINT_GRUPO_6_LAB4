@@ -87,4 +87,8 @@ public class Cuenta {
 		return "Cuenta [id=" + id + ", cliente=" + cliente + ", fechaCreacion=" + fechaCreacion + ", tipoCuenta="
 				+ tipoCuenta + ", cbu=" + cbu + ", saldo=" + saldo + ", estado=" + estado + "]";
 	}
+	
+	public String toStringResumido() {
+		return tipoCuenta.getDescripcion() + " || " + id;
+	}
 }

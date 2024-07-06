@@ -11,6 +11,8 @@ import dominio.Prestamo;
 public class PrestamoDaoImpl implements PrestamoDao{
 
 	private static final String insert = "INSERT INTO prestamos (idCliente, idCuenta, importeAPagar, plazoDePago, importePedido, cuotas, importeMensual, estadoValidacion, fechaValidacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String updateEstadoSolicitud = "UPDATE prestamos SET estadoValidacion = ? WHERE id = ?";
+	
 	@Override
 	public boolean insert(Prestamo prestamo) {
 		PreparedStatement statement;
@@ -45,6 +47,33 @@ public class PrestamoDaoImpl implements PrestamoDao{
 		}
 		
 		return isInsertExitoso;
+	}
+	@Override
+	public boolean updateEstado(int idPrestamo, boolean estadoAprobacion) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+				
+		boolean actualizacionEstadoExitosa = false;
+		
+		try {
+			statement = conexion.prepareStatement(updateEstadoSolicitud);
+			statement.setBoolean(1, estadoAprobacion);
+			statement.setInt(2, idPrestamo);
+			
+			int filasAfectadas = statement.executeUpdate();
+			
+			if(filasAfectadas > 0) {
+				conexion.commit();
+				actualizacionEstadoExitosa = true;
+				
+			} else {
+				conexion.rollback();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return actualizacionEstadoExitosa;
 	}
 	
 
