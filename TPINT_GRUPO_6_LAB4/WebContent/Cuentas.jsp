@@ -206,21 +206,12 @@
 
 
 <!-- Scripts -->
-<script
-	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"></script>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$('#tablaCuentas')
-								.DataTable(
-										{
-											language : {
-												url : 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
-											}
-										});
-					});
+	new DataTable('#tablaCuentas', {
+		language: {
+			url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
+		},
+	});
 </script>
 
 <%@ include file="Footer.jsp"%>
