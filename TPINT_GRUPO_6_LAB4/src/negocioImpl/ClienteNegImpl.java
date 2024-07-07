@@ -10,6 +10,7 @@ import datosImpl.UsuarioDaoImpl;
 import dominio.Cliente;
 import dominio.Usuario;
 import negocio.ClienteNegocio;
+import Excepciones.ErrorMensajeException;
 
 public class ClienteNegImpl implements ClienteNegocio{
 
@@ -17,25 +18,27 @@ public class ClienteNegImpl implements ClienteNegocio{
 	private UsuarioDao uDao = new UsuarioDaoImpl();
 	
 	@Override
-	public boolean crearCliente(Cliente cliente) {
+	public boolean crearCliente(Cliente cliente) throws ErrorMensajeException{
 		
 		boolean clienteCreado = false;
-		
-		if(!cDao.existeDni(cliente.getDni())) {
-			Usuario nuevoUsuario = new Usuario();
-			nuevoUsuario.setUsuario(cliente.getUsuario());
-			nuevoUsuario.setContrasenia(cliente.getContrasenia());
-			nuevoUsuario.setTipoUsuario(cliente.getTipoUsuario());
-			
-			int idUsuario = uDao.crearUsuario(nuevoUsuario);
-			
-			if(idUsuario != -1) 
-			{
-				cliente.setId(idUsuario);
-				clienteCreado = cDao.insert(cliente);
-			}
-		}
-		return clienteCreado;
+
+	    if (cDao.existeDni(cliente.getDni())) {
+	        throw new ErrorMensajeException("El DNI: "+cliente.getDni()+", ya existe en la base de datos!.");
+	    }
+
+	    Usuario nuevoUsuario = new Usuario();
+	    nuevoUsuario.setUsuario(cliente.getUsuario());
+	    nuevoUsuario.setContrasenia(cliente.getContrasenia());
+	    nuevoUsuario.setTipoUsuario(cliente.getTipoUsuario());
+
+	    int idUsuario = uDao.crearUsuario(nuevoUsuario);
+
+	    if (idUsuario != -1) {
+	        cliente.setId(idUsuario);
+	        clienteCreado = cDao.insert(cliente);
+	    }
+
+	    return clienteCreado;
 	}
 	
 	@Override
@@ -63,20 +66,15 @@ public class ClienteNegImpl implements ClienteNegocio{
 	}
 
 	@Override
-	public boolean modificarCliente(Cliente cliente) {
-	    boolean clienteModificado = false;
+	public boolean modificarCliente(Cliente cliente) throws ErrorMensajeException{
+		boolean clienteModificado = false;
 
-	    try {
-	        if (!cDao.existeDni(cliente.getDni(), cliente.getId())) {
-	            clienteModificado = cDao.update(cliente);
-	        } else {
-	        	//POSIBLE MEJORA AGREGANDO UNA EXCEPCION PARTICULAR
-	        	
-	            System.out.println("El DNI ya estï¿½ registrado para otro cliente.");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();        
+	    if (!cDao.existeDni(cliente.getDni(), cliente.getId())) {
+	        clienteModificado = cDao.update(cliente);
+	    } else {
+	        throw new ErrorMensajeException("El DNI ya está registrado para otro cliente.");
 	    }
+	    
 	    return clienteModificado;
 	}
 

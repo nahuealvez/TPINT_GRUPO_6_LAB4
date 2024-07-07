@@ -19,6 +19,20 @@
 			claseMensaje = (String)request.getAttribute("claseMensajeAgregarCliente");
 			existeMensaje = true;
 		}
+		
+		boolean existeMensajeModificar = false;
+	    String mensajeModificar = null;
+	    String claseMensajeModificar = null;
+	    
+	    if (request.getAttribute("txtMensajeModificarCliente") != null) {
+	        mensajeModificar = (String) request.getAttribute("txtMensajeModificarCliente");
+	        existeMensajeModificar = true;
+	    }
+	    
+	    if (request.getAttribute("claseMensajeModificarCliente") != null) {
+	        claseMensajeModificar = (String) request.getAttribute("claseMensajeModificarCliente");
+	        existeMensajeModificar = true;
+	    }
 	
 	%>
 
@@ -140,7 +154,14 @@
 	</div>
 
 <!-- Scripts -->
-
+<script>
+        setTimeout(function() {
+          var alertElement = document.getElementById('alert');
+          if (alertElement) {
+            alertElement.style.display = 'none';
+          }
+        }, 4000);
+</script>
 <script>
 	new DataTable('#tablaClientes', {
 		language: {

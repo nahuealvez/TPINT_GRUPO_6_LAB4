@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Excepciones.ErrorMensajeException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -143,6 +145,7 @@ public class ServletCliente extends HttpServlet {
         
         String mensaje = null;
         String claseMensaje = null;
+        boolean existeMensaje = false;
         
      	try {
      		ClienteNegocio negocioC= new ClienteNegImpl();
@@ -150,14 +153,21 @@ public class ServletCliente extends HttpServlet {
 	        
 	        mensaje = "El cliente fue agregado correctamente a la base";
 	        claseMensaje = "alert alert-success";
+	        existeMensaje = true;
+     	}
+     	catch(ErrorMensajeException e) 
+     	{
+     		mensaje =  e.getMessage();
+     		claseMensaje = "alert alert-danger";
+     		existeMensaje = true;
      	}
      	catch (Exception e) {
-     		mensaje = "El cliente no se pudo agregar | " + e.getMessage();
-     		claseMensaje = "alert alert-danger";
+     		e.printStackTrace();
      	}
         
      	request.setAttribute("txtMensajeAgregarCliente", mensaje);
         request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
+        request.setAttribute("existeMensaje", existeMensaje);
      	
         cargarListaClientes(request, response);
 	}
@@ -220,24 +230,34 @@ public class ServletCliente extends HttpServlet {
         
         String mensaje = null;
         String claseMensaje = null;
+        boolean existeMensaje = false;
         
         try {
         	ClienteNegocio negC = new ClienteNegImpl();
 			boolean modificadoC = negC.modificarCliente(cliente);
 			
-			UsuarioNegocio negU = new UsuarioNegImpl();
-			boolean modificadoU = negU.actualizarContraseniaUsuario(cliente.getId(), cliente.getContrasenia());
+			if(modificadoC) {
+                UsuarioNegocio negU = new UsuarioNegImpl();
+                boolean modificadoU = negU.actualizarContraseniaUsuario(cliente.getId(), cliente.getContrasenia());
+            }
 			
 			mensaje = "El cliente fue modificado correctamente";
 	        claseMensaje = "alert alert-success";
+	        existeMensaje = true;
 		}
+        catch (ErrorMensajeException e) 
+        {
+        	mensaje = e.getMessage();
+            claseMensaje = "alert alert-danger";
+            existeMensaje = true;
+        }
         catch (Exception e) 
         {
-        	mensaje = "El cliente no se pudo modificar | " + e.getMessage();
-     		claseMensaje = "alert alert-danger";
+        	e.printStackTrace();
 		}       
         request.setAttribute("txtMensajeAgregarCliente", mensaje);
         request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
+        request.setAttribute("existeMensaje", existeMensaje);
         
         cargarListaClientes(request, response);
 	}
