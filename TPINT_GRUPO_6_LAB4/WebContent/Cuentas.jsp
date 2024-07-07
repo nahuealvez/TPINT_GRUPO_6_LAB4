@@ -9,9 +9,6 @@
 	boolean existeMensaje = false;
 	String mensaje = null;
 	String claseMensaje = null;
-	boolean existeMensajeCli = false;
-	String mensajeCli = null;
-	String claseMensajeCli = null;
 
 	if (request.getAttribute("txtMensajeCuenta") != null
 			&& request.getAttribute("claseMensajeCuenta") != null) {
@@ -20,11 +17,6 @@
 		existeMensaje = true;
 	}
 
-	if (request.getAttribute("claseMensajeCli") != null) {
-		mensajeCli = (String) request.getAttribute("txtMensajeCli");
-		claseMensajeCli = (String) request.getAttribute("claseMensajeCli");
-		existeMensajeCli = true;
-	}
 %>
 
 
@@ -55,18 +47,7 @@
 	<div class="card-body">
 
 		<%
-			if (existeMensajeCli) {
-		%>
-		<div class="<%=claseMensajeCli%>" role="alert">
-			<%=mensajeCli%>
-		</div>
-		<%
-			}
-		%>
-
-		<%
 			Cliente clienteServlet = (Cliente) request.getAttribute("clienteServlet");
-		/* 	Boolean errorBusqueda = (Boolean) request.getAttribute("errorBusqueda"); */
 
 			if (clienteServlet != null) {
 		%>
