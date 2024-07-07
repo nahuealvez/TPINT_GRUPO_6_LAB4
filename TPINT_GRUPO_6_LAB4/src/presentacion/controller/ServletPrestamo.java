@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import dominio.Cliente;
 import dominio.Cuenta;
 import dominio.Prestamo;
@@ -50,6 +52,15 @@ public class ServletPrestamo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("accederPrestamosCliente") != null)
+		{
+			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			
+			ArrayList<Prestamo> prestamos = cargarPrestamosPorCliente(idCliente);
+			request.setAttribute("listaPrestamos", prestamos);
+			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+		}
+		
 		if(request.getParameter("btnSolicitarPrestamo")!= null)
 		{
 			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
@@ -67,11 +78,37 @@ public class ServletPrestamo extends HttpServlet {
 		
 		if(request.getParameter("confirmarBtn")!= null)
 		{
-			eventoBtnConfirmarSolicitudCliente(request, response);		
+			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			eventoBtnConfirmarSolicitudCliente(request, response);
+			
+			ArrayList<Prestamo> prestamos = cargarPrestamosPorCliente(idCliente); 
+			request.setAttribute("listaPrestamos", prestamos);
+			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+		}
+		
+		if(request.getParameter("btnVerPrestamo")!= null)
+		{
+			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			
+			ArrayList<Prestamo> prestamos = cargarPrestamosPorCliente(idCliente); 
+			request.setAttribute("listaPrestamos", prestamos);
+			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
 	}
 	
 	//------------------------FUNCIONES SOBRE EVENTOS--------------------
+	
+	private ArrayList<Prestamo> cargarPrestamosPorCliente(int idCliente) 
+	{
+		ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
+		try {
+			prestamos = prestamoNeg.listarPrestamosXCliente(idCliente);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return prestamos;
+	}
+
 	private void eventoBtnConfirmarSolicitudCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Prestamo prestamo = new Prestamo();
@@ -109,14 +146,7 @@ public class ServletPrestamo extends HttpServlet {
 			
 	        mensaje = "La solicitud fue generada exitosamente.";
 	        claseMensaje = "alert alert-success";
-	        
-	        System.out.println(prestamo.getCliente().getIdCliente());
-	        System.out.println(prestamo.getCuenta().getId());
-	        System.out.println(prestamo.getImporteAPagar());
-	        System.out.println(prestamo.getImportePedido());
-	        System.out.println(prestamo.getCuotas());
-	        System.out.println(prestamo.getImporteMensual());
-	        
+	        	        
 		} catch (Exception e) {
      		mensaje = "La solicitud no pudo ser generada. Intentelo nuevamente. | " + e.getMessage();
      		claseMensaje = "alert alert-danger";

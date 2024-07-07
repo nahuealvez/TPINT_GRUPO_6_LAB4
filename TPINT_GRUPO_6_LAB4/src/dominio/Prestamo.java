@@ -13,10 +13,10 @@ public class Prestamo {
 	private BigDecimal importePedido;
 	private int cuotas;
 	private BigDecimal importeMensual;
-	private boolean estadoValidacion;
+	private Boolean estadoValidacion;
 	private LocalDateTime fechaValidacion;
 	
-	public Prestamo(int id, Cliente cliente, Cuenta cuenta, LocalDateTime fechaSolicitud, BigDecimal importeAPagar, int plazoDePago, BigDecimal importePedido, int cuotas, BigDecimal importeMensual, boolean estadoValidacion, LocalDateTime fechaValidacion) {
+	public Prestamo(int id, Cliente cliente, Cuenta cuenta, LocalDateTime fechaSolicitud, BigDecimal importeAPagar, int plazoDePago, BigDecimal importePedido, int cuotas, BigDecimal importeMensual, Boolean estadoValidacion, LocalDateTime fechaValidacion) {
 		this.id = id;
 		this.cliente = cliente;
 		this.cuenta = cuenta;
@@ -106,11 +106,11 @@ public class Prestamo {
 		this.importeMensual = importeMensual;
 	}
 
-	public boolean isEstadoValidacion() {
+	public Boolean isEstadoValidacion() {
 		return estadoValidacion;
 	}
 
-	public void setEstadoValidacion(boolean estadoValidacion) {
+	public void setEstadoValidacion(Boolean estadoValidacion) {
 		this.estadoValidacion = estadoValidacion;
 	}
 

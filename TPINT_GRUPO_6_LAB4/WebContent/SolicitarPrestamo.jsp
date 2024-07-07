@@ -12,6 +12,20 @@
 		else {
 			cuentasCliente = new ArrayList<Cuenta>();
 		}
+		
+		boolean existeMensaje = false;
+		String mensaje = null;
+		String claseMensaje = null;
+
+		if (request.getAttribute("txtMensajeCuenta") != null) {
+			mensaje = (String) request.getAttribute("txtMensajeCuenta");
+			existeMensaje = true;
+		}
+
+		if (request.getAttribute("claseMensajeCuenta") != null) {
+			claseMensaje = (String) request.getAttribute("claseMensajeCuenta");
+			existeMensaje = true;
+		}
 	%>
 <script>
     // FUNCION PARA OCULTAR FORMULARIO DE CONFIRMACION

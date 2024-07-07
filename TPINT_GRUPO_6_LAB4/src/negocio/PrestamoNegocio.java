@@ -1,8 +1,12 @@
 package negocio;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import dominio.Prestamo;
 
 public interface PrestamoNegocio {
-	public boolean crearPrestamo (Prestamo prestamo);
-	public boolean actualizarEstadoSolicitud (int idPrestamo, boolean estadoSolicitud);
+	public boolean crearPrestamo (Prestamo prestamo)throws SQLException;
+	public boolean actualizarEstadoSolicitud (int idPrestamo, Boolean estadoSolicitud)throws SQLException;
+	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) throws SQLException;
 }
