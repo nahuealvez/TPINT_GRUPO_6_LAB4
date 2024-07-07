@@ -8,10 +8,29 @@
 		ArrayList<Cuenta> cuentas = null;
 		cuentas = (ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente");
 	%>
+	
+	<script>
+		window.onload = function() {
+	        document.getElementById("prestamoAConfirmar").style.display = "none";
+	        document.getElementById("confirmarBtn").style.display = "none";
+	        document.getElementById("cancelarBtn").style.display = "none";
+	    };
+	
+	    // FUNCION PARA MOSTRAR FORMULARIO DE CONFIRMACION AL HACER CLICK EN "SOLICITAR"
+	    function mostrarConfirmacion() {
+	        document.getElementById("prestamoAConfirmar").style.display = "block";
+	        document.getElementById("confirmarBtn").style.display = "inline-block";
+	        document.getElementById("cancelarBtn").style.display = "inline-block";
+	        
+	        document.getElementById("formularioSolicitud").style.display = "none";
+	        document.getElementById("volverBtn").style.display = "none";
+	        document.getElementById("solicitarBtn").style.display = "none";
+	    }
+	</script>
 
 	<div class="container mt-2 p-1">
         <h2 class="mb-3">Transferencias</h2>
-        <form class="d-flex flex-column gap-3 needs-validation" action="ServletCliente" method="get" novalidate>
+        <form id="formularioSolicitud" class="d-flex flex-column gap-3 needs-validation" action="ServletCliente" method="get" novalidate>
             <div class="col-md-4 position-relative">
                 <label for="txtDni">Importe a transferir:</label>
                 <input type="number" 
@@ -41,7 +60,7 @@
                     <% } %>
                 </select>
             </div>
-            <div class="col-md-4 position-relative alert alert-primary mb-0">
+            <div id="prestamoAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0">
             	<h6 class="m-0">¿Está seguro de realizar esta transferencia?</h6>
             	<br>
             	<strong>Importe a transferir: </strong><p>$10.000,00</p>
@@ -49,11 +68,12 @@
             	<strong>Cuenta saliente: </strong><p>100001 | Caja de ahorros</p>
             </div>
             <div class="col-md-4">
-            	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
-                <button class="btn btn-primary btn-sm">Transferir</button>
-                <button class="btn btn-success btn-sm">Confirmar</button>
-                <a class="btn btn-danger btn-sm" href="Index.jsp">Cancelar</a>
+            	<button id="volverBtn" class="btn btn-dark btn-sm" type="button" onclick="volverPantallaAnterior()">< Volver</button>
+                <button id="solicitarBtn" class="btn btn-primary btn-sm" type="button" onclick="mostrarConfirmacion()">Transferir</button>
+                <button id="confirmarBtn" class="btn btn-success btn-sm" type="submit">Confirmar</button>
+                <a id="cancelarBtn" class="btn btn-danger btn-sm" href="Index.jsp">Cancelar</a>
             </div>
+        </form>
     </div>
 	
 	
