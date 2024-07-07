@@ -53,7 +53,7 @@
                     <% }
                        else { %>
                         <form class="m-0" action="ServletIndex" method="post">
-                        	<button class="nav-link p-0" name="indexClienteNav" type="submit">Inicio</button>
+                        	<button id="btnInicio" class="nav-link p-0" name="indexClienteNav" type="submit">Inicio</button>
                         </form>
                     <% } %>
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
