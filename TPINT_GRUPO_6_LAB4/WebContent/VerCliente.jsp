@@ -77,9 +77,9 @@
 			            disabled
 			            required>
 			        <option disabled value="">Seleccione su género</option>
-			        <option value="M" <%= cliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
-			        <option value="F" <%= cliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
-			        <option value="X" <%= cliente.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
+			        <option value="M" <%= verCliente.getSexo() == 'M' ? "selected" : "" %>>Masculino</option>
+			        <option value="F" <%= verCliente.getSexo() == 'F' ? "selected" : "" %>>Femenino</option>
+			        <option value="X" <%= verCliente.getSexo() == 'X' ? "selected" : "" %>>No binario</option>
 			    </select>
 			</div>        
 			<div class="col-md-6 position-relative">
@@ -121,7 +121,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtDireccion" 
                 	name="txtDireccion"       	
-                	value="<%= cliente.getDireccion() %>"
+                	value="<%= verCliente.getDireccion() %>"
                  	readonly 
                  	disabled
                  required>
@@ -132,7 +132,7 @@
                 	class="form-control form-control-sm" 
                 	id="txtEmail" 
                 	name="txtEmail" 
-                	value="<%= cliente.getEmail() %>"
+                	value="<%= verCliente.getEmail() %>"
                 	readonly  
                 	disabled
                 required>
@@ -144,7 +144,7 @@
                 	form-control-sm" 
                 	id="txtTelefono" 
                 	name="txtTelefono"
-                	value="<%= cliente.getTelefono() %>"
+                	value="<%= verCliente.getTelefono() %>"
                 	readonly 
                 	disabled
                 required>
@@ -156,7 +156,7 @@
                 	form-control-sm" 
                 	id="txtUsuario" 
                 	name="txtUsuario"
-                	value="<%= cliente.getUsuario() %>"
+                	value="<%= verCliente.getUsuario() %>"
                 	required
                 	disabled
                 readonly>

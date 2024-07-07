@@ -263,6 +263,7 @@ public class ServletCliente extends HttpServlet {
 	}
 	public void eventobtnbtnVerCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		
 		 int idVerCliente = Integer.parseInt(request.getParameter("IdVerCliente"));
 		    ClienteNegocio negC = new ClienteNegImpl();
 
