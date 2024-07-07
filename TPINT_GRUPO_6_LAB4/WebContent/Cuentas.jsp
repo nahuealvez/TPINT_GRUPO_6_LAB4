@@ -96,22 +96,14 @@
 					<td><%=cuenta.getFechaCreacion()%></td>
 					<td><%=cuenta.getCbu()%></td>
 					<td><%=cuenta.getSaldo()%></td>
-					<td><%=cuenta.isEstado()
-								? "<span class='badge text-bg-success'>Activo</span>"
-								: "<span class='badge text-bg-danger'>Inactivo</span>"%></td>
+					<td><%=cuenta.isEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>"%></td>
 					<td class="d-flex justify-content-center align-items-center gap-2">
 
 						<form action="ServletCuenta" method="post">
-							<%-- <input type="hidden" name="idCuenta" value="<%=cuenta.getId()%>">
-							<input type="hidden" name="estado" value="<%=cuenta.isEstado()%>">
-							<!-- <input type="hidden" name="opcion" value="btnDesactivarCuenta"> -->
-							<input type="hidden" name="dniCliente" value="<%=clienteServlet.getDni()%>"> --%>
 
 							<%
 								if (cuenta.isEstado()) {
 							%>
-							<!-- Button trigger modal -->
-							<!-- Botón para activar el modal de desactivación -->
 							<button type="button" class="btn btn-outline-danger btn-sm"
 								data-bs-toggle="modal"
 								data-bs-target="#mlDesactivarCuenta<%=cuenta.getId()%>">
@@ -129,19 +121,16 @@
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<div class="modal-body">¿Está seguro de querer
-											desactivar la cuenta?</div>
+										<div class="modal-body">¿Está seguro de querer desactivar la cuenta?</div>
 										<div class="modal-footer">
 											<form action="ServletCuenta" method="post">
 												<input type="hidden" name="opcion" value="cambiarEstado">
-												<input type="hidden" name="idCuenta"
-													value="<%=cuenta.getId()%>"> <input type="hidden"
-													name="dniCliente" value="<%=clienteServlet.getDni()%>">
-												<input type="hidden" name="estado"
-													value="<%=cuenta.isEstado()%>"> <input
-													type="submit" value="Desactivar" class="btn btn-danger">
-												<button type="button" class="btn btn-secondary"
-													data-bs-dismiss="modal">Cancelar</button>
+												<input type="hidden" name="idCuenta" value="<%=cuenta.getId()%>"> 
+												<input type="hidden" name="dniCliente" value="<%=clienteServlet.getDni()%>">
+												<input type="hidden" name="estado" value="<%=cuenta.isEstado()%>">
+												<input type="submit" value="Desactivar" class="btn btn-danger">
+													
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 											</form>
 										</div>
 									</div>
@@ -151,37 +140,31 @@
 							<%
 								} else {
 							%>
-							<!-- Botón para activar el modal de desactivación -->
+							<!-- Modal para activar -->
 							<button type="button" class="btn btn-outline-success btn-sm"
 								data-bs-toggle="modal"
 								data-bs-target="#mlActivarCuenta<%=cuenta.getId()%>">
 								Reactivar</button>
-
-							<!-- Modal para desactivar -->
+								
 							<div class="modal fade"
 								id="mlActivarCuenta<%=cuenta.getId()%>" tabindex="-1"
 								aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar
-												Reactivación</h1>
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Reactivación</h1>
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<div class="modal-body">¿Está seguro de querer
-											reactivar la cuenta?</div>
+										<div class="modal-body">¿Está seguro de querer reactivar la cuenta?</div>
 										<div class="modal-footer">
 											<form action="ServletCuenta" method="post">
 												<input type="hidden" name="opcion" value="cambiarEstado">
-												<input type="hidden" name="idCuenta"
-													value="<%=cuenta.getId()%>"> <input type="hidden"
-													name="dniCliente" value="<%=clienteServlet.getDni()%>">
-												<input type="hidden" name="estado"
-													value="<%=cuenta.isEstado()%>"> <input
-													type="submit" value="Reactivar" class="btn btn-success">
-												<button type="button" class="btn btn-secondary"
-													data-bs-dismiss="modal">Cancelar</button>
+												<input type="hidden" name="idCuenta" value="<%=cuenta.getId()%>">
+												 <input type="hidden" name="dniCliente" value="<%=clienteServlet.getDni()%>">
+												<input type="hidden" name="estado" value="<%=cuenta.isEstado()%>"> 
+												<input type="submit" value="Reactivar" class="btn btn-success">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 											</form>
 										</div>
 									</div>
