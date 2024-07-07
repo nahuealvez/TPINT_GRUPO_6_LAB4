@@ -9,15 +9,21 @@
 	boolean existeMensaje = false;
 	String mensaje = null;
 	String claseMensaje = null;
+	boolean existeMensajeCli = false;
+	String mensajeCli = null;
+	String claseMensajeCli = null;
 
-	if (request.getAttribute("txtMensajeCuenta") != null) {
+	if (request.getAttribute("txtMensajeCuenta") != null
+			&& request.getAttribute("claseMensajeCuenta") != null) {
 		mensaje = (String) request.getAttribute("txtMensajeCuenta");
+		claseMensaje = (String) request.getAttribute("claseMensajeCuenta");
 		existeMensaje = true;
 	}
 
-	if (request.getAttribute("claseMensajeCuenta") != null) {
-		claseMensaje = (String) request.getAttribute("claseMensajeCuenta");
-		existeMensaje = true;
+	if (request.getAttribute("claseMensajeCli") != null) {
+		mensajeCli = (String) request.getAttribute("txtMensajeCli");
+		claseMensajeCli = (String) request.getAttribute("claseMensajeCli");
+		existeMensajeCli = true;
 	}
 %>
 
@@ -49,8 +55,18 @@
 	<div class="card-body">
 
 		<%
+			if (existeMensajeCli) {
+		%>
+		<div class="<%=claseMensajeCli%>" role="alert">
+			<%=mensajeCli%>
+		</div>
+		<%
+			}
+		%>
+
+		<%
 			Cliente clienteServlet = (Cliente) request.getAttribute("clienteServlet");
-			Boolean errorBusqueda = (Boolean) request.getAttribute("errorBusqueda");
+		/* 	Boolean errorBusqueda = (Boolean) request.getAttribute("errorBusqueda"); */
 
 			if (clienteServlet != null) {
 		%>
@@ -196,20 +212,11 @@
 				%>
 			</tbody>
 		</table>
-		<%
-			} else {
-		%>
-		<div class="alert alert-info" role="alert">No se encontraron
-			cuentas para este cliente.</div>
+				
 		<%
 			}
 		%>
 
-		<%
-			} else if (errorBusqueda != null && errorBusqueda) {
-		%>
-		<div class="alert alert-danger" role="alert">No se encontró
-			ningún cliente con ese DNI.</div>
 		<%
 			}
 		%>
