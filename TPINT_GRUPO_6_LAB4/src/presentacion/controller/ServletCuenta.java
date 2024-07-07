@@ -24,7 +24,7 @@ import negocioImpl.CuentaNegocioImpl;
 public class ServletCuenta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();		
+	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
 	private ClienteNegocio clienteNeg = new ClienteNegImpl();
 	private String mensaje = null;
 	private String claseMensaje = null;
@@ -41,24 +41,24 @@ public class ServletCuenta extends HttpServlet {
 		if ("agregar".equals(opcion)) {
 			try {
 				String dni = request.getParameter("dniCliente");
-				
+
 				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
-				
+
 				if (clienteServlet != null) {
 
 					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-				
-					if (cuentaNeg.contarCuentasActivas(listaDeCuentas)<3 ) {
-						String cbu= cuentaNeg.nuevoCbu();
-						
+
+					if (cuentaNeg.contarCuentasActivas(listaDeCuentas) < 3) {
+						String cbu = cuentaNeg.nuevoCbu();
+
 						request.setAttribute("cbuGenerado", cbu);
 						request.setAttribute("clienteServlet", clienteServlet);
-						
+
 						request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
 					} else {
 						request.setAttribute("listaDeCuentas", listaDeCuentas);
 						request.setAttribute("clienteServlet", clienteServlet);
-						
+
 						String mensaje = "El cliente ya posee tres cuentas activas";
 						String claseMensaje = "alert alert-danger";
 						request.setAttribute("txtMensajeCuenta", mensaje);
@@ -82,21 +82,20 @@ public class ServletCuenta extends HttpServlet {
 
 		String opcion = request.getParameter("opcion");
 
-
 		switch (opcion) {
 		case "agregarCuenta":
-			eventoAgregarCuenta( request, response);
+			eventoAgregarCuenta(request, response);
 			break;
 
 		case "buscarCliente":
 
-			eventoBuscarCliente( request,response);
-			
+			eventoBuscarCliente(request, response);
+
 			break;
 
 		case "cambiarEstado":
 
-			eventoCambiarEstado( request, response) ;
+			eventoCambiarEstado(request, response);
 
 			break;
 
@@ -105,9 +104,13 @@ public class ServletCuenta extends HttpServlet {
 		}
 	}
 	
-	public void eventoAgregarCuenta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
+	/* METODOS */
+
+	public void eventoAgregarCuenta(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Cuenta cuentagregada = new Cuenta();
-		
+
 		try {
 
 			Cliente cliente = new Cliente();
@@ -115,8 +118,6 @@ public class ServletCuenta extends HttpServlet {
 
 			TipoCuenta tipodecuenta = new TipoCuenta();
 			tipodecuenta.setId(Integer.parseInt(request.getParameter("ddlTipoCuenta")));
-			
-			
 
 			cuentagregada.setCliente(cliente);
 			cuentagregada.setFechaCreacion(LocalDateTime.now());
@@ -128,7 +129,7 @@ public class ServletCuenta extends HttpServlet {
 			boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
 
 			if (cuentaCreada) {
-				mensaje = "La cuenta fue creada con ï¿½xito";
+				mensaje = "La cuenta fue creada con éxito";
 				claseMensaje = "alert alert-success";
 			} else {
 				mensaje = "La cuenta no pudo ser creada ";
@@ -141,15 +142,17 @@ public class ServletCuenta extends HttpServlet {
 			e.printStackTrace();
 
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-		} 
+		}
 		request.setAttribute("txtMensajeCuenta", mensaje);
 		request.setAttribute("claseMensajeCuenta", claseMensaje);
 		request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
 
 	}
-	public void eventoBuscarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	public void eventoBuscarCliente(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String dni = request.getParameter("dniCliente");
 
 		try {
@@ -161,7 +164,7 @@ public class ServletCuenta extends HttpServlet {
 
 				request.setAttribute("clienteServlet", clienteServlet);
 				request.setAttribute("cuentasxCliente", cuentas);
-				
+
 			} else {
 
 				request.setAttribute("errorBusqueda", true);
@@ -172,24 +175,26 @@ public class ServletCuenta extends HttpServlet {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
-	public void eventoCambiarEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	public void eventoCambiarEstado(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int idCuenta = Integer.parseInt(request.getParameter("idCuenta"));
 		boolean estado = !Boolean.parseBoolean(request.getParameter("estado"));
 		String dni2 = request.getParameter("dniCliente");
 		Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni2);
-		
+
 		try {
-			
+
 			List<Cuenta> cuentasActivas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
 			int aux = cuentaNeg.contarCuentasActivas(cuentasActivas);
-			
-			if(estado) {
-									
-				if(aux >= 3) {
+
+			if (estado) {
+
+				if (aux >= 3) {
 					mensaje = "El cliente ya posee tres cuentas activas";
 					claseMensaje = "alert alert-danger";
 					request.setAttribute("txtMensajeCuenta", mensaje);
@@ -198,14 +203,14 @@ public class ServletCuenta extends HttpServlet {
 					request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 					return;
 				}
-				
+
 			}
 			boolean estadoActualizado = cuentaNeg.actualizarEstado(idCuenta, estado);
-			
+
 			if (estadoActualizado) {
-			
+
 				if (!estado) {
-					
+
 					mensaje = "Cuenta desactivada";
 					claseMensaje = "alert alert-success";
 					request.setAttribute("txtMensajeCuenta", mensaje);
@@ -218,25 +223,24 @@ public class ServletCuenta extends HttpServlet {
 					request.setAttribute("claseMensajeCuenta", claseMensaje);
 
 				}
-				
-			}else {
-				request.getRequestDispatcher("ServletCuenta?opcion=buscarCliente&dniCliente=" + request.getParameter("dniCliente")).forward(request, response);
+
+			} else {
+				request.getRequestDispatcher(
+						"ServletCuenta?opcion=buscarCliente&dniCliente=" + request.getParameter("dniCliente"))
+						.forward(request, response);
 			}
-			
+
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
-			
 
 		} catch (NullPointerException e) {
 			mensaje = "Ocurriï¿½ un error en el cambio de estado" + e.getMessage();
-			claseMensaje = "alert alert-danger";				
+			claseMensaje = "alert alert-danger";
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 }
