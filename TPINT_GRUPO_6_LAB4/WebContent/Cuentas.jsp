@@ -39,13 +39,14 @@
 		class="card-header d-flex justify-content-between align-items-center">
 		<h4>Buscar Cliente por DNI</h4>
 		<form action="ServletCuenta" method="post" class="d-flex gap-3">
-			<input type="hidden" name="opcion" value="buscarCliente"> <input
-				type="text" class="form-control" placeholder="Ingrese DNI"
-				name="dniCliente">
+			<input type="hidden" name="opcion" value="buscarCliente"> 
+			<input type="text" class="form-control" minlength="7" maxlength="8" placeholder="Ingrese DNI" name="dniCliente">
 			<button type="submit" class="btn btn-primary">Buscar</button>
 		</form>
 	</div>
+	
 	<div class="card-body">
+	
 		<%
 			Cliente clienteServlet = (Cliente) request.getAttribute("clienteServlet");
 			Boolean errorBusqueda = (Boolean) request.getAttribute("errorBusqueda");
@@ -54,8 +55,7 @@
 		%>
 
 		<div class="card-header d-flex justify-content-end">
-			<a class="btn btn-primary"
-				href="ServletCuenta?opcion=agregar&dniCliente=<%=clienteServlet.getDni()%>">Agregar</a>
+			<a class="btn btn-primary" href="ServletCuenta?opcion=agregar&dniCliente=<%=clienteServlet.getDni()%>">Agregar</a>
 		</div>
 
 		<div class="alert alert-success" role="alert">
@@ -116,10 +116,8 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar
-												desactivación</h1>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar desactivación</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">¿Está seguro de querer desactivar la cuenta?</div>
 										<div class="modal-footer">
@@ -143,8 +141,7 @@
 							<!-- Modal para activar -->
 							<button type="button" class="btn btn-outline-success btn-sm"
 								data-bs-toggle="modal"
-								data-bs-target="#mlActivarCuenta<%=cuenta.getId()%>">
-								Reactivar</button>
+								data-bs-target="#mlActivarCuenta<%=cuenta.getId()%>"> Reactivar</button>
 								
 							<div class="modal fade"
 								id="mlActivarCuenta<%=cuenta.getId()%>" tabindex="-1"
