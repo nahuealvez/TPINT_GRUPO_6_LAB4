@@ -82,14 +82,13 @@
 		                      <form action="ServletCliente" method="post">
                             <% if (cli.getEstado()) { %>
                             <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#mdlDesactivarCliente<%= cli.getIdCliente() %>">
-                                Desactivar
-                            </button>
+                                Desactivar </button>
                             <!-- Modal para Desactivar -->
                              <div class="modal fade" id="mdlDesactivarCliente<%= cli.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Confirmar Desactivación</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmar desactivación</h5>
                                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -107,14 +106,14 @@
                             </div>
                             <% } else { %>
                             <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#mdlActivarCliente<%= cli.getIdCliente() %>">
-                                Activar.......
+                                Activar
                             </button>
                             <!-- Modal para Activar -->
                             <div class="modal fade" id="mdlActivarCliente<%= cli.getIdCliente() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Confirmar Activación</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmar activación</h5>
                                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">

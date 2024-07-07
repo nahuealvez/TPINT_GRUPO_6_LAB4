@@ -1,3 +1,4 @@
+
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="dominio.Usuario" %>
@@ -56,7 +57,7 @@
                         </form>
                     <% } %>
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
-                    <a class="nav-link p-0" href="#">Cuentas</a>
+                    <a class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
                     <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
                     <form class="m-0" action="ServletTransferencia" method="post">
                        	<button class="nav-link p-0" name="btnTransferencia" type="submit">Transferencias</button>
