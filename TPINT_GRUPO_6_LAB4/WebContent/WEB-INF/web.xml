@@ -3,6 +3,5 @@
   <display-name>TPINT_GRUPO_6_LAB4</display-name>
   <welcome-file-list>
     <welcome-file>Login.jsp</welcome-file>
-
   </welcome-file-list>
 </web-app>

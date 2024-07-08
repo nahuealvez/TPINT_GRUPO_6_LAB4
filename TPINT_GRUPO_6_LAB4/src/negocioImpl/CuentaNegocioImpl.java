@@ -60,4 +60,19 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException {
 		return cuentaDao.cuentasPorClienteActivas(idCliente);
 	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException {
+		return cuentaDao.obtenerTodasLasCuentas();
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException {
+		return cuentaDao.obtenerTodasLasCuentasCorrientes();
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException {
+		return cuentaDao.obtenerTodasLasCuentasAhorro();
+	}
 }

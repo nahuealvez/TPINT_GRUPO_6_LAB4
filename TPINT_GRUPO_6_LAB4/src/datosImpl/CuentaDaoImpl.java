@@ -13,6 +13,8 @@ import datos.Conexion;
 import datos.CuentaDao;
 import dominio.Cliente;
 import dominio.Cuenta;
+import dominio.Localidad;
+import dominio.Provincia;
 import dominio.TipoCuenta;
 
 public class CuentaDaoImpl implements CuentaDao {
@@ -22,6 +24,10 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String actualizarEstado = "UPDATE cuentas set estado=? WHERE id=?";
 	private static final String verificarCbu = "SELECT 1 FROM cuentas where cbu=?";
 	private static final String verificarEstado= "SELECT estado FROM cuentas WHERE id=?";
+	private static final String obtenerCuentas = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id";
+	private static final String obtenerCuentasCorrientes = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 2";
+	private static final String obtenerCuentasAhorro = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 1";
+
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException{
@@ -263,5 +269,182 @@ public class CuentaDaoImpl implements CuentaDao {
 		}
 			
 		return listaCuentas;
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException {
+		PreparedStatement statement;
+		 ResultSet rs;
+		 Connection conexion = Conexion.getConexion().getSQLConexion();
+		 ArrayList<Cuenta> listaCuentas = new ArrayList<Cuenta>();
+		    
+	    try {
+	        statement = conexion.prepareStatement(obtenerCuentas);
+	        rs = statement.executeQuery();
+	        while (rs.next()) {
+	            Cuenta cuenta = new Cuenta();
+
+	            Cliente cliente = new Cliente();
+	            cliente.setIdCliente(rs.getInt("clienteId"));
+	            cliente.setDni(rs.getString("dni"));
+	            cliente.setCuil(rs.getString("cuil"));
+	            cliente.setNombre(rs.getString("clienteNombre"));
+	            cliente.setApellido(rs.getString("clienteApellido"));
+	            cliente.setSexo(rs.getString("sexo").charAt(0));
+	            cliente.setNacionalidad(rs.getString("nacionalidad"));
+	            cliente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+	            cliente.setDireccion(rs.getString("direccion"));
+	            cliente.setEmail(rs.getString("email"));
+	            cliente.setTelefono(rs.getString("telefono"));
+
+	            
+	            cliente.setId(rs.getInt("usuarioId"));
+	            cliente.setUsuario(rs.getString("usuarioNombre"));
+	            cliente.setContrasenia(rs.getString("contrasenia"));
+	            cliente.setEstado(rs.getBoolean("usuarioEstado"));
+	            
+	            Provincia provincia = new Provincia();
+	            provincia.setNombre(rs.getString("provinciaNombre"));
+	            cliente.setProvincia(provincia);
+
+	            Localidad localidad = new Localidad();
+	            localidad.setNombre(rs.getString("localidadNombre"));
+	            cliente.setLocalidad(localidad); 
+
+	            TipoCuenta tipoCuenta = new TipoCuenta();
+	            tipoCuenta.setDescripcion(rs.getString("tipoCuentaDescripcion"));
+
+	            cuenta.setId(rs.getInt("cuentaId"));
+	            cuenta.setCliente(cliente);
+	            cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+	            cuenta.setTipoCuenta(tipoCuenta);
+	            cuenta.setCbu(rs.getString("cbu"));
+	            cuenta.setSaldo(rs.getBigDecimal("saldo"));
+	            cuenta.setEstado(rs.getBoolean("cuentaEstado"));
+
+	            listaCuentas.add(cuenta);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return listaCuentas;
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException {
+		PreparedStatement statement;
+		 ResultSet rs;
+		 Connection conexion = Conexion.getConexion().getSQLConexion();
+		 ArrayList<Cuenta> listaCuentas = new ArrayList<Cuenta>();
+		    
+	    try {
+	        statement = conexion.prepareStatement(obtenerCuentasCorrientes);
+	        rs = statement.executeQuery();
+	        while (rs.next()) {
+	            Cuenta cuenta = new Cuenta();
+
+	            Cliente cliente = new Cliente();
+	            cliente.setIdCliente(rs.getInt("clienteId"));
+	            cliente.setDni(rs.getString("dni"));
+	            cliente.setCuil(rs.getString("cuil"));
+	            cliente.setNombre(rs.getString("clienteNombre"));
+	            cliente.setApellido(rs.getString("clienteApellido"));
+	            cliente.setSexo(rs.getString("sexo").charAt(0));
+	            cliente.setNacionalidad(rs.getString("nacionalidad"));
+	            cliente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+	            cliente.setDireccion(rs.getString("direccion"));
+	            cliente.setEmail(rs.getString("email"));
+	            cliente.setTelefono(rs.getString("telefono"));
+
+	            
+	            cliente.setId(rs.getInt("usuarioId"));
+	            cliente.setUsuario(rs.getString("usuarioNombre"));
+	            cliente.setContrasenia(rs.getString("contrasenia"));
+	            cliente.setEstado(rs.getBoolean("usuarioEstado"));
+	            
+	            Provincia provincia = new Provincia();
+	            provincia.setNombre(rs.getString("provinciaNombre"));
+	            cliente.setProvincia(provincia);
+
+	            Localidad localidad = new Localidad();
+	            localidad.setNombre(rs.getString("localidadNombre"));
+	            cliente.setLocalidad(localidad); 
+
+	            TipoCuenta tipoCuenta = new TipoCuenta();
+	            tipoCuenta.setDescripcion(rs.getString("tipoCuentaDescripcion"));
+
+	            cuenta.setId(rs.getInt("cuentaId"));
+	            cuenta.setCliente(cliente);
+	            cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+	            cuenta.setTipoCuenta(tipoCuenta);
+	            cuenta.setCbu(rs.getString("cbu"));
+	            cuenta.setSaldo(rs.getBigDecimal("saldo"));
+	            cuenta.setEstado(rs.getBoolean("cuentaEstado"));
+
+	            listaCuentas.add(cuenta);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return listaCuentas;
+	}
+
+	@Override
+	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException {
+		PreparedStatement statement;
+		 ResultSet rs;
+		 Connection conexion = Conexion.getConexion().getSQLConexion();
+		 ArrayList<Cuenta> listaCuentas = new ArrayList<Cuenta>();
+		    
+	    try {
+	        statement = conexion.prepareStatement(obtenerCuentasAhorro);
+	        rs = statement.executeQuery();
+	        while (rs.next()) {
+	            Cuenta cuenta = new Cuenta();
+
+	            Cliente cliente = new Cliente();
+	            cliente.setIdCliente(rs.getInt("clienteId"));
+	            cliente.setDni(rs.getString("dni"));
+	            cliente.setCuil(rs.getString("cuil"));
+	            cliente.setNombre(rs.getString("clienteNombre"));
+	            cliente.setApellido(rs.getString("clienteApellido"));
+	            cliente.setSexo(rs.getString("sexo").charAt(0));
+	            cliente.setNacionalidad(rs.getString("nacionalidad"));
+	            cliente.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+	            cliente.setDireccion(rs.getString("direccion"));
+	            cliente.setEmail(rs.getString("email"));
+	            cliente.setTelefono(rs.getString("telefono"));
+
+	            
+	            cliente.setId(rs.getInt("usuarioId"));
+	            cliente.setUsuario(rs.getString("usuarioNombre"));
+	            cliente.setContrasenia(rs.getString("contrasenia"));
+	            cliente.setEstado(rs.getBoolean("usuarioEstado"));
+	            
+	            Provincia provincia = new Provincia();
+	            provincia.setNombre(rs.getString("provinciaNombre"));
+	            cliente.setProvincia(provincia);
+
+	            Localidad localidad = new Localidad();
+	            localidad.setNombre(rs.getString("localidadNombre"));
+	            cliente.setLocalidad(localidad); 
+
+	            TipoCuenta tipoCuenta = new TipoCuenta();
+	            tipoCuenta.setDescripcion(rs.getString("tipoCuentaDescripcion"));
+
+	            cuenta.setId(rs.getInt("cuentaId"));
+	            cuenta.setCliente(cliente);
+	            cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+	            cuenta.setTipoCuenta(tipoCuenta);
+	            cuenta.setCbu(rs.getString("cbu"));
+	            cuenta.setSaldo(rs.getBigDecimal("saldo"));
+	            cuenta.setEstado(rs.getBoolean("cuentaEstado"));
+
+	            listaCuentas.add(cuenta);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return listaCuentas;
 	}
 }
