@@ -273,7 +273,7 @@ public class ServletCuenta extends HttpServlet {
 	         if (clienteServlet != null) {
 	             List<Cuenta> listaDeCuentas = cuentaNeg.cuentasActivas(clienteServlet.getIdCliente());
 	             System.out.println("flag2");
-	             if (listaDeCuentas != null && !listaDeCuentas.isEmpty()) {
+	             if (listaDeCuentas != null ) {
 	                 request.setAttribute("cuentasxCliente", listaDeCuentas);
 	             } else {
 	            	 System.out.println("flag3");
