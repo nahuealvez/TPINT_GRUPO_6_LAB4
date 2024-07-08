@@ -19,4 +19,5 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
+	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 }

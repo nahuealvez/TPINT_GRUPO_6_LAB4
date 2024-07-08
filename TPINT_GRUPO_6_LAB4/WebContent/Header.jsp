@@ -57,7 +57,11 @@
                         </form>
                     <% } %>
                     <a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
+                     <% if (usuarioLogueado.getTipoUsuario().getId() == 1) { %>
                     <a class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
+                     <% }else if (usuarioLogueado.getTipoUsuario().getId() == 2) { %>
+                     <a class="nav-link p-0" href="ServletCuenta?opcion=listar">Cuentas</a>
+                          <% } %>
                     <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
                     <form class="m-0" action="ServletTransferencia" method="post">
                        	<button class="nav-link p-0" name="btnTransferencia" type="submit">Transferencias</button>

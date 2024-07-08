@@ -27,7 +27,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String obtenerCuentas = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id";
 	private static final String obtenerCuentasCorrientes = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 2";
 	private static final String obtenerCuentasAhorro = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 1";
-
+	private static final String listasActivas= "select *from cuentas where estado=true and id=?";
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException{
@@ -446,5 +446,48 @@ public class CuentaDaoImpl implements CuentaDao {
 	        e.printStackTrace();
 	    }
 	    return listaCuentas;
+	}
+
+	@Override
+	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		ArrayList<Cuenta> listaCuentas = new ArrayList<Cuenta> (); 
+		
+		try {
+			statement= conexion.prepareStatement(listasActivas);
+			statement.setInt(1, idCliente);
+			rs=statement.executeQuery();
+			
+			while(rs.next()) {
+				Cuenta cuenta= new Cuenta();
+				
+				Cliente cliente= new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+				
+				TipoCuenta tipoCuenta= new TipoCuenta();
+				tipoCuenta.setDescripcion(rs.getString("tipoCuenta"));
+				
+				cuenta.setId(rs.getInt("id"));
+				cuenta.setCliente(cliente);
+				cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+				cuenta.setTipoCuenta(tipoCuenta);
+				cuenta.setCbu(rs.getString("cbu"));
+				cuenta.setSaldo(rs.getBigDecimal("saldo"));
+				cuenta.setEstado(rs.getBoolean("estado"));
+				
+				listaCuentas.add(cuenta);
+				
+				
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+		return listaCuentas;
 	}
 }

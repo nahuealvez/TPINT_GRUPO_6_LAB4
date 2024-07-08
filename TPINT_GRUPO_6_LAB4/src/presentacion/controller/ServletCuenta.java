@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dominio.Cliente;
 import dominio.Cuenta;
@@ -37,8 +38,8 @@ public class ServletCuenta extends HttpServlet {
 			throws ServletException, IOException {
 
 		String opcion = request.getParameter("opcion");
-
-		if ("agregar".equals(opcion)) {
+		switch(opcion) {
+		case "agregar":
 			try {
 				String dni = request.getParameter("dniCliente");
 				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
@@ -68,7 +69,16 @@ public class ServletCuenta extends HttpServlet {
 				e.printStackTrace();
 				request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
 			}
+			
+			break;
+		case "listar":
+			eventoListarCuentasdDeClientes ( request, response);
+			break;
+		
+		default:
+			break;
 		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -122,7 +132,7 @@ public class ServletCuenta extends HttpServlet {
 			boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
 
 			if (cuentaCreada) {
-				mensaje = "La cuenta fue creada con éxito";
+				mensaje = "La cuenta fue creada con ï¿½xito";
 				claseMensaje = "alert alert-success";
 			} else {
 				mensaje = "La cuenta no pudo ser creada ";
@@ -167,7 +177,7 @@ public class ServletCuenta extends HttpServlet {
 
 			} else {
 				
-				mostrarMensaje(request, response, "No se encontró ningún cliente con ese DNI", "alert alert-danger", clienteServlet, null);
+				mostrarMensaje(request, response, "No se encontrï¿½ ningï¿½n cliente con ese DNI", "alert alert-danger", clienteServlet, null);
 
 			}
 
@@ -225,7 +235,7 @@ public class ServletCuenta extends HttpServlet {
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (NullPointerException e) {
-			mensaje = "Ocurrió un error en el cambio de estado" + e.getMessage();
+			mensaje = "Ocurriï¿½ un error en el cambio de estado" + e.getMessage();
 			claseMensaje = "alert alert-danger";
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
@@ -248,4 +258,41 @@ public class ServletCuenta extends HttpServlet {
 		request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 	}
 
+	
+	private void eventoListarCuentasdDeClientes (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		 try {
+	         HttpSession sessionLogueada1 = request.getSession(false);
+	         Cliente clienteServlet = null;
+	         System.out.println("entro al evento de listar cuentas de clientes");
+
+	         if (sessionLogueada1 != null) {
+	             clienteServlet = (Cliente) sessionLogueada1.getAttribute("cliente");
+	             System.out.println("cliente servlet: "+clienteServlet.getIdCliente());
+	         }
+
+	         if (clienteServlet != null) {
+	             List<Cuenta> listaDeCuentas = cuentaNeg.cuentasActivas(clienteServlet.getIdCliente());
+	             System.out.println("flag2");
+	             if (listaDeCuentas != null && !listaDeCuentas.isEmpty()) {
+	                 request.setAttribute("cuentasxCliente", listaDeCuentas);
+	             } else {
+	            	 System.out.println("flag3");
+	                 request.setAttribute("txtMensajeCuenta", "No tiene cuentas asociadas.");
+	                 request.setAttribute("claseMensajeCuenta", "alert alert-danger");
+	             }
+	         } else {
+	             request.setAttribute("txtMensajeCuenta", "No se encontrÃ³ el cliente en la sesiÃ³n.");
+	             request.setAttribute("claseMensajeCuenta", "alert alert-danger");
+	         }
+	         System.out.println("flag4");
+	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         System.out.println("flag5");
+	         request.setAttribute("txtMensajeCuenta", "OcurriÃ³ un error al obtener las cuentas.");
+	         request.setAttribute("claseMensajeCuenta", "alert alert-danger");
+	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
+	     }
+	 }
 }
+

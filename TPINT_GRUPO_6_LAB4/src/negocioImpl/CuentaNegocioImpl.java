@@ -75,4 +75,10 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException {
 		return cuentaDao.obtenerTodasLasCuentasAhorro();
 	}
+
+	@Override
+	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
+		
+		return cuentaDao.cuentasActivas(idCliente);
+	}
 }
