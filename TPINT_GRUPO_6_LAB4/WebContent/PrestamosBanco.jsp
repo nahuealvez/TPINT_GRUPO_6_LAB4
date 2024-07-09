@@ -70,9 +70,47 @@
 	                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo">
 						  Aprobar
 						</button>
+						<div class="modal fade" id="mdlAprobarPrestamo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<form action="ServletPrestamo" method="post">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h1 class="modal-title fs-5" id="exampleModalLabel"><%= "Aprobar préstamo #" + pre.getId() %></h1>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        ¿Confirma aprobar el préstamo?
+							      </div>
+							      <div class="modal-footer">
+							        <button id="confirmarAprobacion" class="btn btn-success" type="submit" name="confirmarAprobacion">Sí, apruebo</button>
+							        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+							      </div>
+							    </div>
+							  </div>
+							</form>
+						</div>
 						<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo">
 						  Rechazar
 						</button>
+							<div class="modal fade" id="mdlRechazarPrestamo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<form>
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5" id="exampleModalLabel">Rechazar préstamo #</h1>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+								      <div class="modal-body">
+								        ¿Confirma rechazar el préstamo?
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-success">Sí, rechazo</button>
+								        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+								      </div>
+								    </div>
+								  </div>
+								</form>
+							</div>
                     </td>
                      <% } else if(!pre.isEstadoValidacion()){ %>
                     <td>
@@ -87,12 +125,6 @@
 								</svg>
                     		</button>
                     	</form>
-	                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo">
-						  Aprobar
-						</button>
-						<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo">
-						  Rechazar
-						</button>
                     </td>
                     <% } else { %>
                     <td>
@@ -107,12 +139,6 @@
 								</svg>
                     		</button>
                     	</form>
-	                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo">
-						  Aprobar
-						</button>
-						<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo">
-						  Rechazar
-						</button>
                     </td>
                     <%}%>          
                 </tr>
@@ -122,46 +148,6 @@
 	  </div>
 	</div>
 	
-	<div class="modal fade" id="mdlAprobarPrestamo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<form>
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" id="exampleModalLabel">Aprobar préstamo #</h1>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        ¿Confirma aprobar el préstamo?
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-success">Sí, apruebo</button>
-		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-		      </div>
-		    </div>
-		  </div>
-		</form>
-	</div>
-	
-	<div class="modal fade" id="mdlRechazarPrestamo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<form>
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h1 class="modal-title fs-5" id="exampleModalLabel">Rechazar préstamo #</h1>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        ¿Confirma rechazar el préstamo?
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-success">Sí, rechazo</button>
-		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-		      </div>
-		    </div>
-		  </div>
-		</form>
-	</div>
-
 <!-- Scripts -->
 
 <!-- <script>

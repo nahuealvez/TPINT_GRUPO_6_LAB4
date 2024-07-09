@@ -74,7 +74,11 @@ public class Cuota {
 
 	@Override
 	public String toString() {
-		return String.format("Cuota [id=%s, prestamo=%s, fechaVencimiento=%s, estadoPago=%s, movimiento=%s]", id,
-				prestamo, fechaVencimiento, estadoPago, movimiento);
+        return "Cuota id: " + id +
+                "\nPrestamo ID: " + prestamo.getId() +
+                "\nCuota Nro: " + nroCuota +
+                "\nCuota Fecha VTO: " + fechaVencimiento +
+                "\nImporte Cuota: " + prestamo.getImporteMensual() +
+                "\nCuota Paga: " + estadoPago;
 	}
 }

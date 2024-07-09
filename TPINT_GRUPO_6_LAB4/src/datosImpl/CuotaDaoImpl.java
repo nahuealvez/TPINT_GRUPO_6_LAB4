@@ -19,7 +19,7 @@ public class CuotaDaoImpl implements CuotaDao{
 	private ResultSet rs;
 	private Connection conexion = Conexion.getConexion().getSQLConexion();
 	private String insertCuota = "INSERT INTO cuotas (idPrestamo, nroCuota, fechaVencimiento, estadoPago, idMovimiento) VALUES (?, ?, ?, ?, ?)";
-	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.estadoPago, C.idMovimiento FROM cuotas as C WHERE idPrestamo = ?";
+	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.estadoPago, C.idMovimiento, P.importeMensual FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
 
 	@Override
 	public boolean insert(Cuota cuota) throws SQLException {

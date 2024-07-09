@@ -11,4 +11,5 @@ public interface PrestamoDao {
 	public boolean updateEstado (int idPrestamo, Boolean estadoAprobacion)throws SQLException;
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) throws SQLException;
 	public ArrayList<Prestamo> listarSolicitudesPrestamos() throws SQLException;
+	public Prestamo obtenerPrestamoPorId (int idPrestamo) throws SQLException;
 }
