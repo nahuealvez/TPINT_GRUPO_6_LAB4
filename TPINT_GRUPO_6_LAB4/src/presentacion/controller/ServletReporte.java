@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import dominio.Cuenta;
+import dominio.Movimiento;
 import negocioImpl.CuentaNegocioImpl;
+import negocioImpl.MovimientoNegImpl;
 import negocio.CuentaNegocio;
-
+import negocio.MovimientoNegocio;
 
 @WebServlet("/ServletReporte")
 public class ServletReporte extends HttpServlet {
@@ -35,13 +37,50 @@ public class ServletReporte extends HttpServlet {
  			ArrayList <Cuenta> listaCtas= new ArrayList<Cuenta>();
  			CuentaNegocio NCta = new CuentaNegocioImpl();
  			try {
- 				listaCtas=(ArrayList<Cuenta>) NCta.obtenerTodasLasCuentasAhorro();
+ 				listaCtas=(ArrayList<Cuenta>) NCta.obtenerTodasLasCuentasCorrientes();
 			} catch (Exception e) {
 				 e.printStackTrace();
 			}
  			request.setAttribute("listaCtaCte", listaCtas);
  	        request.getRequestDispatcher("/ReportesCuentasCorriente.jsp").forward(request, response);
 		}
+		if(request.getParameter("btnVerMovimientosCta")!= null)
+		{
+			int idCuenta= Integer.parseInt(request.getParameter("IdCuentaCte"));
+			System.out.println("Todo bien: " + idCuenta);
+						
+			ArrayList<Movimiento> listaMovimientoCta = new ArrayList<Movimiento>();
+			MovimientoNegocio NMvto = new MovimientoNegImpl();
+			try 
+			{
+				listaMovimientoCta=NMvto.listarMovimientosPorCuenta(idCuenta);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}	
+ 			request.setAttribute("listaMovimiento", listaMovimientoCta);
+			request.getRequestDispatcher("/ReporteVerCuenta.jsp").forward(request, response);
+		}
+		if(request.getParameter("btnVerMovimientosAhorro")!= null)
+		{
+			int idCuenta= Integer.parseInt(request.getParameter("IdCuentaCte"));
+			System.out.println("Todo bien: " + idCuenta);
+						
+			ArrayList<Movimiento> listaMovimientoCta = new ArrayList<Movimiento>();
+			MovimientoNegocio NMvto = new MovimientoNegImpl();
+			try 
+			{
+				listaMovimientoCta=NMvto.listarMovimientosPorCuenta(idCuenta);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}	
+ 			request.setAttribute("listaMovimiento", listaMovimientoCta);
+			request.getRequestDispatcher("/ReporteVerCuenta.jsp").forward(request, response);
+		}
+		
 	}
 
 	

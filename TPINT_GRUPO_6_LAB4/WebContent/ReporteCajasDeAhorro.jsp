@@ -55,7 +55,10 @@
             		<td><%= cuentaCA.getSaldo() %></td> 
       		     	<td><%= cuentaCA.isEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %></td>             		
             		<td>
-                        <button class="btn btn-primary">Ver Movimientos</button>
+                        <form action="ServletReporte" method="get"> 
+            				<input type="hidden" value="<%= cuentaCA.getId() %>" name= "IdCuentaCte"  >                  	
+                        	<input type="submit" value="Ver Movimientos" class="btn btn-primary" id="btnVerMovimientosAhorro" name="btnVerMovimientosAhorro">
+                        </form> 
                     </td>
                 </tr>
               <% } %>
