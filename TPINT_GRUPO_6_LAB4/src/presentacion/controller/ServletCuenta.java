@@ -15,11 +15,15 @@ import javax.servlet.http.HttpSession;
 
 import dominio.Cliente;
 import dominio.Cuenta;
+import dominio.Movimiento;
 import dominio.TipoCuenta;
+import dominio.TipoMovimiento;
 import negocio.ClienteNegocio;
 import negocio.CuentaNegocio;
+import negocio.MovimientoNegocio;
 import negocioImpl.ClienteNegImpl;
 import negocioImpl.CuentaNegocioImpl;
+import negocioImpl.MovimientoNegImpl;
 
 @WebServlet("/ServletCuenta")
 public class ServletCuenta extends HttpServlet {
@@ -27,6 +31,7 @@ public class ServletCuenta extends HttpServlet {
 
 	private CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
 	private ClienteNegocio clienteNeg = new ClienteNegImpl();
+	private MovimientoNegocio movimientoNeg = new MovimientoNegImpl();
 	private String mensaje = null;
 	private String claseMensaje = null;
 
@@ -132,7 +137,20 @@ public class ServletCuenta extends HttpServlet {
 			boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
 
 			if (cuentaCreada) {
-				mensaje = "La cuenta fue creada con ï¿½xito";
+				
+				Movimiento movimiento = new Movimiento();
+				
+				TipoMovimiento tipoMov = new TipoMovimiento();
+				tipoMov.setId(1);
+				
+                movimiento.setFecha(LocalDateTime.now());
+                movimiento.setTipoMovimiento(tipoMov);;
+                movimiento.setCuenta(cuentagregada);
+                movimiento.setImporte(cuentagregada.getSaldo());
+                
+                boolean movCuentaNueva = movimientoNeg.agregarMovimiento(movimiento);
+                
+				mensaje = "La cuenta fue creada con éxito";
 				claseMensaje = "alert alert-success";
 			} else {
 				mensaje = "La cuenta no pudo ser creada ";
