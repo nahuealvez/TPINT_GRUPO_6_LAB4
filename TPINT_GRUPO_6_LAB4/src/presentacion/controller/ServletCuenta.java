@@ -177,6 +177,7 @@ public class ServletCuenta extends HttpServlet {
 			throws ServletException, IOException {
 
 		String dni = request.getParameter("dniCliente");
+		 String filtroEstado = request.getParameter("filtroEstado");
 
 		try {
 			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
@@ -184,7 +185,14 @@ public class ServletCuenta extends HttpServlet {
 			if (clienteServlet != null) {
 
 				List<Cuenta> cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-
+				
+				 if ("activas".equals(filtroEstado)) {
+		                cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getId(), true);
+		            } else if ("inactivas".equals(filtroEstado)) {
+		            	cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getId(), false);
+		            } else if ("todas".equals(filtroEstado)) {
+		                cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getId());
+		            }
 				request.setAttribute("clienteServlet", clienteServlet);
 				request.setAttribute("cuentasxCliente", cuentas);
 
@@ -195,7 +203,7 @@ public class ServletCuenta extends HttpServlet {
 
 			} else {
 				
-				mostrarMensaje(request, response, "No se encontrï¿½ ningï¿½n cliente con ese DNI", "alert alert-danger", clienteServlet, null);
+				mostrarMensaje(request, response, "No se encontró ningún cliente con ese DNI", "alert alert-danger", clienteServlet, null);
 
 			}
 

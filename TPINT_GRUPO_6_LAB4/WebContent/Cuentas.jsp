@@ -16,7 +16,6 @@
 		claseMensaje = (String) request.getAttribute("claseMensajeCuenta");
 		existeMensaje = true;
 	}
-
 %>
 
 
@@ -39,7 +38,12 @@
 		<form action="ServletCuenta" method="post" class="d-flex gap-3">
 			<input type="hidden" name="opcion" value="buscarCliente"> <input
 				type="text" class="form-control" minlength="7" maxlength="8"
-				placeholder="Ingrese DNI" name="dniCliente">
+				placeholder="Ingrese DNI" name="dniCliente"> <select
+				name="filtroEstado" class="form-select">
+				<option value="todas">Todas</option>
+				<option value="activas">Activas</option>
+				<option value="inactivas">Inactivas</option>
+			</select>
 			<button type="submit" class="btn btn-primary">Buscar</button>
 		</form>
 	</div>
@@ -193,7 +197,7 @@
 				%>
 			</tbody>
 		</table>
-				
+
 		<%
 			}
 		%>
@@ -208,8 +212,8 @@
 <!-- Scripts -->
 <script>
 	new DataTable('#tablaCuentas', {
-		language: {
-			url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
+		language : {
+			url : 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
 		},
 	});
 </script>
