@@ -9,4 +9,5 @@ public interface PrestamoNegocio {
 	public boolean crearPrestamo (Prestamo prestamo)throws SQLException;
 	public boolean actualizarEstadoSolicitud (int idPrestamo, Boolean estadoSolicitud)throws SQLException;
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente) throws SQLException;
+	public ArrayList<Prestamo> listarSolicitudesPrestamos() throws SQLException;
 }

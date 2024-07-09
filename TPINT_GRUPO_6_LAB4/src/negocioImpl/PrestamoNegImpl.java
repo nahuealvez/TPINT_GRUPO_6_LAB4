@@ -51,4 +51,17 @@ public class PrestamoNegImpl implements PrestamoNegocio{
 		}
 	}
 
+	@Override
+	public ArrayList<Prestamo> listarSolicitudesPrestamos() throws SQLException {
+		try {
+			return pDao.listarSolicitudesPrestamos();
+		} 
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
 }

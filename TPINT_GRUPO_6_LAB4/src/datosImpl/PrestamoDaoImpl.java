@@ -23,7 +23,8 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	
 	private static final String insert = "INSERT INTO prestamos (idCliente, idCuenta, importeAPagar, plazoDePago, importePedido, cuotas, importeMensual, estadoValidacion, fechaValidacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String updateEstadoSolicitud = "UPDATE prestamos SET estadoValidacion = ? WHERE id = ?";
-	private static final String listarPrestamosXCliente = "SELECT * FROM prestamos WHERE idCliente = ?";
+	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual,C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
+	private static final String listarSolicitudes = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id";
 	
 	@Override
 	public boolean insert(Prestamo prestamo) throws SQLException {
@@ -116,6 +117,28 @@ public class PrestamoDaoImpl implements PrestamoDao{
 		
 	}
 	
+	@Override
+	public ArrayList<Prestamo> listarSolicitudesPrestamos() throws SQLException {
+		ArrayList<Prestamo> solicitudesPrestamos = new ArrayList<Prestamo>();
+		
+		try {
+			st = conexion.prepareStatement(listarSolicitudes);
+			rs = st.executeQuery();
+			while(rs.next())
+			{
+				solicitudesPrestamos.add(getPrestamo(rs));
+			}
+			return solicitudesPrestamos;
+			
+		} 
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
 	private Prestamo getPrestamo(ResultSet resultSet) throws SQLException
 	{
 		Prestamo prestamo = new Prestamo();
@@ -125,6 +148,9 @@ public class PrestamoDaoImpl implements PrestamoDao{
 		//CLIENTE
 		Cliente cliente = new Cliente();
 		cliente.setIdCliente(resultSet.getInt("idCliente"));
+		cliente.setNombre(resultSet.getString("nombre"));
+		cliente.setApellido(resultSet.getString("apellido"));
+		cliente.setDni(resultSet.getString("dni"));
 		
 		//CUENTA
 		Cuenta cuenta = new Cuenta();

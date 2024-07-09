@@ -94,6 +94,14 @@ public class ServletPrestamo extends HttpServlet {
 			request.setAttribute("listaPrestamos", prestamos);
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
+		
+		if(request.getParameter("btnPrestamosAdminBanco")!= null)
+		{
+			
+			ArrayList<Prestamo> prestamos = cargarSolicitudesPrestamos();
+			request.setAttribute("listaPrestamosCliente", prestamos);
+			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+		}
 	}
 	
 	//------------------------FUNCIONES SOBRE EVENTOS--------------------
@@ -103,6 +111,17 @@ public class ServletPrestamo extends HttpServlet {
 		ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
 		try {
 			prestamos = prestamoNeg.listarPrestamosXCliente(idCliente);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return prestamos;
+	}
+	
+	private ArrayList<Prestamo> cargarSolicitudesPrestamos() 
+	{
+		ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
+		try {
+			prestamos = prestamoNeg.listarSolicitudesPrestamos();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
