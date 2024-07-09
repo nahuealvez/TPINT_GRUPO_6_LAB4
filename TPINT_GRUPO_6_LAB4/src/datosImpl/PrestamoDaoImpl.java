@@ -23,7 +23,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	
 	private static final String insert = "INSERT INTO prestamos (idCliente, idCuenta, importeAPagar, plazoDePago, importePedido, cuotas, importeMensual, estadoValidacion, fechaValidacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String updateEstadoSolicitud = "UPDATE prestamos SET estadoValidacion = ? WHERE id = ?";
-	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual,C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
+	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
 	private static final String listarSolicitudes = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id";
 	
 	@Override

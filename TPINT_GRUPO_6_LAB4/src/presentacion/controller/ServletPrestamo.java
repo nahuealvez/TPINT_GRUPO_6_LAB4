@@ -31,7 +31,6 @@ import negocioImpl.PrestamoNegImpl;
 public class ServletPrestamo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final ClienteNegocio clienteNeg = new ClienteNegImpl();
 	private static final CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
 	private static final PrestamoNegocio prestamoNeg = new PrestamoNegImpl();
 
@@ -86,7 +85,7 @@ public class ServletPrestamo extends HttpServlet {
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
 		
-		if(request.getParameter("btnVerPrestamo")!= null)
+		if(request.getParameter("btnPrestamosCliente")!= null)
 		{
 			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
 			
