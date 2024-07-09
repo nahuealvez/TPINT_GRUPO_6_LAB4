@@ -54,7 +54,10 @@
             		<td><%= cuentaCC.getSaldo() %></td> 
       		     	<td><%= cuentaCC.isEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %></td>             		
             		<td>
-                        <button class="btn btn-primary">Ver Movimientos</button>
+                        <form action="ServletReporte" method="get"> 
+            				<input type="hidden" value="<%= cuentaCC.getId() %>" name= "IdCuentaCte"  >                  	
+                        	<input type="submit" value="Ver Movimientos" class="btn btn-primary" id="btnVerMovimientosCta" name="btnVerMovimientosCta">
+                        </form> 
                     </td>
                 </tr>
               <% } %>
