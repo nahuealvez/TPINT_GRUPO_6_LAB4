@@ -67,43 +67,50 @@
 					<%
 						if (usuarioLogueado.getTipoUsuario().getId() == 1) {
 					%>
-					<a class="nav-link p-0" href="Index.jsp">Inicio</a>
-					<a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a>
-					<a class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
-					<a class="nav-link p-0" href="Reportes.jsp">Reportes</a>
+
+					<a class="nav-link p-0" href="Index.jsp">Inicio</a> <a
+						class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a> <a
+						class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
+						
+						<form class="m-0" action="ServletPrestamo" method="post">
+						
+						<button class="nav-link p-0" type="submit"
+							name="btnPrestamosAdminBanco">Préstamos</button>
+					</form>
+					
+						 <a class="nav-link p-0" href="Reportes.jsp">Reportes</a>
+
 					<%
 						} else if (usuarioLogueado.getTipoUsuario().getId() == 2) {
 					%>
+
 					<form class="m-0" action="ServletIndex" method="post">
 						<button id="btnInicio" class="nav-link p-0" name="indexClienteNav"
 							type="submit">Inicio</button>
 					</form>
+
 					<a class="nav-link p-0" href="ServletCuenta?opcion=listar">Cuentas</a>
-					
+
 					<form class="m-0" action="ServletTransferencia" method="post">
 						<button class="nav-link p-0" name="btnTransferencia" type="submit">Transferencias</button>
+					</form>
+
+					<form class="m-0" action="ServletPrestamo" method="post">
+						<input type="hidden" name="idCliente"
+							value="<%=cliente.getIdCliente()%>">
+						<button class="nav-link p-0" type="submit"
+							name="accederPrestamosCliente">Préstamos</button>
 					</form>
 					<%
 						}
 					%>
-					
-				<%-- 	<%
-						if (usuarioLogueado.getTipoUsuario().getId() == 1) {
-					%>
-					<%
-						} else if (usuarioLogueado.getTipoUsuario().getId() == 2) {
-					%>
-					<%
-						}
-					%> --%>
-					
-					<a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a>
+
+					<!-- <a class="nav-link p-0" href="Prestamos.jsp">Préstamos</a> -->
 				</div>
 			</div>
 			<div class="dropdown d-flex align-items-center gap-3">
 				<span class="userProfile">|</span> <span class="userProfile"><%=usuarioLogueado.getTipoUsuario().getId() == 1 ? usuarioLogueado.getUsuario()
-					: cliente.getNombreApellido()%></span>
-				<a href="#"
+					: cliente.getNombreApellido()%></span> <a href="#"
 					class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
 					data-bs-toggle="dropdown" aria-expanded="true"> <svg
 						xmlns="http://www.w3.org/2000/svg" width="30" height="30"
