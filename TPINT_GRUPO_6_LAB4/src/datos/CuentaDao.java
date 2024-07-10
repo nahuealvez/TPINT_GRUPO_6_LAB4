@@ -1,10 +1,12 @@
 package datos;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Cuenta;
+import dominio.Movimiento;
 
 public interface CuentaDao {
 
@@ -20,4 +22,6 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
 	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
+	public boolean verificarSaldo(Cuenta cuenta, BigDecimal importe);
+	public boolean afectarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 }

@@ -1,5 +1,6 @@
 package datosImpl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import datos.CuentaDao;
 import dominio.Cliente;
 import dominio.Cuenta;
 import dominio.Localidad;
+import dominio.Movimiento;
 import dominio.Provincia;
 import dominio.TipoCuenta;
 
@@ -28,6 +30,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String obtenerCuentasCorrientes = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 2";
 	private static final String obtenerCuentasAhorro = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 1";
 	private static final String listasActivas= "SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ? and estado=true";
+	private static final String afectarSaldo = "UPDATE cuentas SET saldo =  saldo + ? WHERE id = ?";
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException{
@@ -489,5 +492,45 @@ public class CuentaDaoImpl implements CuentaDao {
 			throw ex;
 		}
 		return listaCuentas;
+	}
+
+	@Override
+	public boolean verificarSaldo(Cuenta cuenta, BigDecimal importe) {
+		BigDecimal resta = cuenta.getSaldo().subtract(importe);
+		
+		if (resta.compareTo(BigDecimal.ZERO) >= 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean afectarSaldo(int idCuenta, BigDecimal importe) throws SQLException {
+		PreparedStatement statement;
+		Connection conexion= Conexion.getConexion().getSQLConexion();
+		  
+		try {
+			statement= conexion.prepareStatement(afectarSaldo);
+			statement.setInt(2, idCuenta);
+			statement.setBigDecimal(1, importe);
+		   
+		    int filasAfectadas= statement.executeUpdate();
+		    if(filasAfectadas > 0) {
+			    conexion.commit();
+			    return true;
+		    }
+		    else {
+		    	conexion.rollback();
+		    	return false;
+		    }
+		}
+		catch(SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 }
