@@ -20,4 +20,5 @@ public interface CuentaNegocio {
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
 	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
+	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 }
