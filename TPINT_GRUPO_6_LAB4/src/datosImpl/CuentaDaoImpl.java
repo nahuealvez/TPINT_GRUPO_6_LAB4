@@ -31,6 +31,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String obtenerCuentasAhorro = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 1";
 	private static final String listasActivas= "SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ? and estado=true";
 	private static final String afectarSaldo = "UPDATE cuentas SET saldo =  saldo + ? WHERE id = ?";
+	private static final String cuentasxEstado= "SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ? and estado=?";
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException{
@@ -532,5 +533,50 @@ public class CuentaDaoImpl implements CuentaDao {
 		catch (Exception ex) {
 			throw ex;
 		}
+	}
+	
+	@Override
+	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		ArrayList<Cuenta> listaCuentasxEstado = new ArrayList<Cuenta> (); 
+
+		try {
+			statement= conexion.prepareStatement(cuentasxEstado);
+			statement.setInt(1, idCliente);
+			statement.setBoolean(2, estado);
+			rs=statement.executeQuery();
+
+			while(rs.next()) {
+				Cuenta cuenta= new Cuenta();
+
+				Cliente cliente= new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+
+				TipoCuenta tipoCuenta= new TipoCuenta();
+				tipoCuenta.setDescripcion(rs.getString("tipoCuenta"));
+
+				cuenta.setId(rs.getInt("id"));
+				cuenta.setCliente(cliente);
+				cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+				cuenta.setTipoCuenta(tipoCuenta);
+				cuenta.setCbu(rs.getString("cbu"));
+				cuenta.setSaldo(rs.getBigDecimal("saldo"));
+				cuenta.setEstado(rs.getBoolean("estado"));
+
+				listaCuentasxEstado.add(cuenta);
+
+
+			}
+
+		}catch(SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+		return listaCuentasxEstado;
 	}
 }

@@ -137,4 +137,10 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 			throw ex;
 		}
 	}
+	
+	@Override
+	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+
+		return cuentaDao.CuentasxClienteYEstado(idCliente, estado);
+	}
 }
