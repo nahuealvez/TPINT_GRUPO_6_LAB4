@@ -55,10 +55,11 @@ public class ServletPrestamo extends HttpServlet {
 			request.setAttribute("listaPrestamos", prestamos);
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
-		
+		System.out.println("solicitar prestamo: "+request.getParameter("btnSolicitarPrestamo"));
 		if(request.getParameter("btnSolicitarPrestamo")!= null)
 		{
 			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			System.out.println("clienteid: "+idCliente);
 			try {
 				ArrayList<Cuenta> cuentasCliente = (ArrayList<Cuenta>) cuentaNeg.cuentasPorClienteActivas(idCliente);
 			    request.setAttribute("cuentasCliente", cuentasCliente);
@@ -99,10 +100,12 @@ public class ServletPrestamo extends HttpServlet {
 		
 		if(request.getParameter("confirmarAprobacion")!= null)
 		{
-			int idPrestamo = 7; // HARDCODEADO -- RESOLVER PASAR POR PARAMETRO.
+			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo")); 
+			System.out.println("id de prestamo en confirmaraprobacion "+idPrestamo);
 			try {
 				Prestamo prestamoAprob = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
 				prestamoNeg.aprobarPrestamo(prestamoAprob);
+				
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
@@ -110,6 +113,7 @@ public class ServletPrestamo extends HttpServlet {
 			try {
 				CuotaNegocio cNeg = new CuotaNegImpl();
 				ArrayList<Cuota> cuotas = cNeg.listarCuotasPorPrestamo(idPrestamo);
+				
 				for (Cuota cuota : cuotas) {
 					System.out.println("SERVLET " + cuota.toString());
 				}
