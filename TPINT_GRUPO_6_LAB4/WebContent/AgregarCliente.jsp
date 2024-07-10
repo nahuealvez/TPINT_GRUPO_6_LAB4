@@ -224,7 +224,7 @@
         	</div>
             <div class="col-md-6 position-relative">
                 <label for="txtClave">Clave:</label>
-                <input type="text" 
+                <input type="password" 
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtClave" 
@@ -237,7 +237,7 @@
             </div>
             <div class="col-md-6 position-relative">
              	<label for="txtValidarClave">Validar Clave:</label>
-            	<input type="text" 
+            	<input type="password" 
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtValidarClave" 

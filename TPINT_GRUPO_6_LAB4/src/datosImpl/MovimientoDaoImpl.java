@@ -78,16 +78,34 @@ public class MovimientoDaoImpl implements MovimientoDao {
 	@Override
 	public ArrayList<Movimiento> listarMovimientosPorCuenta(int idCuenta) throws SQLException {
 		ArrayList<Movimiento> movimientosPorCuenta = new ArrayList<Movimiento>();
-		Movimiento movimiento = new Movimiento();
 		
-		try {
-			st = conexion.prepareStatement(listarMovimientosPorCuenta);
-			st.setInt(1, idCuenta);
-			rs = st.executeQuery();
-			while (rs.next()) {
-				movimientosPorCuenta.add(movimiento);
-			}
-			return movimientosPorCuenta;
+
+		    try {
+		        st = conexion.prepareStatement(listarMovimientosPorCuenta);
+		        st.setInt(1, idCuenta);
+		        rs = st.executeQuery();
+
+		        while (rs.next()) {
+		            Movimiento movimiento = new Movimiento(); // Crear un nuevo objeto Movimiento en cada iteración
+		            Cuenta cuenta =new Cuenta();
+		            
+		            movimiento.setId(rs.getInt("idMovimiento"));
+		            movimiento.setFecha(rs.getTimestamp("fechaMovimiento").toLocalDateTime()); // Asegúrate de que el método setFecha espera LocalDateTime
+		            movimiento.setConcepto(rs.getString("conceptoMovimiento"));
+		            
+		            cuenta.setId(rs.getInt("idCuenta"));
+		            movimiento.setCuenta(cuenta);		           
+		            movimiento.setImporte(rs.getBigDecimal("importeMovimiento"));
+
+		           
+		            TipoMovimiento tipoMovimiento = new TipoMovimiento();
+		            tipoMovimiento.setId(rs.getInt("idTipoMovimiento"));
+		            tipoMovimiento.setDescripcion(rs.getString("nombreTipoMovimiento"));
+		            movimiento.setTipoMovimiento(tipoMovimiento);
+
+		            movimientosPorCuenta.add(movimiento);
+		        }
+		        return movimientosPorCuenta;
 		}
 		catch (SQLException ex) {
 			throw ex;

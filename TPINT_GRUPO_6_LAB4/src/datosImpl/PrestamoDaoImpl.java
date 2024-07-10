@@ -23,8 +23,9 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	
 	private static final String insert = "INSERT INTO prestamos (idCliente, idCuenta, importeAPagar, plazoDePago, importePedido, cuotas, importeMensual, estadoValidacion, fechaValidacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String updateEstadoSolicitud = "UPDATE prestamos SET estadoValidacion = ? WHERE id = ?";
-	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual,C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
+	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
 	private static final String listarSolicitudes = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id";
+	private static final String obtenerPrestamoPorId = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE P.id = ?";
 	
 	@Override
 	public boolean insert(Prestamo prestamo) throws SQLException {
@@ -129,6 +130,30 @@ public class PrestamoDaoImpl implements PrestamoDao{
 				solicitudesPrestamos.add(getPrestamo(rs));
 			}
 			return solicitudesPrestamos;
+			
+		} 
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	@Override
+	public Prestamo obtenerPrestamoPorId(int idPrestamo) throws SQLException {
+		Prestamo prestamo = new Prestamo();
+		
+		try {
+			st = conexion.prepareStatement(obtenerPrestamoPorId);
+			st.setInt(1, idPrestamo);
+			rs = st.executeQuery();
+			 if (rs.next()) {
+		          prestamo = getPrestamo(rs);
+		     } else {
+		    	 throw new SQLException("No se encontró ningún préstamo con el ID especificado: " + idPrestamo);
+		     }
+			return prestamo;
 			
 		} 
 		catch (SQLException ex) {

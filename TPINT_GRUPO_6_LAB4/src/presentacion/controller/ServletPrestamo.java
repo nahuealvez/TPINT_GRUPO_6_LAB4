@@ -16,12 +16,15 @@ import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import dominio.Cliente;
 import dominio.Cuenta;
+import dominio.Cuota;
 import dominio.Prestamo;
 import negocio.ClienteNegocio;
 import negocio.CuentaNegocio;
+import negocio.CuotaNegocio;
 import negocio.PrestamoNegocio;
 import negocioImpl.ClienteNegImpl;
 import negocioImpl.CuentaNegocioImpl;
+import negocioImpl.CuotaNegImpl;
 import negocioImpl.PrestamoNegImpl;
 
 /**
@@ -31,7 +34,6 @@ import negocioImpl.PrestamoNegImpl;
 public class ServletPrestamo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final ClienteNegocio clienteNeg = new ClienteNegImpl();
 	private static final CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
 	private static final PrestamoNegocio prestamoNeg = new PrestamoNegImpl();
 
@@ -86,7 +88,7 @@ public class ServletPrestamo extends HttpServlet {
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
 		
-		if(request.getParameter("btnVerPrestamo")!= null)
+		if(request.getParameter("btnPrestamosCliente")!= null)
 		{
 			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
 			
@@ -101,6 +103,31 @@ public class ServletPrestamo extends HttpServlet {
 			ArrayList<Prestamo> prestamos = cargarSolicitudesPrestamos();
 			request.setAttribute("listaPrestamosCliente", prestamos);
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+		}
+		
+		if(request.getParameter("confirmarAprobacion")!= null)
+		{
+			int idPrestamo = 7; // HARDCODEADO -- RESOLVER PASAR POR PARAMETRO.
+			try {
+				Prestamo prestamoAprob = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
+				prestamoNeg.aprobarPrestamo(prestamoAprob);
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			
+			try {
+				CuotaNegocio cNeg = new CuotaNegImpl();
+				ArrayList<Cuota> cuotas = cNeg.listarCuotasPorPrestamo(idPrestamo);
+				for (Cuota cuota : cuotas) {
+					System.out.println("SERVLET " + cuota.toString());
+				}
+			} 
+			catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -135,6 +162,7 @@ public class ServletPrestamo extends HttpServlet {
 		Cuenta cuenta = new Cuenta();
 		
 		float tasaInteres = 20.0f;
+		int plazoPago = 30;
 		BigDecimal importePedido = new BigDecimal(request.getParameter("txtImporteSolicitado"));
 		int cuotas = (Integer.parseInt(request.getParameter("txtCuotas")));
 
@@ -154,6 +182,7 @@ public class ServletPrestamo extends HttpServlet {
 		
 		prestamo.setImporteAPagar(importeTotalAPagar);
 		prestamo.setImportePedido(importePedido);
+		prestamo.setPlazoDePago(plazoPago);
 		prestamo.setCuotas(cuotas);
 		prestamo.setImporteMensual(importeMensual);
 		

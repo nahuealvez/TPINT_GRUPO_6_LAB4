@@ -150,7 +150,7 @@ public class ServletCuenta extends HttpServlet {
                 
                 boolean movCuentaNueva = movimientoNeg.agregarMovimiento(movimiento);
                 
-				mensaje = "La cuenta fue creada con éxito";
+				mensaje = "La cuenta fue creada con ï¿½xito";
 				claseMensaje = "alert alert-success";
 			} else {
 				mensaje = "La cuenta no pudo ser creada ";
@@ -177,6 +177,7 @@ public class ServletCuenta extends HttpServlet {
 			throws ServletException, IOException {
 
 		String dni = request.getParameter("dniCliente");
+		 String filtroEstado = request.getParameter("filtroEstado");
 
 		try {
 			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
@@ -184,7 +185,14 @@ public class ServletCuenta extends HttpServlet {
 			if (clienteServlet != null) {
 
 				List<Cuenta> cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-
+				
+				 if ("todas".equals(filtroEstado)) {
+					 cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
+		            } else if ("activas".equals(filtroEstado)) {
+		            	cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), true);
+		            } else if ("inactivas".equals(filtroEstado)) {
+		                cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), false);
+		            }
 				request.setAttribute("clienteServlet", clienteServlet);
 				request.setAttribute("cuentasxCliente", cuentas);
 
