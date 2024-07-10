@@ -18,6 +18,13 @@
 	%>
 	
 	<h3>Préstamos</h3>
+	 <div class="card-header d-flex justify-content-end">
+	  
+	  	<form action="ServletPrestamo" method="post">
+	  		
+	  		<input type="submit" value="Solicitar" id="btnSolicitarPrestamo"  name="btnSolicitarPrestamo"class="btn btn-primary">
+	  	</form>
+	  </div>
 	<div class="card">
 	  <div class="card-header d-flex justify-content-start gap-2">
 	  	<div>

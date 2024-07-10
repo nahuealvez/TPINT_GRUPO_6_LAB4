@@ -132,8 +132,8 @@
 											<form action="ServletCuenta" method="post">
 												<input type="hidden" name="opcion" value="cambiarEstado">
 												<input type="hidden" name="idCuenta"
-													value="<%=cuenta.getId()%>"> <input type="hidden"
-													name="dniCliente" value="<%=clienteServlet.getDni()%>">
+													value="<%=cuenta.getId()%>"> 
+												<input type="hidden" name="dniCliente" value="<%=clienteServlet.getDni()%>">
 												<input type="hidden" name="estado"
 													value="<%=cuenta.isEstado()%>"> <input
 													type="submit" value="Desactivar" class="btn btn-danger">

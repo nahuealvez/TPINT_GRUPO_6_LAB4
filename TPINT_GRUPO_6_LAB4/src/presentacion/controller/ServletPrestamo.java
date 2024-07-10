@@ -39,20 +39,13 @@ public class ServletPrestamo extends HttpServlet {
 
     public ServletPrestamo() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("accederPrestamosCliente") != null)
 		{
@@ -73,7 +66,7 @@ public class ServletPrestamo extends HttpServlet {
 			    RequestDispatcher rd = request.getRequestDispatcher("/SolicitarPrestamo.jsp");
 			    rd.forward(request, response);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -97,13 +90,12 @@ public class ServletPrestamo extends HttpServlet {
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
 		
-		if(request.getParameter("btnPrestamosAdminBanco")!= null)
-		{
-			
-			ArrayList<Prestamo> prestamos = cargarSolicitudesPrestamos();
-			request.setAttribute("listaPrestamosCliente", prestamos);
-			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
-		}
+		if(request.getParameter("btnPrestamosAdminBanco")!= null) {
+            ArrayList<Prestamo> prestamos = cargarSolicitudesPrestamos();
+           
+            request.setAttribute("listaPrestamosCliente", prestamos);
+            request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+        }
 		
 		if(request.getParameter("confirmarAprobacion")!= null)
 		{
