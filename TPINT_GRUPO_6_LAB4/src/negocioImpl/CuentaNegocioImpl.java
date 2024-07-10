@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +8,14 @@ import java.util.List;
 import datos.CuentaDao;
 import datosImpl.CuentaDaoImpl;
 import dominio.Cuenta;
+import dominio.Movimiento;
 import negocio.CuentaNegocio;
+import negocio.MovimientoNegocio;
 
 public class CuentaNegocioImpl implements CuentaNegocio  {
+	
 
-		private CuentaDao cuentaDao= new CuentaDaoImpl();
-		
+	private CuentaDao cuentaDao= new CuentaDaoImpl();
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException {
@@ -80,5 +83,58 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
 		
 		return cuentaDao.cuentasActivas(idCliente);
+	}
+
+	@Override
+	public boolean acreditar(Cuenta cuenta, Movimiento movimiento) throws SQLException {
+		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
+		try {
+			if (movimientoNegocio.agregarMovimiento(movimiento)) {
+				if (cuentaDao.afectarSaldo(cuenta.getId(), movimiento.getImporte())) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public boolean debitar(Cuenta cuenta, Movimiento movimiento) throws SQLException {
+		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
+		try {
+			if (cuentaDao.verificarSaldo(cuenta, movimiento.getImporte())) {
+				if (movimientoNegocio.agregarMovimiento(movimiento)) {
+					if (cuentaDao.afectarSaldo(cuenta.getId(), movimiento.getImporte().negate())) {
+						return true;
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 }
