@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Cuenta;
-import dominio.Movimiento;
 
 public interface CuentaNegocio {
 
@@ -21,6 +20,4 @@ public interface CuentaNegocio {
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
 	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
-	public boolean acreditar(Cuenta cuenta, Movimiento movimiento) throws SQLException;
-	public boolean debitar(Cuenta cuenta, Movimiento movimiento) throws SQLException;
 }
