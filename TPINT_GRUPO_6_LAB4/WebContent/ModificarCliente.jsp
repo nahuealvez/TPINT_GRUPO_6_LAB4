@@ -229,14 +229,13 @@
                 	maxlength="14" 
                 	pattern="^[A-Za-z0-9_]+$"
                 	placeholder="Ingrese nuevo usuario" 
-                	required
-                readonly>
+                required>
             </div>
             <div class="col-md-6 position-relative">
         	</div>
             <div class="col-md-6 position-relative">
                 <label for="txtClave">Clave:</label>
-                <input type="text" 
+                <input type="password" 
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtClave" 
@@ -246,11 +245,12 @@
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
-                required>
+                	required
+                readonly>
             </div>
             <div class="col-md-6 position-relative">
             	<label for="txtValidarClave">Validar Clave:</label>
-            	<input type="text" 
+            	<input type="password" 
                 	class="form-control 
                 	form-control-sm" 
                 	id="txtValidarClave" 
@@ -260,7 +260,8 @@
                 	maxlength="14" 
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
-            required>
+            		required
+            readonly>
         </div>
             <div class="col-md-6 mt-3">
                 <a class="btn btn-dark btn-sm" href="ServletCliente?Param=1">< Volver</a>
