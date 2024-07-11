@@ -101,6 +101,7 @@
 								</div>
 							</form>
 						</div>
+						
 						<button type="button" class="btn btn-outline-danger btn-sm"
 							data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo">
 							Rechazar</button>
@@ -134,8 +135,7 @@
 					<td><span class="badge bg-danger">RECHAZADO</span></td>
 					<td class="d-flex justify-content-start align-items-center gap-2">
 						<form action="ServletPrestamo" method="post">
-							<input type="hidden" id="idPrestamo" name="idPrestamo" value="<%=pre.getId()%>">
-							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
+							<button type="submit" id="btnVerPrestamo"
 								class="btn btn-primary btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -152,8 +152,7 @@
 					<td><span class="badge text-bg-success">APROBADO</span></td>
 					<td class="d-flex justify-content-start align-items-center gap-2">
 						<form action="ServletPrestamo" method="post">
-							<input type="hidden" id="idPrestamo" name="idPrestamo" value="<%=pre.getId()%>">
-							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
+							<button type="submit" id="btnVerPrestamo"
 								class="btn btn-primary btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
