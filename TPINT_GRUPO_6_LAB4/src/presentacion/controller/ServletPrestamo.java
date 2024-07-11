@@ -125,6 +125,25 @@ public class ServletPrestamo extends HttpServlet {
 			}
 		}
 		
+		if(request.getParameter("btnVerPrestamo")!= null)
+		{
+			try {
+				int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+				Prestamo prestamoADetallar = new Prestamo();
+				prestamoADetallar = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
+				request.setAttribute("prestamoADetallar", prestamoADetallar);
+				request.getRequestDispatcher("/DetallePrestamo.jsp").forward(request, response);
+				
+			} 
+			catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		
 	}
 	
 	//------------------------FUNCIONES SOBRE EVENTOS--------------------
@@ -198,6 +217,10 @@ public class ServletPrestamo extends HttpServlet {
         
      	request.setAttribute("txtMensajeAgregarCliente", mensaje);
         request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
+	}
+	
+	private void confirmarAprobacion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 
 }
