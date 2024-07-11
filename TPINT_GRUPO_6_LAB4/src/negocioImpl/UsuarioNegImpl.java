@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import Excepciones.ErrorUsuarioDesactivado;
 import Excepciones.ErrorUsuarioException;
 import datos.UsuarioDao;
 import datosImpl.UsuarioDaoImpl;
@@ -16,7 +17,7 @@ public class UsuarioNegImpl implements UsuarioNegocio {
 	}
 	
 	@Override
-	public Usuario verificarUsuario(String usuario, String pass) throws ErrorUsuarioException {
+	public Usuario verificarUsuario(String usuario, String pass) throws ErrorUsuarioException, ErrorUsuarioDesactivado {
 		
 		return usuarioDao.verificarUsuario(usuario, pass);
 	}

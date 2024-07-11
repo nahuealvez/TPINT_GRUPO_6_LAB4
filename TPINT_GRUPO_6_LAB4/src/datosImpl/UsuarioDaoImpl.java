@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Excepciones.ErrorUsuarioDesactivado;
 import Excepciones.ErrorUsuarioException;
 import datos.Conexion;
 import datos.UsuarioDao;
@@ -55,7 +56,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	}
 	
 	@Override
-	public Usuario verificarUsuario(String usuario, String contrasenia) throws ErrorUsuarioException  {
+	public Usuario verificarUsuario(String usuario, String contrasenia) throws ErrorUsuarioException, ErrorUsuarioDesactivado  {
 		
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -76,6 +77,13 @@ public class UsuarioDaoImpl implements UsuarioDao{
 				TipoUsuario tipoUsuario = new TipoUsuario();
 				tipoUsuario.setId(rs.getInt("idTipoUsuario"));
 				user.setTipoUsuario(tipoUsuario);
+				
+				boolean estado = rs.getBoolean("estado");
+				user.setEstado(estado);
+				
+				if(estado == false) {
+					throw new ErrorUsuarioDesactivado();
+				}
 				
 			}
 		}catch(SQLException e) {

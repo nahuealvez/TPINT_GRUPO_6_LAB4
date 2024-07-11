@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Excepciones.ErrorUsuarioDesactivado;
 import Excepciones.ErrorUsuarioException;
 import dominio.Usuario;
 import negocio.CuentaNegocio;
@@ -59,13 +60,18 @@ public class ServletLogin extends HttpServlet {
 				else {
 					response.sendRedirect("Index.jsp");
 				}			
-			}
-			catch(ErrorUsuarioException e) {
-				request.setAttribute("loginError", "Usuario o contraseña incorrectos.");
-				System.out.println(e.getMessage());
+			}catch(ErrorUsuarioException e) {
+				request.setAttribute("loginError", e.getMessage());
+				
+	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
+	            rd.forward(request, response);
+			}catch(ErrorUsuarioDesactivado e) {
+				request.setAttribute("loginError", e.getMessage());
+				
 	            RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
 	            rd.forward(request, response);
 			}
+			
 				
 		}
 											
