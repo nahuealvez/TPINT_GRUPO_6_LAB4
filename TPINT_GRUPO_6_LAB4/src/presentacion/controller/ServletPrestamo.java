@@ -101,22 +101,21 @@ public class ServletPrestamo extends HttpServlet {
 		if(request.getParameter("confirmarAprobacion")!= null)
 		{
 			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo")); 
+			boolean estadoAux=Boolean.parseBoolean("idestado");
+			ArrayList<Prestamo> prestamosActualizados =new ArrayList<Prestamo>();
 			System.out.println("id de prestamo en confirmaraprobacion "+idPrestamo);
 			try {
+				if(estadoAux == true) {
 				Prestamo prestamoAprob = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
 				prestamoNeg.aprobarPrestamo(prestamoAprob);
-				
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-			
-			try {
-				CuotaNegocio cNeg = new CuotaNegImpl();
-				ArrayList<Cuota> cuotas = cNeg.listarCuotasPorPrestamo(idPrestamo);
-				
-				for (Cuota cuota : cuotas) {
-					System.out.println("SERVLET " + cuota.toString());
+				 prestamosActualizados = cargarSolicitudesPrestamos();
+				}else {
+					prestamoNeg.actualizarEstadoSolicitud(idPrestamo, estadoAux);
+					 prestamosActualizados = cargarSolicitudesPrestamos();
+					 
 				}
+				request.setAttribute("listaPrestamosCliente", prestamosActualizados);
+				request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 			} 
 			catch (SQLException ex) {
 				ex.printStackTrace();
@@ -125,6 +124,7 @@ public class ServletPrestamo extends HttpServlet {
 				ex.printStackTrace();
 			}
 		}
+		
 	}
 	
 	//------------------------FUNCIONES SOBRE EVENTOS--------------------

@@ -68,25 +68,24 @@
 						if (usuarioLogueado.getTipoUsuario().getId() == 1) {
 					%>
 
-					<a class="nav-link p-0" href="Index.jsp">Inicio</a> <a
-						class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a> <a
-						class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
+					<a class="nav-link p-0" href="Index.jsp">Inicio</a> 
+					<a class="nav-link p-0" href="ServletCliente?Param=1">Clientes</a> 
+					<a class="nav-link p-0" href="Cuentas.jsp">Cuentas</a>
 						
-						<form class="m-0" action="ServletPrestamo" method="post">
+					<form class="m-0" action="ServletPrestamo" method="post">
 						
 						<button class="nav-link p-0" type="submit"
 							name="btnPrestamosAdminBanco">Préstamos</button>
 					</form>
 					
-						 <a class="nav-link p-0" href="Reportes.jsp">Reportes</a>
+					<a class="nav-link p-0" href="Reportes.jsp">Reportes</a>
 
 					<%
 						} else if (usuarioLogueado.getTipoUsuario().getId() == 2) {
 					%>
 
 					<form class="m-0" action="ServletIndex" method="post">
-						<button id="btnInicio" class="nav-link p-0" name="indexClienteNav"
-							type="submit">Inicio</button>
+						<button id="btnInicio" class="nav-link p-0" name="indexClienteNav"  type="submit">Inicio</button>
 					</form>
 
 					<a class="nav-link p-0" href="ServletCuenta?opcion=listar">Cuentas</a>

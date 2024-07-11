@@ -19,14 +19,6 @@
 %>
 
 <h3>Préstamos</h3>
-<div class="card-header d-flex justify-content-end">
-
-	<form action="ServletPrestamo" method="post">
-
-		<input type="submit" value="Solicitar" id="btnSolicitarPrestamo"
-			name="btnSolicitarPrestamo" class="btn btn-primary">
-	</form>
-</div>
 <div class="card">
 	<div class="card-header d-flex justify-content-start gap-2">
 		<div>
@@ -88,7 +80,6 @@
 							Aprobar</button>
 						<div class="modal fade" id="mdlAprobarPrestamo" tabindex="-1"
 							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<form action="ServletPrestamo" method="post">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -98,13 +89,13 @@
 										</div>
 										<div class="modal-body">¿Confirma aprobar el préstamo?</div>
 										<div class="modal-footer">
+											<form action="ServletPrestamo" method="post">
 											<input type="hidden" name="confirmarAprobacion" value="confirmarAprobacion">
-											<input type="hidden" name="idPrestamo"
-												value="<%=pre.getId()%>">
+											<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+											<input type="hidden" name="idestado" value="<%=true%>">
 											<button class="btn btn-success" type="submit"
 												name="confirmarAprobacion">Sí, apruebo</button>
-											<button type="button" class="btn btn-danger"
-												data-bs-dismiss="modal">Cancelar</button>
+											<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
 										</div>
 									</div>
 								</div>
@@ -115,22 +106,22 @@
 							Rechazar</button>
 						<div class="modal fade" id="mdlRechazarPrestamo" tabindex="-1"
 							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<form>
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">Rechazar
-												préstamo #</h1>
+											<h1 class="modal-title fs-5" id="exampleModalLabel"><%="Rechazar préstamo #" + pre.getId()%></h1>
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<div class="modal-body">¿Confirma rechazar el préstamo?
-										</div>
+										<div class="modal-body">¿Confirma rechazar el préstamo?</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-success">Sí,
-												rechazo</button>
-											<button type="button" class="btn btn-danger"
-												data-bs-dismiss="modal">Cancelar</button>
+											<form action="ServletPrestamo" method="post">
+											<input type="hidden" name="confirmarAprobacion" value="confirmarAprobacion">
+											<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+											<input type="hidden" name="idestado" value="<%=false%>">
+											<button class="btn btn-success" type="submit"
+												name="confirmarAprobacion">Sí, rechazo</button>
+											<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
 										</div>
 									</div>
 								</div>
