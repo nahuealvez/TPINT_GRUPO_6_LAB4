@@ -91,9 +91,7 @@
 
 					<a class="nav-link p-0" href="ServletCuenta?opcion=listar">Cuentas</a>
 
-					<form class="m-0" action="ServletTransferencia" method="post">
-						<button class="nav-link p-0" name="btnTransferencia" type="submit">Transferencias</button>
-					</form>
+					<a class="nav-link p-0" href="Transferencias.jsp">Transferencias</a>
 
 					<form class="m-0" action="ServletPrestamo" method="post">
 						<input type="hidden" name="idCliente"
