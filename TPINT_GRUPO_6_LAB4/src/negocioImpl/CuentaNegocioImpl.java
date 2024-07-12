@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Excepciones.SinSaldoException;
 import datos.CuentaDao;
 import datosImpl.CuentaDaoImpl;
 import dominio.Cuenta;
@@ -86,11 +87,32 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 
 	@Override
-	public boolean acreditar(Cuenta cuenta, Movimiento movimiento) throws SQLException {
+	public boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException {
+		try {
+			Cuenta cuenta = obtenerCuentaPorId(idCuenta);
+			BigDecimal resta = cuenta.getSaldo().subtract(importe);
+			
+			if (resta.compareTo(BigDecimal.ZERO) >= 0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
+	@Override
+	public boolean acreditar(int idCuenta, Movimiento movimiento) throws SQLException {
 		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
 		try {
 			if (movimientoNegocio.agregarMovimiento(movimiento)) {
-				if (cuentaDao.afectarSaldo(cuenta.getId(), movimiento.getImporte())) {
+				if (cuentaDao.afectarSaldo(idCuenta, movimiento.getImporte())) {
 					return true;
 				}
 				else {
@@ -110,12 +132,15 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 
 	@Override
-	public boolean debitar(Cuenta cuenta, Movimiento movimiento) throws SQLException {
+	public boolean debitar(int idCuenta, Movimiento movimiento) throws Exception {
 		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
 		try {
-			if (cuentaDao.verificarSaldo(cuenta, movimiento.getImporte())) {
-				if (movimientoNegocio.agregarMovimiento(movimiento)) {
-					if (cuentaDao.afectarSaldo(cuenta.getId(), movimiento.getImporte().negate())) {
+			if (verificarSaldo(idCuenta, movimiento.getImporte())) {
+				Movimiento aux = new Movimiento();
+				aux = movimiento;
+				aux.setImporte(movimiento.getImporte().negate());
+				if (movimientoNegocio.agregarMovimiento(aux)) {
+					if (cuentaDao.afectarSaldo(idCuenta, aux.getImporte())) {
 						return true;
 					}
 					else {
@@ -127,7 +152,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 				}
 			}
 			else {
-				return false;
+				throw new SinSaldoException();
 			}
 		}
 		catch (SQLException ex) {
@@ -142,5 +167,19 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
 
 		return cuentaDao.CuentasxClienteYEstado(idCliente, estado);
+	}
+
+	@Override
+	public Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException {
+		try {
+			Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuenta);
+			return cuenta;
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 }

@@ -24,8 +24,8 @@ public class MovimientoDaoImpl implements MovimientoDao {
 	private PreparedStatement st;
 	private ResultSet rs;
 	private Connection conexion = Conexion.getConexion().getSQLConexion();
-	private String listarMovimientosPorCuenta = "SELECT M.id AS idMovimiento, M.fecha AS fechaMovimiento, M.concepto AS conceptoMovimiento, M.importe AS importeMovimiento, TM.id AS idTipoMovimiento, TM.descripcion AS nombreTipoMovimiento , CU.id AS idCuenta, TC.id AS idTipoCuenta, TC.descripcion AS nombreTipoCuenta, CL.id AS idCliente FROM movimientos AS M INNER JOIN tiposMovimientos AS TM ON M.idTipoMovimiento = TM.id INNER JOIN cuentas AS CU ON M.idCuenta = CU.id INNER JOIN tiposcuentas AS TC ON CU.idTipoCuenta = TC.id INNER JOIN clientes AS CL ON CU.idCliente = CL.id WHERE CU.id = ?";
-	private String agregarMovimiento = "INSERT INTO movimientos (fecha, idTipoMovimiento, concepto, idCuenta, importe) VALUES (?, ?, ?, ?, ?)";
+	private static final String listarMovimientosPorCuenta = "SELECT M.id AS idMovimiento, M.fecha AS fechaMovimiento, M.concepto AS conceptoMovimiento, M.importe AS importeMovimiento, TM.id AS idTipoMovimiento, TM.descripcion AS nombreTipoMovimiento , CU.id AS idCuenta, TC.id AS idTipoCuenta, TC.descripcion AS nombreTipoCuenta, CL.id AS idCliente FROM movimientos AS M INNER JOIN tiposMovimientos AS TM ON M.idTipoMovimiento = TM.id INNER JOIN cuentas AS CU ON M.idCuenta = CU.id INNER JOIN tiposcuentas AS TC ON CU.idTipoCuenta = TC.id INNER JOIN clientes AS CL ON CU.idCliente = CL.id WHERE CU.id = ?";
+	private static final String agregarMovimiento = "INSERT INTO movimientos (idTipoMovimiento, concepto, idCuenta, importe) VALUES (?, ?, ?, ?)";
 
 	private Movimiento getMovimiento(ResultSet rs) throws SQLException {
 		Movimiento movimiento = new Movimiento();
@@ -121,13 +121,10 @@ public class MovimientoDaoImpl implements MovimientoDao {
 		
 		try {
 			st = conexion.prepareStatement(agregarMovimiento);
-			LocalDateTime ldt = movimiento.getFecha();
-			Date sqlDate = Date.valueOf(ldt.toLocalDate());
-			st.setDate(1, sqlDate);
-			st.setInt(2, movimiento.getTipoMovimiento().getId());
-			st.setString(3, movimiento.getConcepto());
-			st.setInt(4, movimiento.getCuenta().getId());
-			st.setBigDecimal(5, movimiento.getImporte());
+			st.setInt(1, movimiento.getTipoMovimiento().getId());
+			st.setString(2, movimiento.getConcepto());
+			st.setInt(3, movimiento.getCuenta().getId());
+			st.setBigDecimal(4, movimiento.getImporte());
 			
 			int filasAfectadas = st.executeUpdate();
 			

@@ -101,7 +101,7 @@ CREATE TABLE movimientos(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     idTipoMovimiento INT NOT NULL,
-    concepto VARCHAR(25) NOT NULL,
+    concepto VARCHAR(50) NOT NULL,
     idCuenta INT NOT NULL,
     importe DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (idTipoMovimiento) REFERENCES tiposMovimientos(id),
