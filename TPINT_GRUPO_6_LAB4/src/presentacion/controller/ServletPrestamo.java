@@ -55,11 +55,11 @@ public class ServletPrestamo extends HttpServlet {
 			request.setAttribute("listaPrestamos", prestamos);
 			request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 		}
-		System.out.println("solicitar prestamo: "+request.getParameter("btnSolicitarPrestamo"));
+
 		if(request.getParameter("btnSolicitarPrestamo")!= null)
 		{
 			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
-			System.out.println("clienteid: "+idCliente);
+
 			try {
 				ArrayList<Cuenta> cuentasCliente = (ArrayList<Cuenta>) cuentaNeg.cuentasPorClienteActivas(idCliente);
 			    request.setAttribute("cuentasCliente", cuentasCliente);
@@ -100,20 +100,39 @@ public class ServletPrestamo extends HttpServlet {
 		
 		if(request.getParameter("confirmarAprobacion")!= null)
 		{
-			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo")); 
-			boolean estadoAux=Boolean.parseBoolean("idestado");
+			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+			System.out.println("ID PRESTAMO: "+idPrestamo + " SERVLETPRESTAMO");
 			ArrayList<Prestamo> prestamosActualizados =new ArrayList<Prestamo>();
-			System.out.println("id de prestamo en confirmaraprobacion "+idPrestamo);
+
 			try {
-				if(estadoAux == true) {
 				Prestamo prestamoAprob = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
 				prestamoNeg.aprobarPrestamo(prestamoAprob);
-				 prestamosActualizados = cargarSolicitudesPrestamos();
-				}else {
-					prestamoNeg.actualizarEstadoSolicitud(idPrestamo, estadoAux);
-					 prestamosActualizados = cargarSolicitudesPrestamos();
-					 
-				}
+				prestamosActualizados = cargarSolicitudesPrestamos();
+				System.out.println("SE APROBO EL PRESTAMO");
+
+				request.setAttribute("listaPrestamosCliente", prestamosActualizados);
+				request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+			} 
+			catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		if(request.getParameter("rechazarSolicitud")!= null)
+		{
+			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+			System.out.println("ID PRESTAMO A RECHAZAR: "+idPrestamo + " SERVLETPRESTAMO");
+			ArrayList<Prestamo> prestamosActualizados =new ArrayList<Prestamo>();
+
+			try {
+
+				prestamoNeg.actualizarEstadoSolicitud(idPrestamo, false);
+				prestamosActualizados = cargarSolicitudesPrestamos();
+				System.out.println("SE RECHAZO EL PRESTAMO");
+
 				request.setAttribute("listaPrestamosCliente", prestamosActualizados);
 				request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 			} 
@@ -131,6 +150,7 @@ public class ServletPrestamo extends HttpServlet {
 				int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
 				Prestamo prestamoADetallar = new Prestamo();
 				prestamoADetallar = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
+				System.out.println("ID PRESTAMO A DETALLAR: "+idPrestamo + " SERVLETPRESTAMO");
 				request.setAttribute("prestamoADetallar", prestamoADetallar);
 				request.getRequestDispatcher("/DetallePrestamo.jsp").forward(request, response);
 				
@@ -219,8 +239,4 @@ public class ServletPrestamo extends HttpServlet {
         request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
 	}
 	
-	private void confirmarAprobacion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 }

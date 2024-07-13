@@ -57,12 +57,18 @@
                     	<span class='badge bg-warning'>APROBACION PENDIENTE</span>
                     </td>
                     <td class="d-flex justify-content-start align-items-center gap-2">
-                    		<button type="button" class="btn btn-primary btn-sm disabled btn-light" aria-disabled="true">
-                    			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-								</svg>
-                    		</button>
+							<form action="ServletPrestamo" method="post">
+							<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+								<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
+									class="btn btn-primary btn-sm">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+										fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+									  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+									  <path
+											d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+									</svg>
+								</button>
+							</form>
 	                    <button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true">
 						  Pagar
 						</button>
@@ -97,9 +103,10 @@
 								</svg>
                     		</button>
                     	</form>
-	                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo">
-						  Pagar
-						</button>
+						    <a href="PagarCuotas.jsp" class="btn btn-outline-success btn-sm" data-disabled="true" id="payButton">
+        						Pagar
+   							</a>
+						
                     </td>
                     <%}%>                                
                 </tr>

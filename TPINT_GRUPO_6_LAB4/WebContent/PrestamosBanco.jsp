@@ -65,8 +65,9 @@
 					</td>
 					<td class="d-flex justify-content-start align-items-center gap-2">
 						<form action="ServletPrestamo" method="post">
-							<button type="submit" id="btnVerPrestamo"
-								class="btn btn-primary btn-sm" href="DetallePrestamo.jsp">
+						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
+								class="btn btn-primary btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
 								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
@@ -92,7 +93,6 @@
 											<form action="ServletPrestamo" method="post">
 											<input type="hidden" name="confirmarAprobacion" value="confirmarAprobacion">
 											<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
-											<input type="hidden" name="idestado" value="<%=true%>">
 											<button class="btn btn-success" type="submit"
 												name="confirmarAprobacion">Sí, apruebo</button>
 											<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -114,14 +114,12 @@
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
-										<div class="modal-body">¿Confirma rechazar el préstamo?</div>
+										<div class="modal-body">¿Confirma rechazar la solicitud?</div>
 										<div class="modal-footer">
 											<form action="ServletPrestamo" method="post">
-											<input type="hidden" name="confirmarAprobacion" value="confirmarAprobacion">
 											<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
-											<input type="hidden" name="idestado" value="<%=false%>">
 											<button class="btn btn-success" type="submit"
-												name="confirmarAprobacion">Sí, rechazo</button>
+												name="rechazarSolicitud">Sí, rechazar</button>
 											<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
 										</div>
 									</div>
@@ -135,7 +133,8 @@
 					<td><span class="badge bg-danger">RECHAZADO</span></td>
 					<td class="d-flex justify-content-start align-items-center gap-2">
 						<form action="ServletPrestamo" method="post">
-							<button type="submit" id="btnVerPrestamo"
+						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
 								class="btn btn-primary btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -152,7 +151,8 @@
 					<td><span class="badge text-bg-success">APROBADO</span></td>
 					<td class="d-flex justify-content-start align-items-center gap-2">
 						<form action="ServletPrestamo" method="post">
-							<button type="submit" id="btnVerPrestamo"
+						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
 								class="btn btn-primary btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
