@@ -1,6 +1,7 @@
 package presentacion.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import Excepciones.SinSaldoException;
 import dominio.Cliente;
 import dominio.Cuenta;
+import dominio.Localidad;
 import dominio.Movimiento;
 import dominio.TipoMovimiento;
 import negocio.CuentaNegocio;
@@ -132,11 +134,12 @@ public class ServletTransferencia extends HttpServlet {
 		}
 		
 		if (request.getParameter("btnMovimientoCuentas") != null) {
-			
+			int cargarCampos = 1;
 			int tipoTransferencia = 1;
+			request.setAttribute("btnTransferencia", cargarCampos);
 			request.setAttribute("tipoTransferencia", tipoTransferencia);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/Transferencias.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletTransferencia");
 			rd.forward(request, response);
 		}
 		
@@ -149,6 +152,35 @@ public class ServletTransferencia extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/ServletTransferencia");
 			rd.forward(request, response);
 		}
+		
+		if (request.getParameter("filtrarCuentas") != null) {
+			int idCuenta = (Integer.parseInt(request.getParameter("idCuenta")));
+			ArrayList<Cuenta> cuentasPorCliente = new ArrayList<Cuenta>();
+			ArrayList<Cuenta> cuentasPorClienteFiltradas = new ArrayList<Cuenta>();
+			CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+			
+			HttpSession sessionLogueada = request.getSession(false);
+			
+			if (sessionLogueada != null) {
+				cuentasPorCliente = (ArrayList<Cuenta>)sessionLogueada.getAttribute("cuentasPorCliente");
+				cuentasPorClienteFiltradas = cuentasPorCliente;
+				for (int i = 0; i < cuentasPorClienteFiltradas.size(); i++) {
+					Cuenta cuenta = cuentasPorClienteFiltradas.get(i);
+					if (cuenta.getId() == idCuenta) {
+						cuentasPorClienteFiltradas.remove(i);
+						i--;
+					}
+				}
+			}
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<option selected disabled value=''>Seleccione Localidad</option>");
+			for (Cuenta cuenta : cuentasPorClienteFiltradas) {
+	            out.println("<option value='" + cuenta.getId() + "'>" + cuenta.toStringResumido() + "</option>");
+	        }
+			out.close();
+		}			
 	}
-
 }
+
