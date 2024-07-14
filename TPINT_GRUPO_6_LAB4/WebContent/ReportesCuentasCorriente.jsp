@@ -4,6 +4,9 @@
 <%@ page import="java.util.ArrayList" %>   
     
 <%@ include file="Header.jsp" %>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+
 <h3 class="pt-3" >Reportes: Cuentas Corriente</h3>
 
 <div class="card">
@@ -13,7 +16,7 @@
 	</form>  	
     </div>
     <div class="card-body">
-        <table id="tablaClientes" class="table table-striped" style="width:100%">
+        <table id="tablaCuentas" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -70,11 +73,26 @@
 	<a class="btn btn-dark btn-sm" href="Reportes.jsp">< Volver</a>
 </div>
 
-<script>
-	new DataTable('#tablaClientes', {
-		language: {
-			url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
-		},
-	});
-</script>
+
+<!-- Scripts -->
+	<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+
+   
+    <script>
+        new DataTable('#tablaCuentas', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
+            },
+            dom: 'Bfrtip', 
+            buttons: [
+                 'excel', 'pdf', 'print' 
+            ]
+        });
+    </script>
 <%@ include file="Footer.jsp" %>

@@ -82,52 +82,53 @@
         </table>
     </div>
 </div>
-		
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
 <script>
-        $(document).ready(function() {
-            var table = $('#tablaMovimientos').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
-                },
-                dom: '<"d-flex justify-content-between"lfr>tip', // Cambia el orden de los elementos
-                pagingType: 'simple_numbers', // Cambia el estilo de la paginación
-                drawCallback: function () {
-                    $('ul.pagination').addClass('pagination-sm');
-                    $('ul.pagination').addClass('justify-content-center'); // Centra la paginación
-                }
-            });
-
-            $.fn.dataTable.ext.search.push(
-                function(settings, data, dataIndex) {
-                    var min = $('#minDate').val();
-                    var max = $('#maxDate').val();
-                    var date = new Date(data[1]); // Asumiendo que la fecha está en la segunda columna
-
-                    if (
-                        (min === "" || new Date(min) <= date) &&
-                        (max === "" || date <= new Date(max))
-                    ) {
-                        return true;
-                    }
-                    return false;
-                }
-            );
-
-            $('#minDate, #maxDate').on('change', function() {
-                table.draw();
-            });
-
-            $('#clearFilter').on('click', function() {
-                $('#minDate').val('');
-                $('#maxDate').val('');
-                table.draw();
-            });
+    $(document).ready(function() {
+        var table = $('#tablaMovimientos').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json'
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                 'excel', 'pdf', 'print'
+            ]
         });
+
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = $('#minDate').val();
+                var max = $('#maxDate').val();
+                var date = new Date(data[1]);
+
+                if (
+                    (min === "" || new Date(min) <= date) &&
+                    (max === "" || date <= new Date(max))
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $('#minDate, #maxDate').on('change', function() {
+            table.draw();
+        });
+
+        $('#clearFilter').on('click', function() {
+            $('#minDate').val('');
+            $('#maxDate').val('');
+            table.draw();
+        });
+    });
 </script>
 
 <%@ include file="Footer.jsp" %>
