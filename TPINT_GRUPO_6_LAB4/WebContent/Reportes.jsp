@@ -5,7 +5,7 @@
 
 
 <section>
-		<h3 class="pt-3">Accesos répidos</h3>
+		<h3 class="pt-3">Accesos rápidos</h3>
 		<div class="d-flex pt-3 gap-3">
 			<a class="card-accesos" href="ReporteCajasDeAhorro.jsp">
   				<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">

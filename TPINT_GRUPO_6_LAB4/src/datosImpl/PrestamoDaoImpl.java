@@ -26,6 +26,19 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	private static final String listarPrestamosXCliente = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE idCliente = ?";
 	private static final String listarSolicitudes = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni,C.nombre,C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id";
 	private static final String obtenerPrestamoPorId = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON  P.idCliente = C.id WHERE P.id = ?";
+	private static final String listarTodosLosPrestamos = "SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON P.idCliente = C.id";
+	private static final String listarTodosLosPrestamosAprobados ="	SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON P.idCliente = C.id WHERE estadoValidacion = 1";  
+	private static final String listarTodosLosPrestamosRechazados ="	SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON P.idCliente = C.id WHERE estadoValidacion = 0";  
+	private static final String listarTodosLosPrestamosEnEvaluacion ="	SELECT P.id, P.idCliente, P.idCuenta, P.fechaSolicitud, P.importeAPagar, P.plazoDePago, P.importePedido, P.cuotas, P.importeMensual, P.estadoValidacion, P.fechaValidacion, C.dni, C.nombre, C.apellido FROM prestamos AS P INNER JOIN clientes AS C ON P.idCliente = C.id WHERE estadoValidacion is null";  
+	private static final String contarAprobados = "SELECT CASE WHEN COUNT(*) IS NULL THEN 0 ELSE COUNT(*) END AS count FROM prestamos WHERE estadoValidacion = 1";
+	private static final String contarRechazados= "SELECT CASE WHEN COUNT(*) IS NULL THEN 0 ELSE COUNT(*) END AS count FROM prestamos WHERE estadoValidacion = 0";
+	private static final String contarEvaluacion= "SELECT CASE WHEN COUNT(*) IS NULL THEN 0 ELSE COUNT(*) END AS count FROM prestamos WHERE estadoValidacion IS NULL";
+	private static final String sumarValorAprobados = "SELECT CASE WHEN sum(importePedido) IS NULL THEN 0 ELSE sum(importePedido) END AS sum FROM prestamos WHERE estadoValidacion = 1";
+	private static final String sumarValorRechazados= "SELECT CASE WHEN sum(importePedido) IS NULL THEN 0 ELSE sum(importePedido) END AS sum FROM prestamos WHERE estadoValidacion = 0";
+	private static final String sumarValorEvaluacion= "SELECT CASE WHEN sum(importePedido) IS NULL THEN 0 ELSE sum(importePedido) END AS sum FROM prestamos WHERE estadoValidacion is null";
+	
+	
+	
 	
 	@Override
 	public boolean insert(Prestamo prestamo) throws SQLException {
@@ -209,6 +222,150 @@ public class PrestamoDaoImpl implements PrestamoDao{
 				
 		return prestamo;
 	}
-	
+	@Override
+	public ArrayList<Prestamo> listarTodosLosPrestamos() throws SQLException {
+		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
 
+	    try {
+	        st = conexion.prepareStatement(listarTodosLosPrestamos);
+	        rs = st.executeQuery();
+	        while (rs.next()) {
+	            todosLosPrestamos.add(getPrestamo(rs));
+	        }
+	        return todosLosPrestamos;
+	        
+	    } catch (SQLException ex) {
+	        throw ex;
+	    } catch (Exception ex) {
+	        throw ex;
+	    } 
+	}
+	@Override
+	public ArrayList<Prestamo> listarTodosLosPrestamosAprobados() throws SQLException {
+		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
+
+	    try {
+	        st = conexion.prepareStatement(listarTodosLosPrestamosAprobados);
+	        rs = st.executeQuery();
+	        while (rs.next()) {
+	            todosLosPrestamos.add(getPrestamo(rs));
+	        }
+	        return todosLosPrestamos;
+	        
+	    } catch (SQLException ex) {
+	        throw ex;
+	    } catch (Exception ex) {
+	        throw ex;
+	    } 
+	}
+	@Override
+	public ArrayList<Prestamo> listarTodosLosPrestamosRechazados() throws SQLException {
+		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
+
+	    try {
+	        st = conexion.prepareStatement(listarTodosLosPrestamosRechazados);
+	        rs = st.executeQuery();
+	        while (rs.next()) {
+	            todosLosPrestamos.add(getPrestamo(rs));
+	        }
+	        return todosLosPrestamos;
+	        
+	    } catch (SQLException ex) {
+	        throw ex;
+	    } catch (Exception ex) {
+	        throw ex;
+	    } 
+	}
+	@Override
+	public ArrayList<Prestamo> listarTodosLosPrestamosEnEvaluacio() throws SQLException {
+		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
+
+	    try {
+	        st = conexion.prepareStatement(listarTodosLosPrestamosEnEvaluacion);
+	        rs = st.executeQuery();
+	        while (rs.next()) {
+	            todosLosPrestamos.add(getPrestamo(rs));
+	        }
+	        return todosLosPrestamos;
+	        
+	    } catch (SQLException ex) {
+	        throw ex;
+	    } catch (Exception ex) {
+	        throw ex;
+	    } 
+	}
+	
+	@Override
+	public int contarPrestamosAprobados() throws SQLException {
+		try (PreparedStatement st = conexion.prepareStatement(contarAprobados);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getInt("count");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return 0;
+	}
+	@Override
+	public int contarPrestamosRechazados() throws SQLException {
+		 try (PreparedStatement st = conexion.prepareStatement(contarRechazados);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getInt("count");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return 0;
+	}
+	@Override
+	public int contarPrestamosEnEvaluacion() throws SQLException {
+		 try (PreparedStatement st = conexion.prepareStatement(contarEvaluacion);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getInt("count");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return 0;
+	}
+	@Override
+	public BigDecimal sumarPrestamosAprobados() throws SQLException {
+		try (PreparedStatement st = conexion.prepareStatement(sumarValorAprobados);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getBigDecimal("sum");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return BigDecimal.ZERO;
+	}
+	@Override
+	public BigDecimal sumarPrestamosRechazados() throws SQLException {
+		try (PreparedStatement st = conexion.prepareStatement(sumarValorRechazados);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getBigDecimal("sum");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return BigDecimal.ZERO;
+	}
+	@Override
+	public BigDecimal sumarPrestamosEnEvaluacion() throws SQLException {
+		try (PreparedStatement st = conexion.prepareStatement(sumarValorEvaluacion);
+		         ResultSet rs = st.executeQuery()) {
+		        if (rs.next()) {
+		            return rs.getBigDecimal("sum");
+		        }
+		    } catch (SQLException ex) {
+		        throw ex;
+		    }
+		    return BigDecimal.ZERO;
+	}
+	
 }
