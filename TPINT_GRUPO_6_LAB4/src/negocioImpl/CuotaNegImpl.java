@@ -39,7 +39,6 @@ public class CuotaNegImpl implements CuotaNegocio {
 				cuota.setFechaVencimiento(fechaProximoVto);
 				fechaProximoVto = fechaProximoVto.plusDays(prestamo.getPlazoDePago());
 				cuotaDao.insert(cuota);
-				System.out.println("DAO: " + cuota.toString());
 				if(i == prestamo.getCuotas()) {
 					cuotasGeneradas = true;
 				}

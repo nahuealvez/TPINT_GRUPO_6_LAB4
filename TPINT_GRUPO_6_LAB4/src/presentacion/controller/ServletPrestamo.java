@@ -163,6 +163,38 @@ public class ServletPrestamo extends HttpServlet {
 			}
 		}
 		
+		if(request.getParameter("btnFiltrarEstado")!= null)
+		{
+			String estadoPrestamo = request.getParameter("selectedFiltroEstadoPrestamo");
+			System.out.println(estadoPrestamo);
+			if (estadoPrestamo != null) {
+		        ArrayList<Prestamo> prestamosFiltrados = new ArrayList<Prestamo>();
+		        try {
+		            if (estadoPrestamo.equals("Pendiente")) {
+		                prestamosFiltrados = prestamoNeg.listarTodosLosPrestamosEnEvaluacio();
+		            } else if (estadoPrestamo.equals("1")) {
+		                prestamosFiltrados = prestamoNeg.listarTodosLosPrestamosAprobados();
+		            } else if (estadoPrestamo.equals("0")) {
+		                prestamosFiltrados = prestamoNeg.listarTodosLosPrestamosRechazados();
+		            }
+
+		            request.setAttribute("listaPrestamosCliente", prestamosFiltrados);
+		            request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
+		        } 
+		        catch (SQLException ex) 
+		        {
+		            ex.printStackTrace();
+
+		        } 
+		        catch (Exception ex) 
+		        {
+		            ex.printStackTrace();
+
+		        }
+		    }
+
+		}
+		
 		
 	}
 	
@@ -238,5 +270,5 @@ public class ServletPrestamo extends HttpServlet {
      	request.setAttribute("txtMensajeAgregarCliente", mensaje);
         request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
 	}
-	
+		
 }
