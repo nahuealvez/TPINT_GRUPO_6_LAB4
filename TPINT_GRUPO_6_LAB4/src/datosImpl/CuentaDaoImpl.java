@@ -65,8 +65,7 @@ public class CuentaDaoImpl implements CuentaDao {
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
-		catch (Exception ex) {
+		}catch (Exception ex) {
 			throw ex;
 		}
 		
@@ -331,7 +330,9 @@ public class CuentaDaoImpl implements CuentaDao {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	    }
+	    }catch (Exception ex) {
+			throw ex;
+		}
 	    return listaCuentas;
 	}
 
@@ -390,7 +391,9 @@ public class CuentaDaoImpl implements CuentaDao {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	    }
+	    }catch (Exception ex) {
+			throw ex;
+		}
 	    return listaCuentas;
 	}
 
@@ -449,7 +452,9 @@ public class CuentaDaoImpl implements CuentaDao {
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
-	    }
+	    }catch (Exception ex) {
+			throw ex;
+		}
 	    return listaCuentas;
 	}
 

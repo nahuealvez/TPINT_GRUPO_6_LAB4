@@ -21,69 +21,170 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException {
 		
-		return cuentaDao.insert(cuenta);
+		try {
+			return cuentaDao.insert(cuenta);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> cuentasXCliente(int idCliente) throws SQLException {
 		
-		return cuentaDao.cuentasXCliente(idCliente);
+		try {
+			return cuentaDao.cuentasXCliente(idCliente);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public boolean actualizarEstado(int idCuenta, boolean estado)  throws SQLException{
 		
-		return cuentaDao.actualizarEstado(idCuenta, estado);
+		try {
+		
+			return cuentaDao.actualizarEstado(idCuenta, estado);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public boolean verificarCbu(String cbu) throws SQLException {
-		
-		return cuentaDao.verificarCbu(cbu);
+		try {
+			return cuentaDao.verificarCbu(cbu);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public String nuevoCbu() throws SQLException {
 		
-		return cuentaDao.nuevoCbu();
+		try {
+			return cuentaDao.nuevoCbu();
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public boolean verificarEstado(int idCuenta) throws SQLException {
 		
-		return cuentaDao.verificarEstado(idCuenta);
+		try {
+			return cuentaDao.verificarEstado(idCuenta);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public int contarCuentasActivas(List<Cuenta> listaCuentas) throws SQLException {
 		
-		return cuentaDao.contarCuentasActivas(listaCuentas);
+		try {
+		
+			return cuentaDao.contarCuentasActivas(listaCuentas);
+		
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException {
-		return cuentaDao.cuentasPorClienteActivas(idCliente);
+		
+		try {
+			return cuentaDao.cuentasPorClienteActivas(idCliente);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException {
-		return cuentaDao.obtenerTodasLasCuentas();
+		
+		try {
+			return cuentaDao.obtenerTodasLasCuentas();
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException {
-		return cuentaDao.obtenerTodasLasCuentasCorrientes();
+		
+		try {
+			return cuentaDao.obtenerTodasLasCuentasCorrientes();
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException {
-		return cuentaDao.obtenerTodasLasCuentasAhorro();
+		
+		try {
+			return cuentaDao.obtenerTodasLasCuentasAhorro();
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
 	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
 		
-		return cuentaDao.cuentasActivas(idCliente);
+		try {
+			return cuentaDao.cuentasActivas(idCliente);
+			
+		}catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override

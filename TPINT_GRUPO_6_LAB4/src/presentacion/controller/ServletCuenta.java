@@ -98,7 +98,12 @@ public class ServletCuenta extends HttpServlet {
 
 		case "buscarCliente":
 
-			eventoBuscarCliente(request, response);
+			try {
+				eventoBuscarCliente(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			}
 
 			break;
 
@@ -174,7 +179,7 @@ public class ServletCuenta extends HttpServlet {
 	}
 
 	public void eventoBuscarCliente(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, SQLException {
 
 		String dni = request.getParameter("dniCliente");
 		 String filtroEstado = request.getParameter("filtroEstado");
@@ -210,10 +215,13 @@ public class ServletCuenta extends HttpServlet {
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			throw e;
+			
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			throw e;
+			
+		} catch(Exception e) {
+			throw e;
 		}
 	}
 
@@ -273,6 +281,8 @@ public class ServletCuenta extends HttpServlet {
 
 	private void mostrarMensaje(HttpServletRequest request, HttpServletResponse response, String mensaje,
 			String claseMensaje, Cliente cliente, List<Cuenta> cuentas) throws ServletException, IOException {
+		
+		try {
 		request.setAttribute("txtMensajeCuenta", mensaje);
 		request.setAttribute("claseMensajeCuenta", claseMensaje);
 		if (cliente != null) {
@@ -282,6 +292,13 @@ public class ServletCuenta extends HttpServlet {
 			request.setAttribute("cuentasxCliente", cuentas);
 		}
 		request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+		}catch(ServletException e) {
+			throw e;
+		}catch(IOException e) {
+			throw e;
+		}catch (Exception e) {
+			throw e;
+		}
 	}
 
 	
@@ -289,33 +306,33 @@ public class ServletCuenta extends HttpServlet {
 		 try {
 	         HttpSession sessionLogueada1 = request.getSession(false);
 	         Cliente clienteServlet = null;
-	         System.out.println("entro al evento de listar cuentas de clientes");
+	        
 
 	         if (sessionLogueada1 != null) {
 	             clienteServlet = (Cliente) sessionLogueada1.getAttribute("cliente");
-	             System.out.println("cliente servlet: "+clienteServlet.getIdCliente());
+	          
 	         }
 
 	         if (clienteServlet != null) {
 	             List<Cuenta> listaDeCuentas = cuentaNeg.cuentasActivas(clienteServlet.getIdCliente());
-	             System.out.println("flag2");
+	           
 	             if (listaDeCuentas != null ) {
 	                 request.setAttribute("cuentasxCliente", listaDeCuentas);
 	             } else {
-	            	 System.out.println("flag3");
+	            	
 	                 request.setAttribute("txtMensajeCuenta", "No tiene cuentas asociadas.");
 	                 request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	             }
 	         } else {
-	             request.setAttribute("txtMensajeCuenta", "No se encontrÃ³ el cliente en la sesiÃ³n.");
+	             request.setAttribute("txtMensajeCuenta", "No se encontró el cliente en la sesión.");
 	             request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         }
-	         System.out.println("flag4");
+	
 	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
 	     } catch (Exception e) {
 	         e.printStackTrace();
-	         System.out.println("flag5");
-	         request.setAttribute("txtMensajeCuenta", "OcurriÃ³ un error al obtener las cuentas.");
+
+	         request.setAttribute("txtMensajeCuenta", "Ocurrió un error al obtener las cuentas.");
 	         request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
 	     }
