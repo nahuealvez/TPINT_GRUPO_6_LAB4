@@ -43,12 +43,7 @@
 		 prestamosEvaluacion = (int)request.getAttribute("evaluacionCount");
 	}
 	
-	ArrayList<Prestamo> listaPrestamos = null;
-	if (request.getAttribute("listaPrestamos") != null) {
-		listaPrestamos = (ArrayList<Prestamo>) request.getAttribute("listaPrestamos");
-	} else {
-		listaPrestamos = new ArrayList<>();
-	}
+	
 
 	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
@@ -116,7 +111,18 @@
                 </tr>
             </thead>
             <tbody>
-    <% for (Prestamo pre : listaPrestamos) { %>
+     
+    <% 
+    ArrayList<Prestamo> listaPrestamos = null;
+	if (request.getAttribute("listaPrestamos") != null) {
+		listaPrestamos = (ArrayList<Prestamo>) request.getAttribute("listaPrestamos");
+	} else {
+		listaPrestamos = new ArrayList<>();
+		%>
+        <p class="alert alert-info lead">Presiona el botón Listar para cargar las Cuentas Corrientes .</p>
+  		<%
+	}
+    for (Prestamo pre : listaPrestamos) { %>
     <tr>
         <td><%= pre.getId() %></td>
         <td><%= pre.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) %></td>
