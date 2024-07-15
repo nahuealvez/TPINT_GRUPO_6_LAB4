@@ -17,6 +17,7 @@ public interface CuentaDao {
 	public String nuevoCbu()throws SQLException;
 	public boolean verificarEstado (int idCuenta)throws SQLException;
 	public int contarCuentasActivas (List<Cuenta> listaCuentas)throws SQLException;
+	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException;
 	public Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;
 	public List<Cuenta> cuentasPorClienteActivas(int idCliente) throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException;

@@ -9,7 +9,8 @@ function cancelarOperacion() {
 (() => {
 	  'use strict';
 
-	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  // Fetch all the forms we want to apply custom Bootstrap validation
+		// styles to
 	  const forms = document.querySelectorAll('.needs-validation');
 
 	  // Loop over them and prevent submission
@@ -35,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function cargarConfirmacionMovimientoCuenta() {
 	let txtImporteMovimientoCuenta = document.getElementById("txtImporteMovimientoCuenta").value;
-	let txtCuentaDestino = document.getElementById("txtCuentaDestino").options[document.getElementById("txtCuentaDestino").selectedIndex].text;
-	let txtCuentaSaliente = document.getElementById("txtCuentaSaliente").options[document.getElementById("txtCuentaSaliente").selectedIndex].text;
+	let txtCuentaDestino = document.getElementById("ddlCuentaDestino").options[document.getElementById("ddlCuentaDestino").selectedIndex].text;
+	let txtCuentaSaliente = document.getElementById("ddlCuentaSaliente").options[document.getElementById("ddlCuentaSaliente").selectedIndex].text;
 	
 	let txtImporteMovimientoCuentaAConfirmar = document.getElementById("txtImporteMovimientoCuentaAConfirmar");
 	let txtCuentaDestinoAConfirmar = document.getElementById("txtCuentaDestinoAConfirmar");
@@ -74,30 +75,21 @@ function validarYMostrarConfirmacionMovimientoCuenta(event) {
     form.classList.add('was-validated');
 };
 
-function actualizarCuentaDestino() {
-	
-    const selectSaliente = document.getElementById('txtCuentaSaliente');
-    const selectDestino = document.getElementById('txtCuentaDestino');
-	
-    for (let i = 0; i < selectSaliente.options.length; i++) {
-        const option = selectSaliente.options[i].cloneNode(true);
-        selectDestino.appendChild(option);
+function cargarCuentaDestino() {
+    const ddlCuentaSaliente = document.getElementById('ddlCuentaSaliente');
+    let ddlCuentaDestino = document.getElementById('ddlCuentaDestino');
+    
+    ddlCuentaDestino.innerHTML = '';
+    
+    const options = ddlCuentaSaliente.options;
+    const selectedValue = ddlCuentaSaliente.value;
+
+    for (let i = 0; i < options.length; i++) {
+        const option = options[i].cloneNode(true);
+        if (option.value != selectedValue) {
+        	ddlCuentaDestino.appendChild(option);
+        } 
     }
-	
-	document.getElementById('txtCuentaSaliente').addEventListener('change', function() {
-	    const selectedIndex = selectSaliente.selectedIndex;
-
-	    if (selectedIndex >= 0) {
-	        const selectedValue = selectSaliente.options[selectedIndex].value;
-
-	        for (let i = 0; i < selectDestino.options.length; i++) {
-	            if (selectDestino.options[i].value === selectedValue) {
-	                selectDestino.remove(i);
-	                break;
-	            }
-	        }
-	    }
-	});
 }
 
 // Transferencias | Transferencias a terceros

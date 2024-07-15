@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page buffer="8192kb" autoFlush="true" %>
 <%@ page import="dominio.Cuenta" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -39,28 +40,20 @@
 			<label>Seleccione tipo de transferencia:</label>
 			<% if (tipoTransferencia == 0){ %>
 				<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-					<form class="btn-group" action="ServletTransferencia" method="post">
-						<button type="submit" class="<%= claseBtnRegular %>" name="btnMovimientoCuentas" id="btnMovimientoCuentas">Movimiento de cuentas</button>
-					</form>
-					<form class="btn-group" action="ServletTransferencia" method="post">
-						<button type="submit" class="<%= claseBtnRegular %>" name="btnTransferenciaTerceros" id="btnMovimientoCuentas">Transferencia a terceros</button>
-					</form>					
+					<a class="<%= claseBtnRegular %>" href="ServletTransferencia?btnMovimientoCuentas=1">Movimiento de cuentas</a>
+					<a class="<%= claseBtnRegular %>" href="ServletTransferencia?btnTransferenciaTerceros=1">Transferencia a terceros</a>				
 				</div>
 			<% }
 			   else if (tipoTransferencia == 1) { %>
 			    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-					<button class="<%= claseBtnActivo %>" name="btnMovimientoCuentas" id="btnMovimientoCuentas">Movimiento de cuentas</button>
-					<form class="btn-group" action="ServletTransferencia" method="post">
-						<button type="submit" class="<%= claseBtnRegular %>" name="btnTransferenciaTerceros" id="btnMovimientoCuentas">Transferencia a terceros</button>
-					</form>
+					<button class="<%= claseBtnActivo %>">Movimiento de cuentas</button>
+					<a class="<%= claseBtnRegular %>" href="ServletTransferencia?btnTransferenciaTerceros=1">Transferencia a terceros</a>
 				</div>
 			<% }
 			   else if (tipoTransferencia == 2) { %>
 			    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-			    	<form class="btn-group" action="ServletTransferencia" method="post">
-						<button type="submit" class="<%= claseBtnRegular %>" name="btnMovimientoCuentas" id="btnMovimientoCuentas">Movimiento de cuentas</button>
-					</form>
-					<button class="<%= claseBtnActivo %>" name="btnTransferenciaTerceros" id="btnMovimientoCuentas">Transferencia a terceros</button>
+			    	<a class="<%= claseBtnRegular %>" href="ServletTransferencia?btnMovimientoCuentas=1">Movimiento de cuentas</a>
+					<button class="<%= claseBtnActivo %>">Transferencia a terceros</button>
 				</div>
 			<% } %>
 		</div>

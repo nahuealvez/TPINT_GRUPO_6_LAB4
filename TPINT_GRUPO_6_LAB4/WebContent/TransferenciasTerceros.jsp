@@ -4,14 +4,17 @@
 
 <%
 	ArrayList<Cuenta> cuentas = null;
-	
-	if ((ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente") != null) {
+
+	if (session.getAttribute("cuentasPorCliente") != null) {
 		cuentas = (ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente");
 	}
-	
+	else {
+		cuentas = new ArrayList<Cuenta>();
+	}
 %>
 
 		<form id="formularioSolicitud" class="d-flex flex-column gap-3 needs-validation" action="ServletTransferencia" method="post" novalidate>
+			<input type="hidden" id="tipoTransferencia" name="tipoTransferencia" value="2" />
             <div class="col-md-4 position-relative camposFormulario">
                 <label for="txtDni">Importe a transferir:</label>
                 <input type="number" 

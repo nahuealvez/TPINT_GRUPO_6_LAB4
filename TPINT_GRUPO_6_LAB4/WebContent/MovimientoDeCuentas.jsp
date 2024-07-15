@@ -4,18 +4,17 @@
 
 <%
 	ArrayList<Cuenta> cuentas = null;
-	ArrayList<Cuenta> cuentasDestino = null;
 
-	if ((ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente") != null) {
+	if (session.getAttribute("cuentasPorCliente") != null) {
 		cuentas = (ArrayList<Cuenta>)session.getAttribute("cuentasPorCliente");
 	}
-	
-	if ((ArrayList<Cuenta>)request.getAttribute("cuentasPorClienteFiltradas") != null) {
-		cuentasDestino = (ArrayList<Cuenta>)request.getAttribute("cuentasPorClienteFiltradas");
+	else {
+		cuentas = new ArrayList<Cuenta>();
 	}
 %>
 
 		<form id="formularioSolicitud" class="d-flex flex-column gap-3 needs-validation" action="ServletTransferencia" method="post" novalidate>
+			<input type="hidden" id="tipoTransferencia" name="tipoTransferencia" value="1" />
             <div class="col-md-4 position-relative camposFormulario">
                 <label for="txtImporteMovimientoCuenta">Importe a transferir:</label>
                 <input type="number" 
@@ -30,8 +29,8 @@
                 required>
             </div>
             <div class="col-md-4 position-relative camposFormulario">
-                <label for="txtCuentaSaliente">Cuenta saliente:</label>
-                <select id="txtCuentaSaliente" name="txtCuentaSaliente" class="form-select form-select-sm" onclick="actualizarCuentaDestino()" required>
+                <label for="ddlCuentaSaliente">Cuenta saliente:</label>
+                <select id="ddlCuentaSaliente" name="ddlCuentaSaliente" class="form-select form-select-sm" onchange="cargarCuentaDestino()" required>
                 	<option selected disabled value="">Seleccione cuenta...</option>
                 	<% for (Cuenta cuenta : cuentas) { %>
                     	<option value="<%= cuenta.getId() %>"><%= cuenta.toStringResumido() %></option>
@@ -39,12 +38,9 @@
                 </select>
             </div>
             <div class="col-md-4 position-relative camposFormulario">
-                <label for="txtCuentaDestino">Cuenta destino:</label>
-                <select id="txtCuentaDestino" name="txtCuentaDestino" class="form-select form-select-sm" required>
+                <label for="ddlCuentaDestino">Cuenta destino:</label>
+                <select id="ddlCuentaDestino" name="ddlCuentaDestino" class="form-select form-select-sm" required>
                 	<option selected disabled value="">Seleccione cuenta...</option>
-                	<% for (Cuenta cuenta : cuentas) { %>
-                    	<option value="<%= cuenta.getId() %>"><%= cuenta.toStringResumido() %></option>
-                    <% } %>
                 </select>
             </div>
             <div id="MovimientoCuentaAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0" style="display: none;">
@@ -57,12 +53,12 @@
             		</div>
             	</div>
             	<div>
-            		<strong>Cuenta destino: </strong>
-            		<p id="txtCuentaDestinoAConfirmar"></p>
-            	</div>
-            	<div>
             		<strong>Cuenta saliente: </strong>
             		<p id="txtCuentaSalienteAConfirmar"></p>
+            	</div>
+            	<div>
+            		<strong>Cuenta destino: </strong>
+            		<p id="txtCuentaDestinoAConfirmar"></p>
             	</div>
             </div>
             <div class="col-md-4">

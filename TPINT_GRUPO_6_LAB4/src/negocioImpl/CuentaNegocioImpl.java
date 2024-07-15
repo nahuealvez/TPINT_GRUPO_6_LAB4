@@ -211,6 +211,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	@Override
 	public boolean acreditar(int idCuenta, Movimiento movimiento) throws SQLException {
 		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
+		movimiento.setImporte(movimiento.getImporte());
 		try {
 			if (movimientoNegocio.agregarMovimiento(movimiento)) {
 				if (cuentaDao.afectarSaldo(idCuenta, movimiento.getImporte())) {
@@ -238,9 +239,13 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 		try {
 			if (verificarSaldo(idCuenta, movimiento.getImporte())) {
 				Movimiento aux = new Movimiento();
-				aux = movimiento;
-				aux.setImporte(movimiento.getImporte().negate());
-				if (movimientoNegocio.agregarMovimiento(aux)) {
+				
+				aux.setTipoMovimiento(movimiento.getTipoMovimiento());
+	            aux.setCuenta(movimiento.getCuenta());
+	            aux.setConcepto(movimiento.getConcepto());
+	            aux.setImporte(movimiento.getImporte().negate());
+				
+	            if (movimientoNegocio.agregarMovimiento(aux)) {
 					if (cuentaDao.afectarSaldo(idCuenta, aux.getImporte())) {
 						return true;
 					}
@@ -275,6 +280,19 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 		try {
 			Cuenta cuenta = cuentaDao.obtenerCuentaPorId(idCuenta);
 			return cuenta;
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException {
+		try {
+			return cuentaDao.obtenerNroCuentaActivaPorCBU(cbu);
 		}
 		catch (SQLException ex) {
 			throw ex;

@@ -26,6 +26,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String actualizarEstado = "UPDATE cuentas set estado=? WHERE id=?";
 	private static final String verificarCbu = "SELECT 1 FROM cuentas where cbu=?";
 	private static final String verificarEstado= "SELECT estado FROM cuentas WHERE id=?";
+	private static final String obtenerNroCuentaActivaPorCBU = "SELECT id FROM cuentas WHERE cbu = ? AND estado = 1";
 	private static final String obtenerCuentaPorId = "SELECT id, idCliente, fechaCreacion, idTipoCuenta, cbu, saldo, estado FROM cuentas WHERE id = ?";
 	private static final String obtenerCuentas = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id";
 	private static final String obtenerCuentasCorrientes = "SELECT c.id AS cuentaId, cli.id AS clienteId, cli.dni, cli.cuil, cli.nombre AS clienteNombre, cli.apellido AS clienteApellido, cli.sexo, cli.nacionalidad, cli.fechaNacimiento, prov.nombre AS provinciaNombre, loc.nombre AS localidadNombre, cli.direccion, cli.email, cli.telefono, u.id AS usuarioId, u.usuario AS usuarioNombre, u.contrasenia, u.estado AS usuarioEstado, c.fechaCreacion, tc.descripcion AS tipoCuentaDescripcion, c.cbu, c.saldo, c.estado AS cuentaEstado FROM cuentas c JOIN clientes cli ON c.idCliente = cli.id JOIN usuarios u ON cli.idUsuario = u.id JOIN provincias prov ON cli.idProvincia = prov.id JOIN localidades loc ON cli.idLocalidad = loc.id JOIN tiposCuentas tc ON c.idTipoCuenta = tc.id WHERE c.idTipoCuenta = 2";
@@ -142,6 +143,28 @@ public class CuentaDaoImpl implements CuentaDao {
 		  
 		  return false;
 		
+	}
+	
+	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException {
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			 statement = conexion.prepareStatement(obtenerNroCuentaActivaPorCBU);
+		     statement.setString(1, cbu);
+		     rs = statement.executeQuery();
+		     if (rs.next()) {
+		    	 return rs.getInt("id"); 
+		     }
+		     return 0;
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override

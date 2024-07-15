@@ -27,4 +27,5 @@ public interface CuentaNegocio {
 	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 	boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;
+	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException;
 }
