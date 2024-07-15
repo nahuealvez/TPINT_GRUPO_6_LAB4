@@ -70,7 +70,7 @@
 </div>
 
 <div class="col-md-6 mt-3">
-	<a class="btn btn-dark btn-sm" href="Reportes.jsp">< Volver</a>
+	<a class="btn btn-dark btn-sm" href="Reportes.jsp"> Volver</a>
 </div>
 <!-- Scripts -->
 	<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>

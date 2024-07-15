@@ -67,7 +67,7 @@
             	</div>
             </div>
             <div class="col-md-4">
-            	<button id="volverBtn" class="btn btn-dark btn-sm" type="button" onclick="volverPantallaAnterior()">< Volver</button>
+            	<button id="volverBtn" class="btn btn-dark btn-sm" type="button" onclick="volverPantallaAnterior()"> Volver</button>
                 <button id="solicitarBtn" class="btn btn-primary btn-sm" type="button" onclick="validarYMostrarConfirmacionTransferencia(event)">Transferir</button>
                 <button id="confirmarBtn" style="display: none;" class="btn btn-success btn-sm" type="submit" name="confirmarBtn">Confirmar</button>
                 <button id="cancelarBtn" style="display: none;" type="button" class="btn btn-danger btn-sm" onclick="cancelarOperacion()">Cancelar</button>

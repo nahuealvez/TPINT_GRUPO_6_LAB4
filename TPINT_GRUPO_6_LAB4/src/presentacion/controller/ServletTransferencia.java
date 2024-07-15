@@ -1,7 +1,6 @@
 package presentacion.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,32 +16,22 @@ import javax.servlet.http.HttpSession;
 import Excepciones.SinSaldoException;
 import dominio.Cliente;
 import dominio.Cuenta;
-import dominio.Localidad;
 import dominio.Movimiento;
 import dominio.TipoMovimiento;
 import negocio.CuentaNegocio;
-import negocio.MovimientoNegocio;
 import negocioImpl.CuentaNegocioImpl;
-import negocioImpl.MovimientoNegImpl;
 
-/**
- * Servlet implementation class ServletTransferencia
- */
+
+
 @WebServlet("/ServletTransferencia")
 public class ServletTransferencia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ServletTransferencia() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("btnMovimientoCuentas") != null) {
 			int tipoTransferencia = 1;
@@ -61,9 +50,6 @@ public class ServletTransferencia extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("btnTransferencia") != null) {
 			Cliente cliente = new Cliente();

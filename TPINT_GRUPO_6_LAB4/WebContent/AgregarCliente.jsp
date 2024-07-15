@@ -60,7 +60,7 @@
 	</script>
 
     <div class="container mt-2 p-1">
-        <h3 class="mb-3">Agregar cliente</h2>
+        <h3 class="mb-3">Agregar cliente</h3>
         <%--  Inicio de controles  --%>
         <form class="row g-2 needs-validation" action="ServletCliente" method="get" onsubmit="return validarContrasenias()" novalidate>
             <div class="col-md-6 position-relative">
@@ -249,7 +249,7 @@
             	required>
             </div>
             <div class="col-md-6 mt-3">
-            	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()">< Volver</button>
+            	<button class="btn btn-dark btn-sm" onclick="volverPantallaAnterior()"> Volver</button>
                 <input type="submit" value="Agregar" id="btnAgregarCliente" name="btnAgregarCliente" class="btn btn-success btn-sm">
             </div>
         </form>

@@ -12,19 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 
 import dominio.Cliente;
 import dominio.Cuenta;
-import dominio.Cuota;
 import dominio.Prestamo;
-import negocio.ClienteNegocio;
 import negocio.CuentaNegocio;
-import negocio.CuotaNegocio;
 import negocio.PrestamoNegocio;
-import negocioImpl.ClienteNegImpl;
 import negocioImpl.CuentaNegocioImpl;
-import negocioImpl.CuotaNegImpl;
 import negocioImpl.PrestamoNegImpl;
 
 /**

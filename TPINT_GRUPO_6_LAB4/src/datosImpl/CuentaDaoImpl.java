@@ -15,7 +15,6 @@ import datos.CuentaDao;
 import dominio.Cliente;
 import dominio.Cuenta;
 import dominio.Localidad;
-import dominio.Movimiento;
 import dominio.Provincia;
 import dominio.TipoCuenta;
 
@@ -75,7 +74,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	}
 
 	@Override
-	public List<Cuenta> cuentasXCliente(int idCliente) throws SQLException{
+	public ArrayList<Cuenta> cuentasXCliente(int idCliente) throws SQLException{
 		
 		PreparedStatement statement;
 		ResultSet rs;
@@ -554,7 +553,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	}
 	
 	@Override
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
 
 		PreparedStatement statement;
 		ResultSet rs;

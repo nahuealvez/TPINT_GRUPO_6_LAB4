@@ -59,7 +59,7 @@
 	</script>
 
     <div class="container mt-2 p-1">
-        <h3 class="mb-3">Modificar cliente</h2>
+        <h3 class="mb-3">Modificar cliente</h3>
         <%--  Inicio de controles  --%>
         <form class="row g-2 needs-validation" action="ServletCliente" method="post" onsubmit="return validarContrasenias();" novalidate>
         <input type="hidden" id="clienteId" name="clienteId" value="<%= clienteModificar.getIdCliente() %>">
@@ -264,7 +264,7 @@
             readonly>
         </div>
             <div class="col-md-6 mt-3">
-                <a class="btn btn-dark btn-sm" href="ServletCliente?Param=1">< Volver</a>
+                <a class="btn btn-dark btn-sm" href="ServletCliente?Param=1"> Volver</a>
                 <input type="submit" value="Modificar" id="btnAgregarModificacionCliente" name="btnAgregarModificacionCliente" class="btn btn-success btn-sm">
         	</div>
        </div>

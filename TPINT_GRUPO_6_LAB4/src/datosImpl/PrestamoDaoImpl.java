@@ -6,9 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import datos.Conexion;
 import datos.PrestamoDao;
@@ -164,7 +162,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 			 if (rs.next()) {
 		          prestamo = getPrestamo(rs);
 		     } else {
-		    	 throw new SQLException("No se encontró ningún préstamo con el ID especificado: " + idPrestamo);
+		    	 throw new SQLException("No se encontrï¿½ ningï¿½n prï¿½stamo con el ID especificado: " + idPrestamo);
 		     }
 			return prestamo;
 			

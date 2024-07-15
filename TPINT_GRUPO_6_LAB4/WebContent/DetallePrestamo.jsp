@@ -33,7 +33,7 @@
 	%>
 
     <div class="container mt-2 p-1">
-        <h3 class="mb-3">Detalle de préstamo</h2>
+        <h3 class="mb-3">Detalle de préstamo</h3>
         <form class="d-flex flex-column gap-3 needs-validation" action="ServletPrestamo" method="post" novalidate>
        
             <div id="prestamoAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0">

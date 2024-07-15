@@ -12,7 +12,6 @@ import java.sql.Date;
 
 import datos.ClienteDao;
 import datos.Conexion;
-import datos.CuentaDao;
 import datos.MovimientoDao;
 import dominio.Cliente;
 import dominio.Cuenta;
@@ -27,6 +26,7 @@ public class MovimientoDaoImpl implements MovimientoDao {
 	private static final String listarMovimientosPorCuenta = "SELECT M.id AS idMovimiento, M.fecha AS fechaMovimiento, M.concepto AS conceptoMovimiento, M.importe AS importeMovimiento, TM.id AS idTipoMovimiento, TM.descripcion AS nombreTipoMovimiento , CU.id AS idCuenta, TC.id AS idTipoCuenta, TC.descripcion AS nombreTipoCuenta, CL.id AS idCliente FROM movimientos AS M INNER JOIN tiposMovimientos AS TM ON M.idTipoMovimiento = TM.id INNER JOIN cuentas AS CU ON M.idCuenta = CU.id INNER JOIN tiposcuentas AS TC ON CU.idTipoCuenta = TC.id INNER JOIN clientes AS CL ON CU.idCliente = CL.id WHERE CU.id = ?";
 	private static final String agregarMovimiento = "INSERT INTO movimientos (idTipoMovimiento, concepto, idCuenta, importe) VALUES (?, ?, ?, ?)";
 
+	@SuppressWarnings("unused")
 	private Movimiento getMovimiento(ResultSet rs) throws SQLException {
 		Movimiento movimiento = new Movimiento();
 		TipoMovimiento tipoMovimiento = new TipoMovimiento();
@@ -86,11 +86,11 @@ public class MovimientoDaoImpl implements MovimientoDao {
 		        rs = st.executeQuery();
 
 		        while (rs.next()) {
-		            Movimiento movimiento = new Movimiento(); // Crear un nuevo objeto Movimiento en cada iteración
+		            Movimiento movimiento = new Movimiento(); // Crear un nuevo objeto Movimiento en cada iteraciï¿½n
 		            Cuenta cuenta =new Cuenta();
 		            
 		            movimiento.setId(rs.getInt("idMovimiento"));
-		            movimiento.setFecha(rs.getTimestamp("fechaMovimiento").toLocalDateTime()); // Asegúrate de que el método setFecha espera LocalDateTime
+		            movimiento.setFecha(rs.getTimestamp("fechaMovimiento").toLocalDateTime()); // Asegï¿½rate de que el mï¿½todo setFecha espera LocalDateTime
 		            movimiento.setConcepto(rs.getString("conceptoMovimiento"));
 		            
 		            cuenta.setId(rs.getInt("idCuenta"));

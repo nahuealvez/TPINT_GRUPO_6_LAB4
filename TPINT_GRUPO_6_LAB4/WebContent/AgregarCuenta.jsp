@@ -56,7 +56,7 @@
 
 				<div class="col-md-6 mt-3">
 					<button class="btn btn-dark btn-sm" type="button"
-						onclick="volverPantallaAnterior()">< Volver</button>
+						onclick="volverPantallaAnterior()"> Volver</button>
 					<input type="submit" value="Agregar" id="btnAgregarCuenta"
 						name="btnAgregarCuenta" class="btn btn-success btn-sm">
 				</div>

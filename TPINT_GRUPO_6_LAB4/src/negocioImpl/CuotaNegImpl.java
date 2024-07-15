@@ -2,7 +2,6 @@ package negocioImpl;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import datos.CuotaDao;

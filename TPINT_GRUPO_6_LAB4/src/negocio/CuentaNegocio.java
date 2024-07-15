@@ -11,7 +11,7 @@ import dominio.Movimiento;
 public interface CuentaNegocio {
 
 	public boolean insert (Cuenta cuenta) throws SQLException;
-	public List<Cuenta> cuentasXCliente (int idCliente) throws SQLException;
+	public ArrayList<Cuenta> cuentasXCliente (int idCliente) throws SQLException;
 	public boolean actualizarEstado(int idCuenta, boolean estado) throws SQLException;
 	public boolean verificarCbu (String cbu) throws SQLException;
 	public String nuevoCbu() throws SQLException;

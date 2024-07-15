@@ -33,7 +33,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 
 	@Override
-	public List<Cuenta> cuentasXCliente(int idCliente) throws SQLException {
+	public ArrayList<Cuenta> cuentasXCliente(int idCliente) throws SQLException {
 		
 		try {
 			return cuentaDao.cuentasXCliente(idCliente);

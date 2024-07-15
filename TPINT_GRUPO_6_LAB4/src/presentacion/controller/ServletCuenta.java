@@ -26,6 +26,7 @@ import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.MovimientoNegImpl;
 
 @WebServlet("/ServletCuenta")
+@SuppressWarnings("unused")
 public class ServletCuenta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -164,7 +165,7 @@ public class ServletCuenta extends HttpServlet {
 				if (saldoAcreditado) {
 
 				
-					mensaje = "La cuenta fue creada con éxito";
+					mensaje = "La cuenta fue creada con ï¿½xito";
 					claseMensaje = "alert alert-success";
 				} else {
 
@@ -339,7 +340,7 @@ public class ServletCuenta extends HttpServlet {
 	                 request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	             }
 	         } else {
-	             request.setAttribute("txtMensajeCuenta", "No se encontró el cliente en la sesión.");
+	             request.setAttribute("txtMensajeCuenta", "No se encontrï¿½ el cliente en la sesiï¿½n.");
 	             request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         }
 	
@@ -347,7 +348,7 @@ public class ServletCuenta extends HttpServlet {
 	     } catch (Exception e) {
 	         e.printStackTrace();
 
-	         request.setAttribute("txtMensajeCuenta", "Ocurrió un error al obtener las cuentas.");
+	         request.setAttribute("txtMensajeCuenta", "Ocurriï¿½ un error al obtener las cuentas.");
 	         request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
 	     }

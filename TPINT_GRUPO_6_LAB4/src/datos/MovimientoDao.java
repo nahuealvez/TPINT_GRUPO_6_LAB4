@@ -3,7 +3,6 @@ package datos;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dominio.Cuenta;
 import dominio.Movimiento;
 
 public interface MovimientoDao {

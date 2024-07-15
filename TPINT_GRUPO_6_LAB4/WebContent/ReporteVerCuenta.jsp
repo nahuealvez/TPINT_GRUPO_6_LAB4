@@ -24,7 +24,7 @@
 		
 	<div class="card">
     <div class="card-header d-flex justify-content-end">
-        <button class="btn btn-primary btn-sm" onclick="volverPantallaAnterior()">< Regresar</button>
+        <button class="btn btn-primary btn-sm" onclick="volverPantallaAnterior()"> Regresar</button>
     </div>
     <div class="card-body">
         <!-- Filtro de Fecha -->

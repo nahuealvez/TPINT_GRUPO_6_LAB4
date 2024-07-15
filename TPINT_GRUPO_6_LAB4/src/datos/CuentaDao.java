@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Cuenta;
-import dominio.Movimiento;
+
 
 public interface CuentaDao {
 
 	public boolean insert (Cuenta cuenta)throws SQLException;
-	public List<Cuenta> cuentasXCliente (int idCliente)throws SQLException;
+	public ArrayList<Cuenta> cuentasXCliente (int idCliente)throws SQLException;
 	public boolean actualizarEstado(int idCuenta, boolean estado)throws SQLException;
 	public boolean verificarCbu (String cbu)throws SQLException;
 	public String nuevoCbu()throws SQLException;
@@ -25,6 +25,6 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
 	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 	public boolean afectarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
+	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 	public Cuenta obtenerUltimaCuenta(int idCliente) throws SQLException;
 }

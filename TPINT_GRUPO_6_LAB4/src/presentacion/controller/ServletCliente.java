@@ -1,7 +1,6 @@
 package presentacion.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +14,7 @@ import Excepciones.ErrorMensajeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import datos.ClienteDao;
-import datosImpl.ClienteDaoImpl;
+
 import dominio.Cliente;
 import dominio.Localidad;
 import dominio.Provincia;
@@ -70,7 +68,7 @@ public class ServletCliente extends HttpServlet {
 			
 			int idDesactivar =(Integer.parseInt(request.getParameter("idClienteDesactivar")));
 			
-			System.out.println("Botón 'Desactivar' Funciona: "+idDesactivar);
+			System.out.println("Botï¿½n 'Desactivar' Funciona: "+idDesactivar);
 			try 
 			{
 				UsuarioNegocio negU= new UsuarioNegImpl();
@@ -89,7 +87,7 @@ public class ServletCliente extends HttpServlet {
 			
 			int idDesactivar =(Integer.parseInt(request.getParameter("idClienteActivar")));
 			
-			System.out.println("Botón 'Desactivar' Funciona: "+idDesactivar);
+			System.out.println("Botï¿½n 'Desactivar' Funciona: "+idDesactivar);
 			try 
 			{
 				UsuarioNegocio negU= new UsuarioNegImpl();
@@ -114,6 +112,7 @@ public class ServletCliente extends HttpServlet {
 		return listadoCli;
 	}
 	
+	@SuppressWarnings("unused")
 	public void eventobtnAgregarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Cliente cliente = new Cliente();
@@ -179,6 +178,7 @@ public class ServletCliente extends HttpServlet {
         request.getRequestDispatcher("/Clientes.jsp").forward(request, response);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void eventobtnModificarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		int idCliente = (int) request.getAttribute("idCliente");
@@ -193,6 +193,7 @@ public class ServletCliente extends HttpServlet {
 		request.getRequestDispatcher("/ModificarCliente.jsp").forward(request, response);
 	}
 	
+	@SuppressWarnings("unused")
 	public void eventobtnAgregarModificacionCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		

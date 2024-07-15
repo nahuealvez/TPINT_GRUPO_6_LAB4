@@ -20,31 +20,18 @@ import negocio.CuentaNegocio;
 import negocioImpl.ClienteNegImpl;
 import negocioImpl.CuentaNegocioImpl;
 
-/**
- * Servlet implementation class ServletIndex
- */
 @WebServlet("/ServletIndex")
 public class ServletIndex extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ServletIndex() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		;
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getAttribute("indexCliente") != null) {
 			Cliente cliente = new Cliente();

@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 import datos.PrestamoDao;
 import datosImpl.PrestamoDaoImpl;
-import dominio.Cuenta;
 import dominio.Movimiento;
 import dominio.Prestamo;
 import dominio.TipoMovimiento;
 import negocio.CuentaNegocio;
 import negocio.CuotaNegocio;
-import negocio.MovimientoNegocio;
 import negocio.PrestamoNegocio;
 
 public class PrestamoNegImpl implements PrestamoNegocio{

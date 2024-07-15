@@ -19,6 +19,7 @@ import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.UsuarioNegImpl;
 
 @WebServlet("/ServletLogin")
+@SuppressWarnings("unused")
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioNegocio usuarioNeg = new UsuarioNegImpl();
@@ -50,7 +51,7 @@ public class ServletLogin extends HttpServlet {
 				
 				session.setAttribute("sessionUsuario", user);		
 				
-				// para enviar datos del cliente y de la cuenta a la sesión
+				// para enviar datos del cliente y de la cuenta a la sesiï¿½n
 				if (user.getTipoUsuario().getId() == 2) {
 					int loginCliente = 1;
 					request.setAttribute("indexCliente", loginCliente);
