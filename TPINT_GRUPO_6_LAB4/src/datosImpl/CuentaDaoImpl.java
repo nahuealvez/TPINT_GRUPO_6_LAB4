@@ -34,6 +34,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	private static final String listasActivas= "SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ? and estado=true";
 	private static final String afectarSaldo = "UPDATE cuentas SET saldo =  saldo + ? WHERE id = ?";
 	private static final String cuentasxEstado= "SELECT c.id, c.idCliente, c.fechaCreacion, tc.descripcion as 'tipoCuenta', c.cbu, c.saldo, c.estado from Cuentas c  inner join tiposCuentas tc on tc.id = c.idTipoCuenta where idCliente = ? and estado=?";
+	private static final String obtenerUltimaCuenta = "SELECT c.id, c.idCliente, c.fechaCreacion, c.idTipoCuenta, c.cbu, c.saldo, c.estado from Cuentas c where idCliente = ?";
 	
 	@Override
 	public boolean insert(Cuenta cuenta) throws SQLException{
@@ -631,6 +632,44 @@ public class CuentaDaoImpl implements CuentaDao {
 			throw ex;
 		}
 		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public Cuenta obtenerUltimaCuenta(int idCliente) throws SQLException {
+		PreparedStatement statement;
+		ResultSet rs;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+
+		try {
+			statement = conexion.prepareStatement(obtenerUltimaCuenta);
+			statement.setInt(1, idCliente);
+			rs = statement.executeQuery();
+			Cuenta cuenta = new Cuenta();
+
+			while (rs.next()) {
+
+				TipoCuenta tipoCuenta = new TipoCuenta();
+				tipoCuenta.setId(rs.getInt("idTipoCuenta"));
+
+				Cliente cliente = new Cliente();
+				cliente.setIdCliente(rs.getInt("idCliente"));
+
+				cuenta.setId(rs.getInt("id"));
+				cuenta.setCliente(cliente);
+				cuenta.setFechaCreacion(rs.getTimestamp("fechaCreacion").toLocalDateTime());
+				cuenta.setTipoCuenta(tipoCuenta);
+				cuenta.setCbu(rs.getString("cbu"));
+				cuenta.setSaldo(rs.getBigDecimal("saldo"));
+				cuenta.setEstado(rs.getBoolean("estado"));
+
+			}
+
+			return cuenta;
+		} catch (SQLException ex) {
+			throw ex;
+		} catch (Exception ex) {
 			throw ex;
 		}
 	}

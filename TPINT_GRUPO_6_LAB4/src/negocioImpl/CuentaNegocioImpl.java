@@ -301,4 +301,18 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 			throw ex;
 		}
 	}
+
+	@Override
+	public Cuenta obtenerUltimaCuenta(int idCliente) throws SQLException {
+		try {
+			Cuenta cuenta = cuentaDao.obtenerUltimaCuenta(idCliente);
+			return cuenta;
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
 }
