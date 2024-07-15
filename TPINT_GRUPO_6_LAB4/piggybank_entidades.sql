@@ -88,7 +88,7 @@ CREATE TABLE cuotas(
     idPrestamo INT NOT NULL,
     nroCuota INT NOT NULL,
     fechaVencimiento DATE NOT NULL,
-    estadoPago BIT NOT NULL,
+    fechaPago TIMESTAMP NULL,
     idMovimiento INT NOT NULL
 );
 
