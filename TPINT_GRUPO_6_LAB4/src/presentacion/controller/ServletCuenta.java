@@ -123,6 +123,7 @@ public class ServletCuenta extends HttpServlet {
 	public void eventoAgregarCuenta(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Cuenta cuentagregada = new Cuenta();
+		Cuenta ultimaCuenta = new Cuenta();
 
 		try {
 
@@ -136,27 +137,41 @@ public class ServletCuenta extends HttpServlet {
 			cuentagregada.setFechaCreacion(LocalDateTime.now());
 			cuentagregada.setTipoCuenta(tipodecuenta);
 			cuentagregada.setCbu(request.getParameter("txtCbu"));
-			cuentagregada.setSaldo(new BigDecimal(request.getParameter("txtSaldo")));
+			cuentagregada.setSaldo(BigDecimal.ZERO);
 			cuentagregada.setEstado(true);
 
 			boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
 
 			if (cuentaCreada) {
 				
-				Movimiento movimiento = new Movimiento();
+				ultimaCuenta = cuentaNeg.obtenerUltimaCuenta(cuentagregada.getCliente().getIdCliente());
 				
+
+				Movimiento movimiento = new Movimiento();
+
 				TipoMovimiento tipoMov = new TipoMovimiento();
 				tipoMov.setId(1);
+
+				movimiento.setFecha(LocalDateTime.now());
+				movimiento.setTipoMovimiento(tipoMov);
+				movimiento.setConcepto("Saldo Inicial");
+				movimiento.setCuenta(ultimaCuenta);
+				movimiento.setImporte(new BigDecimal("10000"));
+
 				
-                movimiento.setFecha(LocalDateTime.now());
-                movimiento.setTipoMovimiento(tipoMov);;
-                movimiento.setCuenta(cuentagregada);
-                movimiento.setImporte(cuentagregada.getSaldo());
-                
-                boolean movCuentaNueva = movimientoNeg.agregarMovimiento(movimiento);
-                
-				mensaje = "La cuenta fue creada con ï¿½xito";
-				claseMensaje = "alert alert-success";
+				boolean saldoAcreditado = cuentaNeg.acreditar(ultimaCuenta.getId(), movimiento);
+
+				if (saldoAcreditado) {
+
+				
+					mensaje = "La cuenta fue creada con éxito";
+					claseMensaje = "alert alert-success";
+				} else {
+
+					mensaje = "Cuenta creada, saldo inicial no acreditado";
+					claseMensaje = "alert alert-danger";
+				}
+
 			} else {
 				mensaje = "La cuenta no pudo ser creada ";
 				claseMensaje = "alert alert-danger";

@@ -28,4 +28,5 @@ public interface CuentaNegocio {
 	boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;
 	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException;
+	public Cuenta obtenerUltimaCuenta(int idCliente) throws SQLException;
 }
