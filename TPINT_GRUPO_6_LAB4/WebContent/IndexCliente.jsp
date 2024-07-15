@@ -50,17 +50,16 @@
 			</section>
 			<section>		
 				<h3 class="mb-0">Accesos rápidos</h3>
-				<div class="d-flex pt-3 gap-3">
-					<a href="Transferencias.jsp">
-						<button class="card-accesos" type="button">
+				<div class="d-flex pt-3 gap-3">					
+					<form action="ServletTransferencia" method="post">
+						<input type="hidden" name="idCliente" value="<%=clienteLogueado.getIdCliente()%>">
+						<button class="card-accesos" type="submit" id="btnTransferencia" name="btnTransferencia">
 							<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
 								<path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5"/>
 							</svg>
 							<p>Transferencias</p>
 						</button>
-					</a>
-					
-
+					</form>
 					<form action="ServletPrestamo" method="post">
 						<input type="hidden" name="idCliente" value="<%=clienteLogueado.getIdCliente()%>">
 						<button class="card-accesos" type="submit" name="accederPrestamosCliente">
