@@ -86,13 +86,15 @@ public class UsuarioDaoImpl implements UsuarioDao{
 				}
 				
 			}
+			if(user==null) {
+				throw new ErrorUsuarioException();
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}catch(Exception e) {
+			throw e;
 		}
 		
-		if(user==null) {
-			throw new ErrorUsuarioException();
-		}
 		return user;
 		
 	}
