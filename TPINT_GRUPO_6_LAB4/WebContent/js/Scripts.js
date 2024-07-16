@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	// evitar acción de botones al presionar enter en los campos del formulario
 	const inputs = document.querySelectorAll('input');
 
-    inputs.forEach(input => {
+	inputs.forEach(input => {
         input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !e.target.classList.contains('noPreventDefault')) {
                 e.preventDefault();
             }
         });

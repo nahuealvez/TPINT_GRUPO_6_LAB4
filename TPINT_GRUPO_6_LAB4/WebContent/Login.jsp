@@ -30,14 +30,14 @@
             <form method="post" action="ServletLogin" class="needs-validation" novalidate>
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Usuario</label>
-                    <input type="text" name="txtUsuario" placeholder="Ingrese su usuario" class="form-control" required>
+                    <input type="text" name="txtUsuario" placeholder="Ingrese su usuario" class="form-control noPreventDefault" required>
                     <div class="invalid-feedback">
                     	Por favor, ingrese su usuario.
 				    </div>
                 </div>
                 <div class="mb-3">
                     <label for="passoword" class="form-label">Contraseña</label>
-                    <input type="password" name="txtPass" placeholder="Ingrese su contraseña" class="form-control" required>
+                    <input type="password" name="txtPass" placeholder="Ingrese su contraseña" class="form-control noPreventDefault" required>
                     <div class="invalid-feedback">
                     	Por favor, ingrese su contraseña.
 				    </div>

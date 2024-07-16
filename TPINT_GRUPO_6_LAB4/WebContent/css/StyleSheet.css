@@ -120,3 +120,11 @@ a {
 	flex-shrink: 0;
 	height: 50px;
 }
+
+.dataTables_wrapper .dataTables_filter {
+     float: none;
+	text-align: right; /* Alinea el buscador a la derecha */
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: .5rem 1rem; /* Añade padding para estilizar los botones */
+}
