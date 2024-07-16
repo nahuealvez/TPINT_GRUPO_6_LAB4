@@ -88,7 +88,7 @@
 	                       	extend: 'pdf',
 	                       	text: 'Pdf',
 	                        className: 'btn-primary'
-                        },
+                        },	
                         {
 	                       	extend: 'print',
 	                       	text: 'Imprimir',

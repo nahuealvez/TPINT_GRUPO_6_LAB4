@@ -53,35 +53,54 @@
 					for (Prestamo pre : listaPrestamos) {
 				%>
 				<tr>
-					<td><%=pre.getId()%></td>
-					<td><%=pre.getFechaSolicitud().format(formatoFecha)%></td>
-					<td><%=pre.getCliente().getDni()%></td>
-					<td><%=pre.getCliente().getApellido() + " " + pre.getCliente().getNombre()%></td>
-					<td><%=formatoMoneda.format(pre.getImportePedido())%></td>
-					<td><%=pre.getCuotas()%></td>
-					<%
-						if (pre.isEstadoValidacion() == null) {
-					%>
-					<td><span class='badge bg-warning'>APROBACION PENDIENTE</span>
-					</td>
-					<td class="d-flex justify-content-start align-items-center gap-2">
-						<form action="ServletPrestamo" method="post">
-						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
-							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
-								class="btn btn-primary btn-sm">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-								  <path
-										d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-								</svg>
-							</button>
-						</form> 
-						<!-- MODAL PARA APROBAR EL PRESTAMO  -->
-						<button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo<%= pre.getId() %>">
-							Aprobar
-						</button>
-						<div class="modal fade" id="mdlAprobarPrestamo<%= pre.getId() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<td class="align-middle"><%=pre.getId()%></td>
+					<td class="align-middle"><%=pre.getFechaSolicitud().format(formatoFecha)%></td>
+					<td class="align-middle"><%=pre.getCliente().getDni()%></td>
+					<td class="align-middle"><%=pre.getCliente().getApellido() + " " + pre.getCliente().getNombre()%></td>
+					<td class="align-middle"><%=formatoMoneda.format(pre.getImportePedido())%></td>
+					<td class="align-middle"><%=pre.getCuotas()%></td>
+					<% if (pre.isEstadoValidacion() == null) { %>
+	                    <td class="align-middle">
+	                    	<span class='badge bg-warning'>APROBACION PENDIENTE</span>
+	                    </td>
+                    <% } else if (!pre.isEstadoValidacion()) { %>
+                    	<td class="align-middle">
+                    		<span class="badge bg-danger">RECHAZADO</span>
+                    	</td>
+                    <% } else { %>
+                    	<td class="align-middle">
+                    		<span class="badge text-bg-success">APROBADO</span>
+                    	</td> 
+                    <% } %>
+					<td class="align-middle">
+						<div class="d-flex justify-content-start align-items-center gap-2">
+							<form action="ServletPrestamo" method="post">
+							<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
+								<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
+									class="btn btn-primary btn-sm">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+										fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+									  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+									  <path
+											d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+									</svg>
+								</button>
+							</form> 
+							<!-- MODAL PARA APROBAR EL PRESTAMO  -->
+							<% if (pre.isEstadoValidacion() == null) { %>
+								<button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo<%= pre.getId() %>">
+									Aprobar
+								</button>
+							<% } else if (!pre.isEstadoValidacion()) { %>
+								<button type="button" class="btn btn-outline-success btn-sm disabled">
+									Aprobar
+								</button>
+							<% } else { %>
+								<button type="button" class="btn btn-outline-success btn-sm disabled">
+									Aprobar
+								</button>
+							<% } %>
+							<div class="modal fade" id="mdlAprobarPrestamo<%= pre.getId() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -99,12 +118,22 @@
 										</div>
 									</div>
 								</div>
-						</div>
-						
-						<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo<%= pre.getId() %>">
-							Rechazar
-						</button>
-						<div class="modal fade" id="mdlRechazarPrestamo<%= pre.getId() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							</div>
+							<!-- MODAL PARA RECHAZAR EL PRESTAMO  -->
+							<% if (pre.isEstadoValidacion() == null) { %>
+								<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo<%= pre.getId() %>">
+									Rechazar
+								</button>
+							<% } else if (!pre.isEstadoValidacion()) { %>
+								<button type="button" class="btn btn-outline-danger btn-sm disabled">
+									Rechazar
+								</button>
+							<% } else { %>
+								<button type="button" class="btn btn-outline-danger btn-sm disabled">
+									Rechazar
+								</button>
+							<% } %>
+							<div class="modal fade" id="mdlRechazarPrestamo<%= pre.getId() %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -121,148 +150,17 @@
 										</div>
 									</div>
 								</div>
-							
+							</div>
 						</div>
 					</td>
-					<%
-						} else if (!pre.isEstadoValidacion()) {
-					%>
-					<td><span class="badge bg-danger">RECHAZADO</span></td>
-					<td class="d-flex justify-content-start align-items-center gap-2">
-						<form action="ServletPrestamo" method="post">
-						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
-							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
-								class="btn btn-primary btn-sm">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-								  <path
-										d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-								</svg>
-							</button>
-						</form>
-					</td>
-					<%
-						} else {
-					%>
-					<td><span class="badge text-bg-success">APROBADO</span></td>
-					<td class="d-flex justify-content-start align-items-center gap-2">
-						<form action="ServletPrestamo" method="post">
-						<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
-							<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
-								class="btn btn-primary btn-sm">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-								  <path
-										d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-								</svg>
-							</button>
-						</form>
-					</td>
-					<%
-						}
-					%>
 				</tr>
-				<%
-					}
-				%>
+				<% } %>
 			</tbody>
 		</table>
 	</div>
 </div>
 
 <!-- Scripts -->
-
-<!-- <script>
-	$(document).ready(function() {
-		$('#btnAprobarPrestamo').click(function(e) {
-			e.preventDefault();
-			var idPrestamo = $(this).parent().find('idPrestamo').val();
-			Swal.fire({
-			  title: "¿Confirma aprobar el préstamo?",
-			  text: "Esta acción no es reversible",
-			  icon: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#3085d6",
-			  cancelButtonColor: "#d33",
-			  confirmButtonText: "Sí, apruebo el préstamo",
-			  cancelButtonText: "Cancelar"
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  aprobarPrestamo(idPrestamo);
-			  }
-			});
-		})
-	})
-	
-	function aprobarPrestamo(idPrestamo) {
-		console.log('prestamoAprobado');
-		$.ajax({
-			type: 'POST',
-			url: 'ServletPrestamo',
-			async: true,
-			success: function(response) {
-			    Swal.fire({
-			      title: "Aprobado",
-			      text: "El préstamo fue aprobado",
-			      icon: "success"
-			    });
-			},
-			error: function(xhr, status, error) {
-			    Swal.fire({
-			      title: "No aprobado",
-			      text: "Hubo un error al aprobar el préstamo",
-			      icon: "error"
-			    });
-			}
-		});
-	}
-	
-	$(document).ready(function() {
-		$('#btnRechazarPrestamo').click(function(e) {
-			e.preventDefault();
-			var idPrestamo = $(this).parent().find('idPrestamo').val();
-			Swal.fire({
-			  title: "¿Confirma rechazar el préstamo?",
-			  text: "Esta acción no es reversible",
-			  icon: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#3085d6",
-			  cancelButtonColor: "#d33",
-			  confirmButtonText: "Sí, rechazo el préstamo",
-			  cancelButtonText: "Cancelar"
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  rechazarPrestamo(idPrestamo);
-			  }
-			});
-		})
-	})
-	
-	function rechazarPrestamo(idPrestamo) {
-		console.log('prestamoAprobado');
-		$.ajax({
-			type: 'POST',
-			url: 'ServletPrestamo',
-			async: true,
-			success: function(response) {
-			    Swal.fire({
-			      title: "Aprobado",
-			      text: "El préstamo fue rechazado",
-			      icon: "success"
-			    });
-			},
-			error: function(xhr, status, error) {
-			    Swal.fire({
-			      title: "No aprobado",
-			      text: "Hubo un error al rechazar el préstamo",
-			      icon: "error"
-			    });
-			}
-		});
-	}
-</script>  -->
 
 <script>
 	new DataTable('#tablaPrestamosBanco', {
