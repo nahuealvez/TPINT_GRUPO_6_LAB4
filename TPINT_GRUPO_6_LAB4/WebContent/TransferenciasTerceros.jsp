@@ -48,7 +48,7 @@
                	    maxlength="22" 
                 required>
             </div>
-            <div id="prestamoAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0" style="display: none;">
+            <div id="transferenciaAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0" style="display: none;">
             	<h6 class="mb-3">¿Está seguro de realizar esta transferencia?</h6>
             	<div>
             		<strong>Importe a transferir: </strong>

@@ -20,6 +20,10 @@ function volverPantallaAnterior() {
 	window.history.back();
 }
 
+function irAlIndex() {
+	document.getElementById("btnInicio").click();
+}
+
 function cancelarOperacion() {
 	document.getElementById("btnInicio").click();
 };
@@ -44,6 +48,51 @@ function cancelarOperacion() {
 	  })
 })();
 
+// Prestamos
+
+function cargarConfirmacionPrestamo() {
+	// OBTIENE LOS VALORES DEL FORMULARIO DE CARGA
+    var importeSolicitado = document.getElementById("txtImporteSolicitado").value;
+    var cuotas = document.getElementById("txtCuotas").value;
+    
+    // CALCULA EL IMPORTE FINAL INTERES INCLUIDO
+    var interes = 0.20;
+    var montoAPagar = importeSolicitado * (1 + interes);
+    var importeCuota = montoAPagar / cuotas;
+ 
+    // ACTUALIZA CONTENIDO A MOSTRAR DEL DIV DE CONFIRMACION
+    document.getElementById("confImporteSolicitado").innerText = "$" + parseFloat(importeSolicitado).toFixed(2);
+    document.getElementById("confCuotas").innerText = cuotas;
+    document.getElementById("confMontoPagar").innerText = "$" + montoAPagar.toFixed(2);
+    document.getElementById("confImporteCuota").innerText = "$" + importeCuota.toFixed(2);
+}
+
+function mostrarConfirmacionPrestamo() {
+    document.getElementById("prestamoAConfirmar").style.display = "block";
+    document.getElementById("confirmarBtn").style.display = "inline-block";
+    document.getElementById("cancelarBtn").style.display = "inline-block";
+    
+    document.getElementById("formularioSolicitud").style.display = "none";
+    document.getElementById("volverBtn").style.display = "none";
+    document.getElementById("solicitarBtn").style.display = "none";
+    
+    let camposFormulario = document.getElementsByClassName("camposFormulario");
+    for (var i = 0; i < camposFormulario.length; i++) {
+        camposFormulario[i].style.display = "none";
+    }
+};
+
+function validarYMostrarConfirmacionPrestamo(event) {
+    var form = document.getElementById("formularioSolicitud");
+    if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    } else {
+    	cargarConfirmacionPrestamo();
+    	mostrarConfirmacionPrestamo();
+    }
+    form.classList.add('was-validated');
+};
 
 
 // Transferencias | Movimiento de cuentas
@@ -123,7 +172,7 @@ function cargarConfirmacionTransferencia() {
 };
 
 function mostrarConfirmacionTransferencia() {	    	
-    document.getElementById("prestamoAConfirmar").style.display = "block";
+    document.getElementById("transferenciaAConfirmar").style.display = "block";
     document.getElementById("confirmarBtn").style.display = "inline-block";
     document.getElementById("cancelarBtn").style.display = "inline-block";
     
