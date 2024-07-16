@@ -80,15 +80,15 @@
 								</button>
 							</form>
 							<% if (pre.isEstadoValidacion() == null) { %>
-			                    <button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true" disabled>
+			                    <button type="button" class="btn btn-outline-success btn-sm disabled">
 								  Pagar
 								</button>
 		                    <% } else if (!pre.isEstadoValidacion()) { %>
-		                    	<button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true" disabled>
+		                    	<button type="button" class="btn btn-outline-success btn-sm disabled">
 								  Pagar
 								</button>
 		                    <% } else { %>
-		                    	<button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true">
+		                    	<button type="button" class="btn btn-outline-success btn-sm">
 								  Pagar
 								</button>
 		                    <% } %>
