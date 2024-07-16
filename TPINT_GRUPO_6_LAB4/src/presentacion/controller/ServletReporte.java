@@ -124,6 +124,7 @@ String valorParam = request.getParameter("param");
 			{
 				e.printStackTrace();
 			}	
+				request.setAttribute("idCuenta", idCuenta);
 				request.setAttribute("listaMovimiento", listaMovimientoCta);
 			request.getRequestDispatcher("/ReporteVerCuenta.jsp").forward(request, response);
 		}
@@ -141,6 +142,7 @@ String valorParam = request.getParameter("param");
 			{
 				e.printStackTrace();
 			}	
+				request.setAttribute("idCuenta", idCuenta);
 				request.setAttribute("listaMovimiento", listaMovimientoCta);
 			request.getRequestDispatcher("/ReporteVerCuenta.jsp").forward(request, response);
 		}

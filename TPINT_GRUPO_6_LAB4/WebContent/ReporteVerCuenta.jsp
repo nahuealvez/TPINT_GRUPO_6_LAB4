@@ -6,11 +6,17 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>  
 
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css"> -->
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-
 <%@ include file="Header.jsp" %>
-		<h3 class="pt-3">Movimientos</h3>
+
+<%
+	int idCuenta = 0;
+
+	if (request.getAttribute("idCuenta") != null) {
+		idCuenta = (Integer)request.getAttribute("idCuenta");
+	}
+%>
+
+		<h3 class="pt-3">Movimientos | Cuenta: <%=idCuenta %></h3>
 		
 	<div class="card">
     <div class="card-header d-flex justify-content-end">
@@ -72,8 +78,7 @@
         </table>
     </div>
 </div>
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css"> -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+
 <script>
     $(document).ready(function() {
         var table = $('#tablaMovimientos').DataTable({
