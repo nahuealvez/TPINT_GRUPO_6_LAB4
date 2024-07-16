@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', (event) => {
+	setTimeout(function () {
+	    $("#alert").fadeOut(1000);
+	}, 3000);
+	
+	
+	// evitar acción de botones al presionar enter en los campos del formulario
+	const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    });
+});
+
 function volverPantallaAnterior() {
 	window.history.back();
 }
@@ -26,11 +44,7 @@ function cancelarOperacion() {
 	  })
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
-	setTimeout(function () {
-	    $("#alert").fadeOut(1000);
-	}, 3000);
-});
+
 
 // Transferencias | Movimiento de cuentas
 
