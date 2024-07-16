@@ -41,9 +41,6 @@
                 <label for="ddlCuentaDestino">Cuenta destino:</label>
                 <select id="ddlCuentaDestino" name="ddlCuentaDestino" class="form-select form-select-sm" required>
                 	<option selected disabled value="">Seleccione cuenta...</option>
-                	<% for (Cuenta cuenta : cuentas) { %>
-                    	<option value="<%= cuenta.getId() %>"><%= cuenta.toStringResumido() %></option>
-                    <% } %>
                 </select>
             </div>
             <div id="MovimientoCuentaAConfirmar" class="col-md-4 position-relative alert alert-primary mb-0" style="display: none;">
