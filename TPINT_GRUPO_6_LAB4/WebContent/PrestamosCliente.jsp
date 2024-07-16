@@ -46,18 +46,28 @@
 	        <tbody>
 	        	<%for (Prestamo pre : listaPrestamos) {%>
                 <tr>
-                    <td><%= pre.getId() %></td>
-                    <td><%= pre.getFechaSolicitud().format(formatoFecha) %></td>
-                    <td><%= formatoMoneda.format(pre.getImporteMensual()) %></td>
-                    <td><%= pre.getCuotas() %></td>
-                    <td><%= formatoMoneda.format(pre.getImportePedido()) %></td>
-                    <td><%= formatoMoneda.format(pre.getImporteAPagar()) %></td>
+                    <td class="align-middle"><%= pre.getId() %></td>
+                    <td class="align-middle"><%= pre.getFechaSolicitud().format(formatoFecha) %></td>
+                    <td class="align-middle"><%= formatoMoneda.format(pre.getImporteMensual()) %></td>
+                    <td class="align-middle"><%= pre.getCuotas() %></td>
+                    <td class="align-middle"><%= formatoMoneda.format(pre.getImportePedido()) %></td>
+                    <td class="align-middle"><%= formatoMoneda.format(pre.getImporteAPagar()) %></td>
                     <% if (pre.isEstadoValidacion() == null) { %>
-                    <td>
-                    	<span class='badge bg-warning'>APROBACION PENDIENTE</span>
-                    </td>
-                    <td class="d-flex justify-content-start align-items-center gap-2">
-							<form action="ServletPrestamo" method="post">
+	                    <td class="align-middle">
+	                    	<span class='badge bg-warning'>APROBACION PENDIENTE</span>
+	                    </td>
+                    <% } else if (!pre.isEstadoValidacion()) { %>
+                    	<td class="align-middle">
+                    		<span class="badge bg-danger">RECHAZADO</span>
+                    	</td>
+                    <% } else { %>
+                    	<td class="align-middle">
+                    		<span class="badge text-bg-success">APROBADO</span>
+                    	</td> 
+                    <% } %>
+                    <td class="align-middle">
+                    	<div class="d-flex justify-content-start align-items-center gap-2">
+                    		<form action="ServletPrestamo" method="post">
 							<input type="hidden" name="idPrestamo" value="<%=pre.getId()%>">
 								<button type="submit" id="btnVerPrestamo" name="btnVerPrestamo"
 									class="btn btn-primary btn-sm">
@@ -69,46 +79,21 @@
 									</svg>
 								</button>
 							</form>
-	                    <button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true">
-						  Pagar
-						</button>
+							<% if (pre.isEstadoValidacion() == null) { %>
+			                    <button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true" disabled>
+								  Pagar
+								</button>
+		                    <% } else if (!pre.isEstadoValidacion()) { %>
+		                    	<button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true" disabled>
+								  Pagar
+								</button>
+		                    <% } else { %>
+		                    	<button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true">
+								  Pagar
+								</button>
+		                    <% } %>
+                    	</div>
                     </td>
-                     <% } else if(!pre.isEstadoValidacion()){ %>
-                    <td>
-                    	<span class="badge bg-danger">RECHAZADO</span>
-                    </td>
-                    <td class="d-flex justify-content-start align-items-center gap-2">
-                    		<button type="button" class="btn btn-primary btn-sm disabled btn-light" aria-disabled="true">
-                    			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-								</svg>
-                    		</button>
-	                    <button type="button" class="btn btn-outline-success btn-sm disabled" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo" aria-disabled="true">
-						  Pagar
-						</button>
-                    </td>
-                    <% } else { %>
-                    <td>
-                    	<span class="badge text-bg-success">APROBADO</span>
-                    </td>                    
-                    <td class="d-flex justify-content-start align-items-center gap-2">
-                    	<form action="ServletPrestamo" method="post">
-                    		<input type="hidden" name="idCliente" value="<%=clienteLogueado.getIdCliente()%>">
-                    		<button type="submit" name="btnVerPrestamo" id="btnVerPrestamo" class="btn btn-primary btn-sm">
-                    			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"
-                    			href="DetallePrestamo.jsp">
-								  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-								  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-								</svg>
-                    		</button>
-                    	</form>
-						    <a href="PagarCuotas.jsp" class="btn btn-outline-success btn-sm" data-disabled="true" id="payButton">
-        						Pagar
-   							</a>
-						
-                    </td>
-                    <%}%>                                
                 </tr>
                 <% } %>
 	        </tbody>
