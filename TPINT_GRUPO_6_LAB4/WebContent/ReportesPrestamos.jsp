@@ -151,54 +151,34 @@
 	<a class="btn btn-dark btn-sm" href="Reportes.jsp"> Volver</a>
 </div>
 
-
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
-
-<!-- DataTables JS -->
-<script type="text/javascript" src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
-<!-- DataTables Buttons CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
-
-<!-- DataTables Buttons JS -->
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
-
-<!-- JSZip -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<!-- PDFMake -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-<!-- DataTables Buttons HTML5 export -->
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
-
-<!-- DataTables Buttons print -->
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
-
-
-
 <script >
 $(document).ready(function() {
     $('#example').DataTable({
-        dom: 'Bfrtip', 
-        buttons: [
-             'excel', 'pdf', 'print'
-        ],
         language: {
         	url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',            
-          
-            "buttons": {                             
-                "excel": "Excel",
-                "pdf": "PDF",
-                "print": "Imprimir"
-            }
-        }
-
+        },
+	    layout: {
+	    	topStart: {
+	    		buttons: [
+	                {
+	                   	extend: 'excel',
+	                   	text: 'Excel',
+	                    className: 'btn btn-primary'
+	                },
+	                {
+	                   	extend: 'pdf',
+	                   	text: 'Pdf',
+	                    className: 'btn-primary'
+	                },
+	                {
+	                   	extend: 'print',
+	                   	text: 'Imprimir',
+	                    className: 'btn btn-primary'
+	                }
+	           ]
+	    	}
+    	}
     });
-    
 });
 
 </script>

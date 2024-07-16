@@ -4,8 +4,6 @@
 <%@ page import="java.util.ArrayList" %>   
     
 <%@ include file="Header.jsp" %>
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
 
 <h3 class="pt-3" >Reportes: Cuentas Corriente</h3>
 
@@ -73,26 +71,33 @@
 	<a class="btn btn-dark btn-sm" href="Reportes.jsp"> Volver</a>
 </div>
 
-
-<!-- Scripts -->
-	<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
-
    
     <script>
         new DataTable('#tablaCuentas', {
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
             },
-            dom: 'Bfrtip', 
-            buttons: [
-                 'excel', 'pdf', 'print' 
-            ]
+            layout: {
+    	    	topStart: {
+    	    		buttons: [
+    	                {
+    	                   	extend: 'excel',
+    	                   	text: 'Excel',
+    	                    className: 'btn btn-primary'
+    	                },
+    	                {
+    	                   	extend: 'pdf',
+    	                   	text: 'Pdf',
+    	                    className: 'btn-primary'
+    	                },
+    	                {
+    	                   	extend: 'print',
+    	                   	text: 'Imprimir',
+    	                    className: 'btn btn-primary'
+    	                }
+    	           ]
+    	    	}
+        	}
         });
     </script>
 <%@ include file="Footer.jsp" %>
