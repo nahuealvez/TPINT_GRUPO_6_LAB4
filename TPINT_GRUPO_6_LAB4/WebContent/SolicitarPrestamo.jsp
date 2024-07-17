@@ -38,7 +38,9 @@
                 	form-control-sm"
                 	id="txtImporteSolicitado" 
                 	name="txtImporteSolicitado"
-                	value="" 
+                	value=""
+                	min="0"
+                	step="0.01" 
                 	placeholder="Ingrese el importe a solicitar" 
                 required>
             </div>
@@ -48,6 +50,8 @@
                 	class="form-control form-control-sm" 
                 	id="txtCuotas" 
                 	name="txtCuotas"
+					min="0"
+					step="1"
                 	placeholder="Ingrese cantidad de cuotas" 
                 required>
             </div>

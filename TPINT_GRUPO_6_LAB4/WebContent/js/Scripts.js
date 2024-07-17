@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     });
+	
+	const inputImporteSolicitado = document.getElementById("txtImporteSolicitado");
+	
+	inputImporteSolicitado.addEventListener('keypress', validarDecimal);
+	
+	const inputCuota = document.getElementById("txtCuotas");
+	
+	inputCuota.addEventListener('keypress', validarEntero);
 });
 
 function volverPantallaAnterior() {
@@ -236,7 +244,23 @@ function validarYMostrarConfirmacionTransferencia(event) {
 
 function validarDecimal(event) {
     const char = String.fromCharCode(event.which);
-    if (!(/[0-9.]|\./.test(char))) {
+    const value = event.target.value;
+    
+    if (!(/[0-9.]/.test(char))) {
+        event.preventDefault();
+    }
+
+    if (char === '-') {
+        event.preventDefault();
+    }
+};
+
+function validarEntero(event) {
+    const char = String.fromCharCode(event.which);
+    const value = event.target.value;
+
+    // Verificar si el carácter es un número o un punto decimal
+    if (!(/[0-9]/.test(char))) {
         event.preventDefault();
     }
 };
