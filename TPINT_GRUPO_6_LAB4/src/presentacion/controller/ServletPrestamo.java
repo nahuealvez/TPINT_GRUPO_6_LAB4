@@ -257,13 +257,18 @@ public class ServletPrestamo extends HttpServlet {
 	        mensaje = "La solicitud fue generada exitosamente.";
 	        claseMensaje = "alert alert-success";
 	        	        
-		} catch (Exception e) {
-     		mensaje = "La solicitud no pudo ser generada. Intentelo nuevamente. | " + e.getMessage();
+		}
+        catch (SQLException ex) {
+        	mensaje = "La solicitud no pudo ser generada | " + ex.getMessage();
+     		claseMensaje = "alert alert-danger";
+        }
+        catch (Exception e) {
+     		mensaje = "La solicitud no pudo ser generada | " + e.getMessage();
      		claseMensaje = "alert alert-danger";
 		}
         
-     	request.setAttribute("txtMensajeAgregarCliente", mensaje);
-        request.setAttribute("claseMensajeAgregarCliente", claseMensaje);
+     	request.setAttribute("txtMensaje", mensaje);
+        request.setAttribute("claseMensaje", claseMensaje);
 	}
 		
 }
