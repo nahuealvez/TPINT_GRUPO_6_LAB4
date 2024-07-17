@@ -231,7 +231,7 @@
                 	name="txtClave"
                 	minlength="8" 
                 	maxlength="14" 
-                	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
+                	placeholder="entre 8 y 14 caracteres, un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
                 required>
             </div>
@@ -244,7 +244,7 @@
                 	name="txtValidarClave" 
                 	minlength="8" 
                 	maxlength="14" 
-                	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
+                	placeholder="entre 8 y 14 caracteres,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
             	required>
             </div>
