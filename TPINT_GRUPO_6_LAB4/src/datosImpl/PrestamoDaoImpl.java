@@ -17,7 +17,6 @@ import dominio.Prestamo;
 public class PrestamoDaoImpl implements PrestamoDao{
 	private PreparedStatement st;
 	private ResultSet rs;
-	private Connection conexion = Conexion.getConexion().getSQLConexion();
 	
 	private static final String insert = "INSERT INTO prestamos (idCliente, idCuenta, importeAPagar, plazoDePago, importePedido, cuotas, importeMensual, estadoValidacion, fechaValidacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String updateEstadoSolicitud = "UPDATE prestamos SET estadoValidacion = ? WHERE id = ?";
@@ -42,7 +41,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	public boolean insert(Prestamo prestamo) throws SQLException {
 		
 		boolean isInsertExitoso = false;
-	
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try {
 			st = conexion.prepareStatement(insert);
 			st.setInt(1, prestamo.getCliente().getIdCliente());
@@ -79,7 +78,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	public boolean updateEstado(int idPrestamo, Boolean estadoAprobacion) throws SQLException {
 				
 		boolean actualizacionEstadoExitosa = false;
-		
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try {
 			st = conexion.prepareStatement(updateEstadoSolicitud);
 			st.setBoolean(1, estadoAprobacion);
@@ -108,7 +107,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarPrestamosXCliente(int idCliente)throws SQLException {
 		ArrayList<Prestamo> prestamosPorCliente = new ArrayList<Prestamo>();
-		
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try {
 			st = conexion.prepareStatement(listarPrestamosXCliente);
 			st.setInt(1, idCliente);
@@ -132,13 +131,15 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarSolicitudesPrestamos() throws SQLException {
 		ArrayList<Prestamo> solicitudesPrestamos = new ArrayList<Prestamo>();
-		
+		PreparedStatement statement;
+		ResultSet resultSet;
+		Conexion cx = Conexion.getConexion();
 		try {
-			st = conexion.prepareStatement(listarSolicitudes);
-			rs = st.executeQuery();
-			while(rs.next())
+			statement = cx.getSQLConexion().prepareStatement(listarSolicitudes);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
 			{
-				solicitudesPrestamos.add(getPrestamo(rs));
+				solicitudesPrestamos.add(getPrestamo(resultSet));
 			}
 			return solicitudesPrestamos;
 			
@@ -154,7 +155,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public Prestamo obtenerPrestamoPorId(int idPrestamo) throws SQLException {
 		Prestamo prestamo = new Prestamo();
-		
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try {
 			st = conexion.prepareStatement(obtenerPrestamoPorId);
 			st.setInt(1, idPrestamo);
@@ -223,7 +224,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarTodosLosPrestamos() throws SQLException {
 		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
-
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    try {
 	        st = conexion.prepareStatement(listarTodosLosPrestamos);
 	        rs = st.executeQuery();
@@ -241,7 +242,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarTodosLosPrestamosAprobados() throws SQLException {
 		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
-
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    try {
 	        st = conexion.prepareStatement(listarTodosLosPrestamosAprobados);
 	        rs = st.executeQuery();
@@ -259,7 +260,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarTodosLosPrestamosRechazados() throws SQLException {
 		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
-
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    try {
 	        st = conexion.prepareStatement(listarTodosLosPrestamosRechazados);
 	        rs = st.executeQuery();
@@ -277,7 +278,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	@Override
 	public ArrayList<Prestamo> listarTodosLosPrestamosEnEvaluacio() throws SQLException {
 		ArrayList<Prestamo> todosLosPrestamos = new ArrayList<>();
-
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    try {
 	        st = conexion.prepareStatement(listarTodosLosPrestamosEnEvaluacion);
 	        rs = st.executeQuery();
@@ -295,6 +296,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	
 	@Override
 	public int contarPrestamosAprobados() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try (PreparedStatement st = conexion.prepareStatement(contarAprobados);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {
@@ -307,6 +309,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	}
 	@Override
 	public int contarPrestamosRechazados() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		 try (PreparedStatement st = conexion.prepareStatement(contarRechazados);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {
@@ -319,6 +322,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	}
 	@Override
 	public int contarPrestamosEnEvaluacion() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		 try (PreparedStatement st = conexion.prepareStatement(contarEvaluacion);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {
@@ -331,6 +335,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	}
 	@Override
 	public BigDecimal sumarPrestamosAprobados() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try (PreparedStatement st = conexion.prepareStatement(sumarValorAprobados);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {
@@ -343,6 +348,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	}
 	@Override
 	public BigDecimal sumarPrestamosRechazados() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try (PreparedStatement st = conexion.prepareStatement(sumarValorRechazados);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {
@@ -355,6 +361,7 @@ public class PrestamoDaoImpl implements PrestamoDao{
 	}
 	@Override
 	public BigDecimal sumarPrestamosEnEvaluacion() throws SQLException {
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		try (PreparedStatement st = conexion.prepareStatement(sumarValorEvaluacion);
 		         ResultSet rs = st.executeQuery()) {
 		        if (rs.next()) {

@@ -121,7 +121,7 @@
 							</div>
 							<!-- MODAL PARA RECHAZAR EL PRESTAMO  -->
 							<% if (pre.isEstadoValidacion() == null) { %>
-								<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlAprobarPrestamo<%= pre.getId() %>">
+								<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#mdlRechazarPrestamo<%= pre.getId() %>">
 									Rechazar
 								</button>
 							<% } else if (!pre.isEstadoValidacion()) { %>
