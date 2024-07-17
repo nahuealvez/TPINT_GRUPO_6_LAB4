@@ -22,47 +22,41 @@
 <h3>Cuentas</h3>
 
 <div class="card">
-	<%
-		if (existeMensaje) {
-	%>
-	<div class="<%=claseMensaje%>" role="alert">
-		<%=mensaje%>
-	</div>
-	<%
-		}
-	%>
-
-	<div
-		class="card-header d-flex justify-content-between align-items-center">
-		<h4>Buscar Cliente por DNI</h4>
-		<form action="ServletCuenta" method="post" class="d-flex gap-3">
-			<input type="hidden" name="opcion" value="buscarCliente"> <input
-				type="text" class="form-control" minlength="7" maxlength="8"
-				placeholder="Ingrese DNI" name="dniCliente"> <select
-				name="filtroEstado" class="form-select">
-				<option value="todas">Todas</option>
-				<option value="activas">Activas</option>
-				<option value="inactivas">Inactivas</option>
-			</select>
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<h5 class="m-0">Buscar Cliente por DNI</h5>
+		<form action="ServletCuenta" class="d-flex flex-row gap-2 needs-validation" method="post" class="d-flex gap-3" novalidate>
+			<input type="hidden" name="opcion" value="buscarCliente">
+			<input type="text" class="form-control" minlength="7" maxlength="8" placeholder="Ingrese DNI" name="dniCliente" required>
+				<select name="filtroEstado" class="form-select">
+					<option value="todas">Todas</option>
+					<option value="activas">Activas</option>
+					<option value="inactivas">Inactivas</option>
+				</select>
 			<button type="submit" class="btn btn-primary">Buscar</button>
 		</form>
 	</div>
 
 	<div class="card-body">
 
+		<% if (existeMensaje) { %>
+			<div id="alert" class="<%=claseMensaje%>" role="alert">
+				<%=mensaje%>
+			</div>
+		<% } %>
+		
 		<%
 			Cliente clienteServlet = (Cliente) request.getAttribute("clienteServlet");
 
 			if (clienteServlet != null) {
 		%>
 
-		<div class="card-header d-flex justify-content-end">
+		<div class="card-header d-flex justify-content-end mb-3">
 			<a class="btn btn-primary"
 				href="ServletCuenta?opcion=agregar&dniCliente=<%=clienteServlet.getDni()%>">Agregar</a>
 		</div>
 
-		<div class="alert alert-success" role="alert">
-			Cliente encontrado:
+		<div class="alert alert-primary" role="alert">
+			<p>Cliente encontrado:</p>
 			<ul>
 				<li><strong>Nombre:</strong> <%=clienteServlet.getNombre()%></li>
 				<li><strong>Apellido:</strong> <%=clienteServlet.getApellido()%></li>
