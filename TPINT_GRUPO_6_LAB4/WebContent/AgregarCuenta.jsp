@@ -48,12 +48,6 @@
 						value="<%=request.getAttribute("cbuGenerado") != null ? request.getAttribute("cbuGenerado") : ""%>">
 				</div>
 
-				<div class="col-md-6 position-relative">
-					<label for="txtSaldo">Saldo:</label> <input type="text"
-						class="form-control form-control-sm" id="txtSaldo" name="txtSaldo"
-						value="10000.00" readonly>
-				</div>
-
 				<div class="col-md-6 mt-3">
 					<button class="btn btn-dark btn-sm" type="button"
 						onclick="volverPantallaAnterior()"> Volver</button>
