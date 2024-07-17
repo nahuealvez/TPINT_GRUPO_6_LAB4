@@ -64,8 +64,6 @@ public class ServletCuenta extends HttpServlet {
 					} else {
 
 						mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas", "alert alert-danger", clienteServlet, listaDeCuentas);
-
-						request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
 					}
 				} else {
 
@@ -256,7 +254,6 @@ public class ServletCuenta extends HttpServlet {
 				if (aux >= 3) {
 
 					mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas", "alert alert-danger", clienteServlet, cuentasActivas);
-					request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 					return;
 				}
 
