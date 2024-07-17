@@ -170,6 +170,7 @@ public class ServletPrestamo extends HttpServlet {
 			{
 				ArrayList<Cuota> cuotasPrestamo = new ArrayList<Cuota>();
 				cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(idPrestamo);
+				request.setAttribute("idPrestamo", idPrestamo);
 	            request.setAttribute("listaCuotas", cuotasPrestamo);
 	            System.out.println(cuotasPrestamo.toString());
 	            request.getRequestDispatcher("/CuotasPrestamo.jsp").forward(request, response);

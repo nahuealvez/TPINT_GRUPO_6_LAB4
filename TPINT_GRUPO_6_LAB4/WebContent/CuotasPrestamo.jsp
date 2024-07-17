@@ -11,6 +11,12 @@
 <%@ include file="Header.jsp" %>
 	
 	<%
+		int idPrestamo = 0;
+	
+		if (request.getAttribute("idPrestamo") != null) {
+			idPrestamo = (Integer)request.getAttribute("idPrestamo");
+		}
+	
 		ArrayList<Cuota> listaCuotas = null;
 		if(request.getAttribute("listaCuotas") != null){
 			listaCuotas = (ArrayList<Cuota>)request.getAttribute("listaCuotas");
@@ -22,13 +28,13 @@
 	    NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
 	    
 	%>
-	<h3>Cuotas de prestamo #</h3>
+	<h3>Cuotas | Prestamo #<%= idPrestamo %></h3>
 	<div class="card">		                    	  
 	  <div class="card-body">
 	    <table id="tablaCuotas" class="table table-striped" style="width:100%">
 	        <thead>
 	            <tr>
-	                <th scope="col">#</th>
+	                <th scope="col">Cuota</th>
 	                <th scope="col">Fecha Vencimiento</th>
 	                <th scope="col">Importe de cuota</th>
 	                <th scope="col">Estado</th>
@@ -41,12 +47,12 @@
                 <tr>
                     <td># <%= cuota.getNroCuota()%></td>
                     <td><%= cuota.getFechaVencimiento().format(formatoFecha) %></td>
-                    <td>$ <%= formatoMoneda.format(cuota.getPrestamo().getImporteMensual()) %></td>
+                    <td><%= formatoMoneda.format(cuota.getPrestamo().getImporteMensual()) %></td>
                     <% if(cuota.getFechaPago() == null){ %>
 	                    <td>
-	                    	<span class="badge bg-danger">PENDIENTE</span>
+	                    	<span class="badge bg-danger">PENDIENTE DE PAGO</span>
 	                    </td>
-	                    <td><%= cuota.getFechaPago()%></td>
+	                    <td>Pendiente</td>
 	                    <td class="d-flex justify-content-start align-items-center gap-2">
 		                   	<button type="button" class="btn btn-outline-success btn-sm">
 							  Pagar
@@ -72,7 +78,7 @@
 			url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
 		},
         columnDefs: [
-            { type: 'num', targets: 0 } // Asegúrate de que la primera columna se ordene como número
+            { type: 'num', targets: 0 }
         ]
 	});
 </script>
