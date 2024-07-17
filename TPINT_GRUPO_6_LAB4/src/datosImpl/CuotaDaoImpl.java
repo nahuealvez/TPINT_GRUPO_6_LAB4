@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import datos.Conexion;
@@ -18,8 +20,8 @@ public class CuotaDaoImpl implements CuotaDao{
 	private PreparedStatement st;
 	private ResultSet rs;
 	private Connection conexion = Conexion.getConexion().getSQLConexion();
-	private String insertCuota = "INSERT INTO cuotas (idPrestamo, nroCuota, fechaVencimiento, estadoPago, idMovimiento) VALUES (?, ?, ?, ?, ?)";
-	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.estadoPago, C.idMovimiento, P.importeMensual FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
+	private String insertCuota = "INSERT INTO cuotas (idPrestamo, nroCuota, fechaVencimiento, idMovimiento) VALUES (?, ?, ?, ?)";
+	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.fechaPago, C.idMovimiento, P.importeMensual FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
 
 	@Override
 	public boolean insert(Cuota cuota) throws SQLException {
@@ -33,14 +35,14 @@ public class CuotaDaoImpl implements CuotaDao{
 			st.setInt(1, cuota.getPrestamo().getId());
 			st.setInt(2, cuota.getNroCuota());
 			st.setDate(3, fechaVtoSql);
-			st.setBoolean(4, false); // Por defecto se insertan como estadoPago FALSE
-			st.setInt(5, -1); // Por defecto las cuotas se ingresan sin pagos registrado -- idMovimiento -1
+			st.setInt(4, -1); // Por defecto las cuotas se ingresan sin pagos registrado -- idMovimiento -1
 			
 			int filasAfectadas = st.executeUpdate();
 			
 			if(filasAfectadas > 0) {
 				conexion.commit();
 				agregado = true;
+				System.out.println("DESDE DAO CUOTA INSERT: " + cuota.toString());
 			}
 			else {
 				conexion.rollback();
@@ -94,7 +96,16 @@ public class CuotaDaoImpl implements CuotaDao{
 			cuota.setPrestamo(prestamo);
 			cuota.setNroCuota(rs.getInt("nroCuota"));
 			cuota.setFechaVencimiento(rs.getDate("fechaVencimiento").toLocalDate());
-			cuota.setEstadoPago(rs.getBoolean("estadoPago"));
+			
+			//MANEJAR NULL EN FECHA PAGO
+			Timestamp fechaPagoTimestamp = rs.getTimestamp("fechaPago");
+			
+			if(fechaPagoTimestamp != null) {
+				LocalDateTime fechaPago = fechaPagoTimestamp.toLocalDateTime();
+				cuota.setFechaPago(fechaPago);
+			} else {
+				cuota.setFechaPago(null);
+			}
 			cuota.setMovimiento(movimiento);
 			
 		} 

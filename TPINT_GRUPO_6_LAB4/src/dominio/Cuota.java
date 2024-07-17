@@ -1,22 +1,23 @@
 package dominio;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Cuota {
 	private int id;
 	private Prestamo prestamo;
 	private int nroCuota;
 	private LocalDate fechaVencimiento;
-	private boolean estadoPago;
+	private LocalDateTime fechaPago;
 	private Movimiento movimiento;
 	
-	public Cuota(int id, Prestamo prestamo, int nroCuota, LocalDate fechaVencimiento, boolean estadoPago, Movimiento movimiento) {
+	public Cuota(int id, Prestamo prestamo, int nroCuota, LocalDate fechaVencimiento, LocalDateTime estadoPago, Movimiento movimiento) {
 		super();
 		this.id = id;
 		this.prestamo = prestamo;
 		this.nroCuota = nroCuota;
 		this.fechaVencimiento = fechaVencimiento;
-		this.estadoPago = estadoPago;
+		this.fechaPago = estadoPago;
 		this.movimiento = movimiento;
 	}
 
@@ -56,12 +57,12 @@ public class Cuota {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public boolean isEstadoPago() {
-		return estadoPago;
+	public LocalDateTime getFechaPago() {
+		return fechaPago;
 	}
 
-	public void setEstadoPago(boolean estadoPago) {
-		this.estadoPago = estadoPago;
+	public void setFechaPago(LocalDateTime fechaPago) {
+		this.fechaPago = fechaPago;
 	}
 
 	public Movimiento getMovimiento() {
@@ -79,6 +80,6 @@ public class Cuota {
                 "\nCuota Nro: " + nroCuota +
                 "\nCuota Fecha VTO: " + fechaVencimiento +
                 "\nImporte Cuota: " + prestamo.getImporteMensual() +
-                "\nCuota Paga: " + estadoPago;
+                "\nCuota Paga: " + fechaPago;
 	}
 }
