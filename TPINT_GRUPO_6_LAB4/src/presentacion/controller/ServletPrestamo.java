@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import dominio.Cliente;
 import dominio.Cuenta;
+import dominio.Cuota;
 import dominio.Prestamo;
 import negocio.CuentaNegocio;
+import negocio.CuotaNegocio;
 import negocio.PrestamoNegocio;
 import negocioImpl.CuentaNegocioImpl;
+import negocioImpl.CuotaNegImpl;
 import negocioImpl.PrestamoNegImpl;
 
 /**
@@ -31,6 +34,7 @@ public class ServletPrestamo extends HttpServlet {
 	
 	private static final CuentaNegocio cuentaNeg = new CuentaNegocioImpl();
 	private static final PrestamoNegocio prestamoNeg = new PrestamoNegImpl();
+	private static final CuotaNegocio cuotaNeg = new CuotaNegImpl();
 
     public ServletPrestamo() {
         super();
@@ -157,6 +161,28 @@ public class ServletPrestamo extends HttpServlet {
 				ex.printStackTrace();
 			}
 		}
+		
+		if(request.getParameter("btnPagarPrestamo")!= null)
+		{
+			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+			
+			try 
+			{
+				ArrayList<Cuota> cuotasPrestamo = new ArrayList<Cuota>();
+				cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(idPrestamo);
+	            request.setAttribute("listaCuotas", cuotasPrestamo);
+	            System.out.println(cuotasPrestamo.toString());
+	            request.getRequestDispatcher("/CuotasPrestamo.jsp").forward(request, response);
+	            System.out.println("SALUDOS DESDE BOTON PAGAR" + idPrestamo);
+			}
+			catch (SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}		
 		
 		if(request.getParameter("btnFiltrarEstado")!= null)
 		{

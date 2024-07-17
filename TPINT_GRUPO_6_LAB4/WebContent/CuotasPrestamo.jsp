@@ -1,3 +1,6 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="dominio.Cuota"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="dominio.Prestamo"%>
@@ -7,6 +10,18 @@
 
 <%@ include file="Header.jsp" %>
 	
+	<%
+		ArrayList<Cuota> listaCuotas = null;
+		if(request.getAttribute("listaCuotas") != null){
+			listaCuotas = (ArrayList<Cuota>)request.getAttribute("listaCuotas");
+		} else {
+			listaCuotas = new ArrayList<Cuota>();
+		}
+		
+	    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+	    
+	%>
 	<h3>Cuotas de prestamo #</h3>
 	<div class="card">		                    	  
 	  <div class="card-body">
@@ -22,34 +37,30 @@
 	            </tr>
 	        </thead>
 	        <tbody>
+	        	<%for (Cuota cuota : listaCuotas){ %>
                 <tr>
-                    <td>1</td>
-                    <td>12/07/2024</td>
-                    <td>$2600</td>
+                    <td># <%= cuota.getNroCuota()%></td>
+                    <td><%= cuota.getFechaVencimiento().format(formatoFecha) %></td>
+                    <td>$ <%= formatoMoneda.format(cuota.getPrestamo().getImporteMensual()) %></td>
+                    <% if(cuota.getFechaPago() == null){ %>
+	                    <td>
+	                    	<span class="badge bg-danger">PENDIENTE</span>
+	                    </td>
+	                    <td><%= cuota.getFechaPago()%></td>
+	                    <td class="d-flex justify-content-start align-items-center gap-2">
+		                   	<button type="button" class="btn btn-outline-success btn-sm">
+							  Pagar
+							</button>
+	                    </td>
+	                <% } else { %>                    
                     <td>
                     	<span class="badge bg-success">PAGADA</span>
                     </td>
-                    <td>12/07/2024</td>
-                    <td class="d-flex justify-content-start align-items-center gap-2">
-	                   	<button type="button" class="btn btn-outline-success btn-sm">
-						  Pagar
-						</button>
-                    </td>                    
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>12/08/2024</td>
-                    <td>$2600</td>
-                    <td>
-                    	<span class="badge bg-danger">PENDIENTE</span>
-                    </td>
+                    <td><%= cuota.getFechaPago().format(formatoFecha) %></td>
                     <td></td>
-                    <td class="d-flex justify-content-start align-items-center gap-2">
-	                   	<button type="button" class="btn btn-outline-success btn-sm">
-						  Pagar
-						</button>
-                    </td>                    
+                  <% } %>                    
                 </tr>
+                <% } %>
 	        </tbody>
 	    </table>
 	  </div>
@@ -60,6 +71,9 @@
 		language: {
 			url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-AR.json',
 		},
+        columnDefs: [
+            { type: 'num', targets: 0 } // Asegúrate de que la primera columna se ordene como número
+        ]
 	});
 </script>
 
