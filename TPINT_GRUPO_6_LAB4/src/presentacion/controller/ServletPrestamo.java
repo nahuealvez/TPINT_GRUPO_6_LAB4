@@ -217,6 +217,37 @@ public class ServletPrestamo extends HttpServlet {
 
 		}
 		
+		if (request.getParameter("btnPagarCuota") != null) {
+			String mensaje = "";
+			String claseMensaje = "";
+			
+			int idCuota = Integer.parseInt(request.getParameter("idCuota"));
+			int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			System.out.println("Cuota" + idCuota);
+			Cuota cuota = new Cuota();
+			CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+			
+			try {
+				cuota = cuotaNeg.obtenerCuotaPorId(idCuota);
+				System.out.println("IdCUOTA: " + cuota.getId());
+				System.out.println("NroCUOTA: " + cuota.getNroCuota());
+				request.setAttribute("cuota", cuota);
+				
+				ArrayList<Cuenta> cuentas = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(idCliente);
+				request.setAttribute("cuentas", cuentas);
+			}
+			catch (SQLException ex) {
+				mensaje = "No se pudo generar el volante de pago de cuota | " + ex.getMessage();
+				claseMensaje = "btn btn-danger";
+			}
+			catch (Exception ex) {
+				mensaje = "No se pudo generar el volante de pago de cuota | " + ex.getMessage();
+				claseMensaje = "btn btn-danger";
+			}
+			
+			request.getRequestDispatcher("/PagoCuota.jsp").forward(request, response);
+		}
+		
 		
 	}
 	

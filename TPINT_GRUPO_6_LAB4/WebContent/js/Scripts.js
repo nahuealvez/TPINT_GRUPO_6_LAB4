@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     });
+	
+	const inputImporteSolicitado = document.getElementById("txtImporteSolicitado");
+	
+	inputImporteSolicitado.addEventListener('keypress', validarDecimal);
+	
+	const inputCuota = document.getElementById("txtCuotas");
+	
+	inputCuota.addEventListener('keypress', validarEntero);
 });
 
 function volverPantallaAnterior() {
@@ -48,6 +56,42 @@ function cancelarOperacion() {
 	  })
 })();
 
+// Pago de cuotas
+
+function cargarConfirmacionPagoCuota() {
+	let txtCuentaSaliente = document.getElementById("ddlCuentaSaliente").options[document.getElementById("ddlCuentaSaliente").selectedIndex].text;
+	
+	document.getElementById("txtCuentaSalienteAConfirmar").innerText = txtCuentaSaliente;
+};
+
+function mostrarConfirmacionPagoCuota() {
+	document.getElementById("confirmacionPagoDeCuota").style.display = "block";
+	document.getElementById("confirmarBtn").style.display = "inline-block";
+    document.getElementById("cancelarBtn").style.display = "inline-block";
+    
+    document.getElementById("resumenCuota").style.display = "none";
+    document.getElementById("pagoDeCuota").style.display = "none";
+    document.getElementById("pagarBtn").style.display = "none";
+    document.getElementById("volverBtn").style.display = "none";
+    
+    let camposFormulario = document.getElementsByClassName("camposFormulario");
+    for (var i = 0; i < camposFormulario.length; i++) {
+        camposFormulario[i].style.display = "none";
+    }
+};
+
+function validarYMostrarConfirmacionPagoCuota(event) {
+    var form = document.getElementById("pagoDeCuota");
+    if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    } else {
+    	cargarConfirmacionPagoCuota();
+    	mostrarConfirmacionPagoCuota();
+    }
+    form.classList.add('was-validated');
+};
+
 // Prestamos
 
 function cargarConfirmacionPrestamo() {
@@ -65,7 +109,7 @@ function cargarConfirmacionPrestamo() {
     document.getElementById("confCuotas").innerText = cuotas;
     document.getElementById("confMontoPagar").innerText = "$" + montoAPagar.toFixed(2);
     document.getElementById("confImporteCuota").innerText = "$" + importeCuota.toFixed(2);
-}
+};
 
 function mostrarConfirmacionPrestamo() {
     document.getElementById("prestamoAConfirmar").style.display = "block";
@@ -200,7 +244,23 @@ function validarYMostrarConfirmacionTransferencia(event) {
 
 function validarDecimal(event) {
     const char = String.fromCharCode(event.which);
-    if (!(/[0-9.]|\./.test(char))) {
+    const value = event.target.value;
+    
+    if (!(/[0-9.]/.test(char))) {
+        event.preventDefault();
+    }
+
+    if (char === '-') {
+        event.preventDefault();
+    }
+};
+
+function validarEntero(event) {
+    const char = String.fromCharCode(event.which);
+    const value = event.target.value;
+
+    // Verificar si el carácter es un número o un punto decimal
+    if (!(/[0-9]/.test(char))) {
         event.preventDefault();
     }
 };
