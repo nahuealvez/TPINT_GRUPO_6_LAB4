@@ -46,33 +46,8 @@ public class ServletCuenta extends HttpServlet {
 		String opcion = request.getParameter("opcion");
 		switch(opcion) {
 		case "agregar":
-			try {
-				String dni = request.getParameter("dniCliente");
-				Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
-
-				if (clienteServlet != null) {
-
-					List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-
-					if (cuentaNeg.contarCuentasActivas(listaDeCuentas) < 3) {
-						String cbu = cuentaNeg.nuevoCbu();
-
-						request.setAttribute("cbuGenerado", cbu);
-						request.setAttribute("clienteServlet", clienteServlet);
-
-						request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
-					} else {
-
-						mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas", "alert alert-danger", clienteServlet, listaDeCuentas);
-					}
-				} else {
-
-					request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
-			}
+			eventoAgregarCuentasdDeClientes (request,response);
+			
 			
 			break;
 		case "listar":
@@ -100,7 +75,8 @@ public class ServletCuenta extends HttpServlet {
 			try {
 				eventoBuscarCliente(request, response);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				mensaje = "El cliente no se encuentra en la base de datos  |" + e.getMessage();
+				claseMensaje = "alert alert-danger";
 				
 			}
 
@@ -161,7 +137,7 @@ public class ServletCuenta extends HttpServlet {
 				boolean saldoAcreditado = cuentaNeg.acreditar(ultimaCuenta.getId(), movimiento);
 
 				if (saldoAcreditado) {
-					mensaje = "La cuenta fue creada con éxito";
+					mensaje = "La cuenta fue creada con ï¿½xito";
 					claseMensaje = "alert alert-success";
 				} else {
 
@@ -175,13 +151,14 @@ public class ServletCuenta extends HttpServlet {
 			}
 
 		} catch (NullPointerException e) {
-			mensaje = "La cuenta no pudo ser creada " + e.getMessage();
+			mensaje = "La cuenta no pudo ser creada | " + e.getMessage();
 			claseMensaje = "alert alert-danger";
-			e.printStackTrace();
+			
 
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			mensaje = "La cuenta no pudo ser creada  |" + e.getMessage();
+			claseMensaje = "alert alert-danger";
+			
 		}
 		request.setAttribute("txtMensajeCuenta", mensaje);
 		request.setAttribute("claseMensajeCuenta", claseMensaje);
@@ -220,7 +197,7 @@ public class ServletCuenta extends HttpServlet {
 
 			} else {
 				
-				mostrarMensaje(request, response, "No se encontró ningún cliente con ese DNI", "alert alert-danger", clienteServlet, null);
+				mostrarMensaje(request, response, "No se encontrï¿½ ningï¿½n cliente con ese DNI", "alert alert-danger", clienteServlet, null);
 
 			}
 
@@ -253,7 +230,7 @@ public class ServletCuenta extends HttpServlet {
 
 				if (aux >= 3) {
 
-					mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas", "alert alert-danger", clienteServlet, cuentasActivas);
+					mostrarMensaje(request, response, "El cliente posee el mï¿½ximo de cuentas permitidas", "alert alert-danger", clienteServlet, cuentasActivas);
 					return;
 				}
 
@@ -280,13 +257,14 @@ public class ServletCuenta extends HttpServlet {
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (NullPointerException e) {
-			mensaje = "Ocurrió un error en el cambio de estado" + e.getMessage();
+			mensaje = "OcurriÃ³ un error en el cambio de estado" + e.getMessage();
 			claseMensaje = "alert alert-danger";
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			mensaje = "no se pudo cambiar el estado | " + e.getMessage();
+			claseMensaje = "alert alert-danger";
 		}
 	}
 
@@ -335,18 +313,47 @@ public class ServletCuenta extends HttpServlet {
 	                 request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	             }
 	         } else {
-	             request.setAttribute("txtMensajeCuenta", "No se encontró el cliente en la sesión.");
+	             request.setAttribute("txtMensajeCuenta", "No se encontrï¿½ el cliente en la sesiï¿½n.");
 	             request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         }
 	
 	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
 	     } catch (Exception e) {
-	         e.printStackTrace();
+	    	 mensaje = "Ocurriï¿½ un error al obtener las cuentas. |" + e.getMessage();
+				claseMensaje = "alert alert-danger";
 
-	         request.setAttribute("txtMensajeCuenta", "Ocurrió un error al obtener las cuentas.");
-	         request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
 	     }
 	 }
+	private void eventoAgregarCuentasdDeClientes (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		try {
+			String dni = request.getParameter("dniCliente");
+			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
+
+			if (clienteServlet != null) {
+
+				List<Cuenta> listaDeCuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
+
+				if (cuentaNeg.contarCuentasActivas(listaDeCuentas) < 3) {
+					String cbu = cuentaNeg.nuevoCbu();
+
+					request.setAttribute("cbuGenerado", cbu);
+					request.setAttribute("clienteServlet", clienteServlet);
+
+					request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
+				} else {
+
+					mostrarMensaje(request, response, "El cliente posee el mï¿½ximo de cuentas permitidas", "alert alert-danger", clienteServlet, listaDeCuentas);
+				}
+			} else {
+
+				request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
+			}
+		} catch (Exception e) {
+			mensaje = "La cuenta no pudo ser agregada |" + e.getMessage();
+			claseMensaje = "alert alert-danger";
+			request.getRequestDispatcher("/Cuentas.jsp").forward(request, response);
+		}
+	}
 }
 
