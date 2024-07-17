@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import datos.Conexion;
 import datos.CuotaDao;
+import dominio.Cliente;
 import dominio.Cuota;
 import dominio.Movimiento;
 import dominio.Prestamo;
@@ -21,7 +22,8 @@ public class CuotaDaoImpl implements CuotaDao{
 	private ResultSet rs;
 	private Connection conexion = Conexion.getConexion().getSQLConexion();
 	private String insertCuota = "INSERT INTO cuotas (idPrestamo, nroCuota, fechaVencimiento, idMovimiento) VALUES (?, ?, ?, ?)";
-	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.fechaPago, C.idMovimiento, P.importeMensual FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
+	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.fechaPago, C.idMovimiento, P.importeMensual, P.idCliente FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
+	private String obtenerCuotaPorId = "SELECT C.id AS idCuota, C.idPrestamo AS idPrestamo, P.importeMensual AS importeMensual, C.nroCuota AS nroCuota, C.fechaVencimiento AS fechaVencimiento, C.fechaPago AS fechaPago, C.idMovimiento AS idMovimiento FROM cuotas AS C INNER JOIN prestamos AS P ON C.idPrestamo = P.id WHERE C.id = ?";
 
 	@Override
 	public boolean insert(Cuota cuota) throws SQLException {
@@ -77,9 +79,49 @@ public class CuotaDaoImpl implements CuotaDao{
 			throw ex;
 		}
 	}
+
+	public Cuota obtenerCuotaPorId (int idCuota) throws SQLException {
+		Cuota cuota = new Cuota();
+		Prestamo prestamo = new Prestamo();
+		Movimiento movimiento = new Movimiento();
+		
+		try {
+			st = conexion.prepareStatement(obtenerCuotaPorId);
+			st.setInt(1, idCuota);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				prestamo.setId(rs.getInt("idPrestamo"));
+				prestamo.setImporteMensual(rs.getBigDecimal("importeMensual"));
+				movimiento.setId(rs.getInt("idMovimiento"));
+				
+				cuota.setId(rs.getInt("idCuota"));
+				cuota.setPrestamo(prestamo);
+				cuota.setNroCuota(rs.getInt("nroCuota"));
+				cuota.setFechaVencimiento(rs.getDate("fechaVencimiento").toLocalDate());
+				
+				Timestamp fechaPagoTimestamp = rs.getTimestamp("fechaPago");
+				
+				if(fechaPagoTimestamp != null) {
+					LocalDateTime fechaPago = fechaPagoTimestamp.toLocalDateTime();
+					cuota.setFechaPago(fechaPago);
+				} else {
+					cuota.setFechaPago(null);
+				}
+				cuota.setMovimiento(movimiento);
+			}
+			return cuota;
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
 	
 	private Cuota getCuota (ResultSet rs) throws SQLException {
 		Cuota cuota = new Cuota();
+		Cliente cliente = new Cliente();
 		Prestamo prestamo = new Prestamo();
 		Movimiento movimiento = new Movimiento();
 		
@@ -88,6 +130,8 @@ public class CuotaDaoImpl implements CuotaDao{
 			//PRESTAMO
 			prestamo.setId(rs.getInt("idPrestamo"));
 			prestamo.setImporteMensual(rs.getBigDecimal("importeMensual"));
+			cliente.setId(rs.getInt("idCliente"));
+			prestamo.setCliente(cliente);
 			
 			//MOVIMIENTO
 			movimiento.setId(rs.getInt("idMovimiento"));

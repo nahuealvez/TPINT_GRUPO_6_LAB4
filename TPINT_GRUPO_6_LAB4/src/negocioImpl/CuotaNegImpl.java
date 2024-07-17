@@ -53,4 +53,17 @@ public class CuotaNegImpl implements CuotaNegocio {
 		}
 	}
 
+	@Override
+	public Cuota obtenerCuotaPorId(int idCuota) throws SQLException {
+		try {
+			return cuotaDao.obtenerCuotaPorId(idCuota);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
 }

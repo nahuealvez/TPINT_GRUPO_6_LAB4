@@ -53,20 +53,31 @@
 	                    	<span class="badge bg-danger">PENDIENTE DE PAGO</span>
 	                    </td>
 	                    <td>Pendiente</td>
-	                    <td class="d-flex justify-content-start align-items-center gap-2">
-		                   	<button type="button" class="btn btn-outline-success btn-sm">
-							  Pagar
-							</button>
-	                    </td>
-	                <% } else { %>                    
-                    <td>
-                    	<span class="badge bg-success">PAGADA</span>
-                    </td>
-                    <td><%= cuota.getFechaPago().format(formatoFecha) %></td>
-                    <td></td>
-                  <% } %>                    
+	                <% } else { %>
+	                	<td>
+                    		<span class="badge bg-success">PAGADA</span>
+                    	</td>
+                    	<td><%= cuota.getFechaPago().format(formatoFecha) %></td>
+	                <% } %>
+	                <td class="align-middle">
+	                	<div class="d-flex justify-content-start align-items-center gap-2">
+	                		<% if(cuota.getFechaPago() == null){ %>	
+		                		<form action="ServletPrestamo" method="post">
+		                			<input type="hidden" value="<%= cuota.getId() %>" name="idCuota">
+		                			<input type="hidden" value="<%= cuota.getPrestamo().getCliente().getId() %>" name="idCliente">
+		                			<button type="submit" class="btn btn-outline-success btn-sm" name="btnPagarCuota">
+									  Pagar
+									</button>
+		                		</form>
+	                		<% } else { %>
+		                		<button type="button" class="btn btn-outline-success btn-sm disabled">
+								  Pagar
+								</button>
+							<% } %>
+	                	</div>
+	                </td>
                 </tr>
-                <% } %>
+              	<% } %>
 	        </tbody>
 	    </table>
 	  </div>

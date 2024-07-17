@@ -48,6 +48,42 @@ function cancelarOperacion() {
 	  })
 })();
 
+// Pago de cuotas
+
+function cargarConfirmacionPagoCuota() {
+	let txtCuentaSaliente = document.getElementById("ddlCuentaSaliente").options[document.getElementById("ddlCuentaSaliente").selectedIndex].text;
+	
+	document.getElementById("txtCuentaSalienteAConfirmar").innerText = txtCuentaSaliente;
+};
+
+function mostrarConfirmacionPagoCuota() {
+	document.getElementById("confirmacionPagoDeCuota").style.display = "block";
+	document.getElementById("confirmarBtn").style.display = "inline-block";
+    document.getElementById("cancelarBtn").style.display = "inline-block";
+    
+    document.getElementById("resumenCuota").style.display = "none";
+    document.getElementById("pagoDeCuota").style.display = "none";
+    document.getElementById("pagarBtn").style.display = "none";
+    document.getElementById("volverBtn").style.display = "none";
+    
+    let camposFormulario = document.getElementsByClassName("camposFormulario");
+    for (var i = 0; i < camposFormulario.length; i++) {
+        camposFormulario[i].style.display = "none";
+    }
+};
+
+function validarYMostrarConfirmacionPagoCuota(event) {
+    var form = document.getElementById("pagoDeCuota");
+    if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    } else {
+    	cargarConfirmacionPagoCuota();
+    	mostrarConfirmacionPagoCuota();
+    }
+    form.classList.add('was-validated');
+};
+
 // Prestamos
 
 function cargarConfirmacionPrestamo() {
@@ -65,7 +101,7 @@ function cargarConfirmacionPrestamo() {
     document.getElementById("confCuotas").innerText = cuotas;
     document.getElementById("confMontoPagar").innerText = "$" + montoAPagar.toFixed(2);
     document.getElementById("confImporteCuota").innerText = "$" + importeCuota.toFixed(2);
-}
+};
 
 function mostrarConfirmacionPrestamo() {
     document.getElementById("prestamoAConfirmar").style.display = "block";
