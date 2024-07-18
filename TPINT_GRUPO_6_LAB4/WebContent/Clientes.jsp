@@ -77,7 +77,7 @@
 	                    <td><%= cli.getNombre() %></td>
 	                    <td><%= cli.getApellido() %></td>
 	                    <td>
-	                    	<%= cli.getEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %>
+	                    	<%= cli.getEstado() ? "<span class='badge text-bg-success'>ACTIVO</span>" : "<span class='badge text-bg-danger'>INACTIVO</span>" %>
 	                    </td>
 	                    <td class="d-flex justify-content-center align-items-center gap-2">
 	                    	<form action="ServletCliente" method="get">

@@ -49,6 +49,15 @@ h3 {
     padding: 20px; /* Espacio interior */
 }
 
+.background-layer {
+	witdh: 100%;
+	height: 200px;
+	position: top;
+    background-image: url('../images/bk-pgbk.png');
+    background-size: cover;
+    background-position: top;
+}
+
 .image-container-login::after {
     content: '';
     position: absolute;

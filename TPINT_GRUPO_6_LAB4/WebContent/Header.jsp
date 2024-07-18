@@ -50,8 +50,7 @@
 </head>
 <body class="d-flex flex-column">
 
-	<header
-		class="d-flex bg-body-tertiary bg-secondary py-2 ps-4 pe-4 align-items-center justify-content-between">
+	<header class="d-flex bg-body-tertiary bg-secondary py-2 ps-4 pe-4 align-items-center justify-content-between">
 		<div class="d-flex gap-2 flex-row align-items-center">
 			<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45"
 				fill="currentColor" class="bi bi-piggy-bank-fill"
@@ -61,8 +60,7 @@
 			</svg>
 			<h1 class="title m-0">Piggy Bank</h1>
 		</div>
-		<nav
-			class="navbar navbar-expand-lg g-1 d-flex align-items-center gap-3">
+		<nav class="navbar navbar-expand-lg g-1 d-flex align-items-center gap-3">
 			<div class="collapse navbar-collapse justify-content-center"
 				id="navbarNavAltMarkup">
 				<div class="navbar-nav d-flex flex-row gap-3">
@@ -138,7 +136,6 @@
 				</ul>
 			</div>
 		</nav>
-
 	</header>
-
-	<main class="container container--main pb-4 pt-4">
+	<main class="background-layer">
+		<div class="container container--main pb-4 pt-4">
