@@ -24,6 +24,7 @@ public interface CuentaNegocio {
 	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 	public boolean acreditar(int idCuenta, Movimiento movimiento) throws SQLException;
 	public boolean debitar(int idCuenta, Movimiento movimiento) throws SQLException, Exception;
+	public int debitarPagoCuotaPrestamo(int idCuenta, Movimiento movimiento) throws Exception, SQLException;
 	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 	boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;

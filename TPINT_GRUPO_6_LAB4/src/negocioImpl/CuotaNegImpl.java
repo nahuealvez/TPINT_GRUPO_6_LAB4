@@ -2,12 +2,20 @@ package negocioImpl;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.sun.jmx.snmp.Timestamp;
+
+import Excepciones.SinSaldoException;
 import datos.CuotaDao;
 import datosImpl.CuotaDaoImpl;
+import dominio.Cuenta;
 import dominio.Cuota;
+import dominio.Movimiento;
 import dominio.Prestamo;
+import dominio.TipoMovimiento;
+import negocio.CuentaNegocio;
 import negocio.CuotaNegocio;
 
 public class CuotaNegImpl implements CuotaNegocio {
@@ -64,6 +72,46 @@ public class CuotaNegImpl implements CuotaNegocio {
 		catch (Exception ex) {
 			throw ex;
 		}
+	}
+
+	@Override
+	public boolean registrarPago(int idCuenta, Cuota cuota) throws Exception, SQLException {
+		boolean registrado = false;		
+		CuentaNegocio cuentaNegocio = new CuentaNegocioImpl();
+		Movimiento movimiento = new Movimiento();
+		TipoMovimiento tipoMovimiento = new TipoMovimiento();
+		Cuenta cuenta = new Cuenta();
+		
+		tipoMovimiento.setId(3); // Pago de préstamo
+		movimiento.setTipoMovimiento(tipoMovimiento);
+		movimiento.setConcepto("Cuota Nro:" + cuota.getNroCuota() + " | Préstamo #" + cuota.getPrestamo().getId());
+		cuenta.setId(idCuenta);
+		movimiento.setCuenta(cuenta);
+		movimiento.setImporte(cuota.getPrestamo().getImporteMensual());
+		
+		try {
+			int idMovimientoPagoCuota = cuentaNegocio.debitarPagoCuotaPrestamo(idCuenta, movimiento);
+			if (idMovimientoPagoCuota > 0) {
+				movimiento.setId(idMovimientoPagoCuota);
+				cuota.setMovimiento(movimiento);
+				LocalDateTime fechaPago = LocalDateTime.now();
+				cuota.setFechaPago(fechaPago);
+				cuotaDao.registrarPago(cuota);
+				registrado = true;
+			}
+		}
+		catch (SinSaldoException ex) {
+			throw ex;
+		}
+		catch (SQLException ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return registrado;
 	}
 
 }

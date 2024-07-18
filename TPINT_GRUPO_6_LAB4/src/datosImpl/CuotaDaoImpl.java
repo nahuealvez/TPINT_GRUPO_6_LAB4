@@ -24,7 +24,8 @@ public class CuotaDaoImpl implements CuotaDao{
 	private String insertCuota = "INSERT INTO cuotas (idPrestamo, nroCuota, fechaVencimiento, idMovimiento) VALUES (?, ?, ?, ?)";
 	private String listarCuotasPrestamo = "SELECT C.id, C.idPrestamo, C.nroCuota, C.fechaVencimiento, C.fechaPago, C.idMovimiento, P.importeMensual, P.idCliente FROM cuotas as C INNER JOIN prestamos AS P ON  C.idPrestamo = P.id WHERE idPrestamo = ?";
 	private String obtenerCuotaPorId = "SELECT C.id AS idCuota, C.idPrestamo AS idPrestamo, P.importeMensual AS importeMensual, C.nroCuota AS nroCuota, C.fechaVencimiento AS fechaVencimiento, C.fechaPago AS fechaPago, C.idMovimiento AS idMovimiento FROM cuotas AS C INNER JOIN prestamos AS P ON C.idPrestamo = P.id WHERE C.id = ?";
-
+	private String registrarPago = "UPDATE cuotas SET fechaPago = ?, idMovimiento = ? WHERE id = ?";
+	
 	@Override
 	public boolean insert(Cuota cuota) throws SQLException {
 		boolean agregado = false;
@@ -160,6 +161,38 @@ public class CuotaDaoImpl implements CuotaDao{
 			throw ex;
 		}
 		return cuota;
+	}
+
+	@Override
+	public boolean registrarPago(Cuota cuota) throws SQLException {
+		boolean registrado = false;
+		
+		try {
+			st = conexion.prepareStatement(registrarPago);
+		
+			
+			st.setTimestamp(1, Timestamp.valueOf(cuota.getFechaPago()));
+			st.setInt(2, cuota.getMovimiento().getId());
+			st.setInt(3, cuota.getId());
+			
+			int filasAfectadas = st.executeUpdate();
+			
+			if(filasAfectadas > 0) {
+				conexion.commit();
+				registrado = true;
+			}
+			else {
+				conexion.rollback();
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+		
+		return registrado;
 	}
 
 }

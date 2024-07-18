@@ -81,7 +81,7 @@ public class PrestamoNegImpl implements PrestamoNegocio{
 			
 			tipoMovimiento.setId(2); // ID MOV ALTA PRESTAMO
 			movimiento.setTipoMovimiento(tipoMovimiento);
-			movimiento.setConcepto("ID" + prestamo.getId());
+			movimiento.setConcepto("Acreditación de préstamo aprobado | Préstamo #" + prestamo.getId());
 			movimiento.setCuenta(prestamo.getCuenta());
 			movimiento.setImporte(prestamo.getImportePedido());
 			
