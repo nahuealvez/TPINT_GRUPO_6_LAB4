@@ -14,6 +14,9 @@
 	if (request.getAttribute("idCuenta") != null) {
 		idCuenta = (Integer)request.getAttribute("idCuenta");
 	}
+	
+	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+	NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
 %>
 
 		<h3 class="pt-3">Movimientos | Cuenta: <%=idCuenta %></h3>
@@ -68,10 +71,10 @@
             %>
                 <tr>
                     <td><%= movimiento.getId() %></td>
-                    <td><%= movimiento.getFecha() %></td>
+                    <td><%= movimiento.getFecha().format(formatoFecha) %></td>
                     <td><%= movimiento.getTipoMovimiento().getDescripcion() %></td>
                     <td><%= movimiento.getConcepto() %></td>
-                    <td><%= movimiento.getImporte() %></td>
+                    <td><%= formatoMoneda.format(movimiento.getImporte()) %></td>
                 </tr>
               <% } %>
             </tbody>

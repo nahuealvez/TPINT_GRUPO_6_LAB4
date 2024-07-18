@@ -135,7 +135,7 @@ public class ServletCuenta extends HttpServlet {
 				boolean saldoAcreditado = cuentaNeg.acreditar(ultimaCuenta.getId(), movimiento);
 
 				if (saldoAcreditado) {
-					mensaje = "La cuenta fue creada con ï¿½xito";
+					mensaje = "La cuenta fue creada con éxito";
 					claseMensaje = "alert alert-success";
 				} else {
 
@@ -198,7 +198,7 @@ public class ServletCuenta extends HttpServlet {
 			        mostrarMensaje(request, response, mensaje, "alert alert-danger", clienteServlet, null);
 			    }
 			} else {
-			    mostrarMensaje(request, response, "No se encontrÃ³ ningÃºn cliente con ese DNI", "alert alert-danger", clienteServlet,null);
+			    mostrarMensaje(request, response, "No se encontró ningún cliente con ese DNI", "alert alert-danger", clienteServlet,null);
 			}
 
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
@@ -230,7 +230,7 @@ public class ServletCuenta extends HttpServlet {
 
 				if (aux >= 3) {
 
-					mostrarMensaje(request, response, "El cliente posee el mï¿½ximo de cuentas permitidas",
+					mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas",
 							"alert alert-danger", clienteServlet, cuentasActivas);
 					return;
 				}
@@ -260,7 +260,7 @@ public class ServletCuenta extends HttpServlet {
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (NullPointerException e) {
-			mensaje = "OcurriÃ³ un error en el cambio de estado" + e.getMessage();
+			mensaje = "Ocurrió un error en el cambio de estado" + e.getMessage();
 			claseMensaje = "alert alert-danger";
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
@@ -315,7 +315,7 @@ public class ServletCuenta extends HttpServlet {
 					request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 				}
 			} else {
-				request.setAttribute("txtMensajeCuenta", "No se encontrÃ³ el cliente en la sesiÃ³n.");
+				request.setAttribute("txtMensajeCuenta", "No se encontró el cliente en la sesión.");
 				request.setAttribute("claseMensajeCuenta", "alert alert-danger");
 			}
 
@@ -347,7 +347,7 @@ public class ServletCuenta extends HttpServlet {
 					request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
 				} else {
 
-					mostrarMensaje(request, response, "El cliente posee el mï¿½ximo de cuentas permitidas",
+					mostrarMensaje(request, response, "El cliente posee el máximo de cuentas permitidas",
 							"alert alert-danger", clienteServlet, listaDeCuentas);
 				}
 			} else {

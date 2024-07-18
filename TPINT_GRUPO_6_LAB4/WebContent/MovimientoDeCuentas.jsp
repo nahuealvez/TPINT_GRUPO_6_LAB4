@@ -24,9 +24,12 @@
                 	name="txtImporteMovimientoCuenta" 
                 	placeholder="Ingrese el importe con punto para decimales (ej. 10300.50)"
                 	step="0.01" 
-	                min="0"
+	                min="0.01"
 	                onkeypress="return validarDecimal(event)" 
                 required>
+                <div class="invalid-feedback">
+			      Debe ingresar un número mayor a 0 para transferir.
+			    </div>
             </div>
             <div class="col-md-4 position-relative camposFormulario">
                 <label for="ddlCuentaSaliente">Cuenta saliente:</label>
