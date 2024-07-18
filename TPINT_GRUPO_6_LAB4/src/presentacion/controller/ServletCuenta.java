@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -44,20 +45,19 @@ public class ServletCuenta extends HttpServlet {
 			throws ServletException, IOException {
 
 		String opcion = request.getParameter("opcion");
-		switch(opcion) {
+		switch (opcion) {
 		case "agregar":
-			eventoAgregarCuentasdDeClientes (request,response);
-			
-			
+			eventoAgregarCuentasdDeClientes(request, response);
+
 			break;
 		case "listar":
-			eventoListarCuentasdDeClientes ( request, response);
+			eventoListarCuentasdDeClientes(request, response);
 			break;
-		
+
 		default:
 			break;
 		}
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -77,7 +77,7 @@ public class ServletCuenta extends HttpServlet {
 			} catch (SQLException e) {
 				mensaje = "El cliente no se encuentra en la base de datos  |" + e.getMessage();
 				claseMensaje = "alert alert-danger";
-				
+
 			}
 
 			break;
@@ -118,9 +118,8 @@ public class ServletCuenta extends HttpServlet {
 			boolean cuentaCreada = cuentaNeg.insert(cuentagregada);
 
 			if (cuentaCreada) {
-				
+
 				ultimaCuenta = cuentaNeg.obtenerUltimaCuenta(cuentagregada.getCliente().getIdCliente());
-				
 
 				Movimiento movimiento = new Movimiento();
 
@@ -133,7 +132,6 @@ public class ServletCuenta extends HttpServlet {
 				movimiento.setCuenta(ultimaCuenta);
 				movimiento.setImporte(new BigDecimal("10000"));
 
-				
 				boolean saldoAcreditado = cuentaNeg.acreditar(ultimaCuenta.getId(), movimiento);
 
 				if (saldoAcreditado) {
@@ -153,12 +151,11 @@ public class ServletCuenta extends HttpServlet {
 		} catch (NullPointerException e) {
 			mensaje = "La cuenta no pudo ser creada | " + e.getMessage();
 			claseMensaje = "alert alert-danger";
-			
 
 		} catch (SQLException e) {
 			mensaje = "La cuenta no pudo ser creada  |" + e.getMessage();
 			claseMensaje = "alert alert-danger";
-			
+
 		}
 		request.setAttribute("txtMensajeCuenta", mensaje);
 		request.setAttribute("claseMensajeCuenta", claseMensaje);
@@ -171,45 +168,48 @@ public class ServletCuenta extends HttpServlet {
 			throws ServletException, IOException, SQLException {
 
 		String dni = request.getParameter("dniCliente");
-		 String filtroEstado = request.getParameter("filtroEstado");
+		String filtroEstado = request.getParameter("filtroEstado");
 
 		try {
 			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
 
 			if (clienteServlet != null) {
 
-				List<Cuenta> cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-				
-				 if ("todas".equals(filtroEstado)) {
-					 cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
-		            } else if ("activas".equals(filtroEstado)) {
-		            	cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), true);
-		            } else if ("inactivas".equals(filtroEstado)) {
-		                cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), false);
-		            }
-				request.setAttribute("clienteServlet", clienteServlet);
-				request.setAttribute("cuentasxCliente", cuentas);
+				ArrayList<Cuenta> cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
 
-				if (cuentas == null || cuentas.isEmpty()) {
+			    if ("todas".equals(filtroEstado)) {
+			        cuentas = cuentaNeg.cuentasXCliente(clienteServlet.getIdCliente());
+			    } else if ("activas".equals(filtroEstado)) {
+			        cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), true);
+			    } else if ("inactivas".equals(filtroEstado)) {
+			        cuentas = cuentaNeg.CuentasxClienteYEstado(clienteServlet.getIdCliente(), false);
+			    }
 
-					mostrarMensaje(request, response, "El cliente no tiene cuentas asociadas", "alert alert-danger", clienteServlet, null);
-				}
+			    request.setAttribute("clienteServlet", clienteServlet);
+			    request.setAttribute("cuentasxCliente", cuentas);
 
+			    if (cuentas == null || cuentas.isEmpty()) {
+			        String mensaje = "El cliente no tiene cuentas asociadas";
+			        if ("activas".equals(filtroEstado)) {
+			            mensaje = "El cliente no tiene cuentas activas asociadas";
+			        } else if ("inactivas".equals(filtroEstado)) {
+			            mensaje = "El cliente no tiene cuentas inactivas asociadas";
+			        }
+			        mostrarMensaje(request, response, mensaje, "alert alert-danger", clienteServlet, null);
+			    }
 			} else {
-				
-				mostrarMensaje(request, response, "No se encontr� ning�n cliente con ese DNI", "alert alert-danger", clienteServlet, null);
-
+			    mostrarMensaje(request, response, "No se encontró ningún cliente con ese DNI", "alert alert-danger", clienteServlet,null);
 			}
 
 			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
 
 		} catch (NullPointerException e) {
 			throw e;
-			
+
 		} catch (SQLException e) {
 			throw e;
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			throw e;
 		}
 	}
@@ -230,7 +230,8 @@ public class ServletCuenta extends HttpServlet {
 
 				if (aux >= 3) {
 
-					mostrarMensaje(request, response, "El cliente posee el m�ximo de cuentas permitidas", "alert alert-danger", clienteServlet, cuentasActivas);
+					mostrarMensaje(request, response, "El cliente posee el m�ximo de cuentas permitidas",
+							"alert alert-danger", clienteServlet, cuentasActivas);
 					return;
 				}
 
@@ -241,11 +242,13 @@ public class ServletCuenta extends HttpServlet {
 
 				if (!estado) {
 
-					mostrarMensaje(request, response, "Cuenta desactivada correctamente", "alert alert-success", null, null);
-					
+					mostrarMensaje(request, response, "Cuenta desactivada correctamente", "alert alert-success", null,
+							null);
+
 				} else {
 
-					mostrarMensaje(request, response, "Cuenta reactivada correctamente", "alert alert-success", null, null);
+					mostrarMensaje(request, response, "Cuenta reactivada correctamente", "alert alert-success", null,
+							null);
 				}
 
 			} else {
@@ -270,62 +273,63 @@ public class ServletCuenta extends HttpServlet {
 
 	private void mostrarMensaje(HttpServletRequest request, HttpServletResponse response, String mensaje,
 			String claseMensaje, Cliente cliente, List<Cuenta> cuentas) throws ServletException, IOException {
-		
+
 		try {
-		request.setAttribute("txtMensajeCuenta", mensaje);
-		request.setAttribute("claseMensajeCuenta", claseMensaje);
-		if (cliente != null) {
-			request.setAttribute("clienteServlet", cliente);
-		}
-		if (cuentas != null) {
-			request.setAttribute("cuentasxCliente", cuentas);
-		}
-		request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
-		}catch(ServletException e) {
+			request.setAttribute("txtMensajeCuenta", mensaje);
+			request.setAttribute("claseMensajeCuenta", claseMensaje);
+			if (cliente != null) {
+				request.setAttribute("clienteServlet", cliente);
+			}
+			if (cuentas != null) {
+				request.setAttribute("cuentasxCliente", cuentas);
+			}
+			request.getRequestDispatcher("Cuentas.jsp").forward(request, response);
+		} catch (ServletException e) {
 			throw e;
-		}catch(IOException e) {
+		} catch (IOException e) {
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}
 
-	
-	private void eventoListarCuentasdDeClientes (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		 try {
-	         HttpSession sessionLogueada1 = request.getSession(false);
-	         Cliente clienteServlet = null;
-	        
+	private void eventoListarCuentasdDeClientes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			HttpSession sessionLogueada1 = request.getSession(false);
+			Cliente clienteServlet = null;
 
-	         if (sessionLogueada1 != null) {
-	             clienteServlet = (Cliente) sessionLogueada1.getAttribute("cliente");
-	          
-	         }
+			if (sessionLogueada1 != null) {
+				clienteServlet = (Cliente) sessionLogueada1.getAttribute("cliente");
 
-	         if (clienteServlet != null) {
-	             List<Cuenta> listaDeCuentas = cuentaNeg.cuentasActivas(clienteServlet.getIdCliente());
-	           
-	             if (listaDeCuentas != null ) {
-	                 request.setAttribute("cuentasxCliente", listaDeCuentas);
-	             } else {
-	            	
-	                 request.setAttribute("txtMensajeCuenta", "No tiene cuentas asociadas.");
-	                 request.setAttribute("claseMensajeCuenta", "alert alert-danger");
-	             }
-	         } else {
-	             request.setAttribute("txtMensajeCuenta", "No se encontr� el cliente en la sesi�n.");
-	             request.setAttribute("claseMensajeCuenta", "alert alert-danger");
-	         }
-	
-	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
-	     } catch (Exception e) {
-	    	 mensaje = "Ocurri� un error al obtener las cuentas. |" + e.getMessage();
-				claseMensaje = "alert alert-danger";
+			}
 
-	         request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
-	     }
-	 }
-	private void eventoAgregarCuentasdDeClientes (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+			if (clienteServlet != null) {
+				List<Cuenta> listaDeCuentas = cuentaNeg.cuentasActivas(clienteServlet.getIdCliente());
+
+				if (listaDeCuentas != null) {
+					request.setAttribute("cuentasxCliente", listaDeCuentas);
+				} else {
+
+					request.setAttribute("txtMensajeCuenta", "No tiene cuentas asociadas.");
+					request.setAttribute("claseMensajeCuenta", "alert alert-danger");
+				}
+			} else {
+				request.setAttribute("txtMensajeCuenta", "No se encontró el cliente en la sesión.");
+				request.setAttribute("claseMensajeCuenta", "alert alert-danger");
+			}
+
+			request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
+		} catch (Exception e) {
+			mensaje = "Ocurri� un error al obtener las cuentas. |" + e.getMessage();
+			claseMensaje = "alert alert-danger";
+
+			request.getRequestDispatcher("/CuentasClientes.jsp").forward(request, response);
+		}
+	}
+
+	private void eventoAgregarCuentasdDeClientes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String dni = request.getParameter("dniCliente");
 			Cliente clienteServlet = clienteNeg.buscarClienteXDNI(dni);
@@ -343,7 +347,8 @@ public class ServletCuenta extends HttpServlet {
 					request.getRequestDispatcher("/AgregarCuenta.jsp").forward(request, response);
 				} else {
 
-					mostrarMensaje(request, response, "El cliente posee el m�ximo de cuentas permitidas", "alert alert-danger", clienteServlet, listaDeCuentas);
+					mostrarMensaje(request, response, "El cliente posee el m�ximo de cuentas permitidas",
+							"alert alert-danger", clienteServlet, listaDeCuentas);
 				}
 			} else {
 
@@ -356,4 +361,3 @@ public class ServletCuenta extends HttpServlet {
 		}
 	}
 }
-

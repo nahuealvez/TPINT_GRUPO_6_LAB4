@@ -174,7 +174,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 
 	@Override
-	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
+	public ArrayList<Cuenta> cuentasActivas(int idCliente) throws SQLException {
 		
 		try {
 			return cuentaDao.cuentasActivas(idCliente);
@@ -270,7 +270,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 	
 	@Override
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
 
 		return cuentaDao.CuentasxClienteYEstado(idCliente, estado);
 	}

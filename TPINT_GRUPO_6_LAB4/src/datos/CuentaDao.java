@@ -23,7 +23,7 @@ public interface CuentaDao {
 	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
-	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
+	public ArrayList<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 	public boolean afectarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 	public Cuenta obtenerUltimaCuenta(int idCliente) throws SQLException;

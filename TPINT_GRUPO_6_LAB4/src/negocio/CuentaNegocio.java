@@ -21,10 +21,10 @@ public interface CuentaNegocio {
 	public List<Cuenta> obtenerTodasLasCuentas() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasCorrientes() throws SQLException;
 	public List<Cuenta> obtenerTodasLasCuentasAhorro() throws SQLException;
-	public List<Cuenta> cuentasActivas(int idCliente)throws SQLException;
+	public ArrayList<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 	public boolean acreditar(int idCuenta, Movimiento movimiento) throws SQLException;
 	public boolean debitar(int idCuenta, Movimiento movimiento) throws SQLException, Exception;
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
+	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
 	boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;
 	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException;

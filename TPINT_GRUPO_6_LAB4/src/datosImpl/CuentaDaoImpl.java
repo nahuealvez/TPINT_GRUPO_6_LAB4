@@ -482,7 +482,7 @@ public class CuentaDaoImpl implements CuentaDao {
 	}
 
 	@Override
-	public List<Cuenta> cuentasActivas(int idCliente) throws SQLException {
+	public ArrayList<Cuenta> cuentasActivas(int idCliente) throws SQLException {
 		PreparedStatement statement;
 		ResultSet rs;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
