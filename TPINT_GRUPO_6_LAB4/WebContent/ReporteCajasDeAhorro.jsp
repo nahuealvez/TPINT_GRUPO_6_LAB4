@@ -2,8 +2,18 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="dominio.Cuenta" %>
 <%@ page import="java.util.ArrayList" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
 
 <%@ include file="Header.jsp" %>
+
+<%
+
+	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+	NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+
+%>
 
 <h3 class="pt-3" >Reportes: Caja de Ahorro</h3>
 
@@ -49,10 +59,10 @@
             		<td><%= cuentaCA.getCliente().getApellido() %></td>
             		<td><%= cuentaCA.getCliente().getNombre() %></td>
             		<td><%= cuentaCA.getCliente().getDni() %></td>
-            		<td><%= cuentaCA.getFechaCreacion() %></td> 
+            		<td><%= cuentaCA.getFechaCreacion().format(formatoFecha) %></td> 
             		<td><%= cuentaCA.getTipoCuenta().getDescripcion() %></td>
             		<td><%= cuentaCA.getCbu() %></td>
-            		<td><%= cuentaCA.getSaldo() %></td> 
+            		<td><%= formatoMoneda.format(cuentaCA.getSaldo()) %></td> 
       		     	<td><%= cuentaCA.isEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %></td>             		
             		<td>
                         <form action="ServletReporte" method="get"> 

@@ -1,9 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="dominio.Cuenta" %>
-<%@ page import="java.util.ArrayList" %>   
+<%@ page import="java.util.ArrayList" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
     
 <%@ include file="Header.jsp" %>
+
+<%
+
+	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+	NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+
+%>
 
 <h3 class="pt-3" >Reportes: Cuentas Corriente</h3>
 
@@ -49,10 +59,10 @@
             		<td><%= cuentaCC.getCliente().getApellido() %></td>
             		<td><%= cuentaCC.getCliente().getNombre() %></td>
             		<td><%= cuentaCC.getCliente().getDni() %></td>
-            		<td><%= cuentaCC.getFechaCreacion() %></td> 
+            		<td><%= cuentaCC.getFechaCreacion().format(formatoFecha) %></td> 
             		<td><%= cuentaCC.getTipoCuenta().getDescripcion() %></td>
             		<td><%= cuentaCC.getCbu() %></td>
-            		<td><%= cuentaCC.getSaldo() %></td> 
+            		<td><%= formatoMoneda.format(cuentaCC.getSaldo()) %></td> 
       		     	<td><%= cuentaCC.isEstado() ? "<span class='badge text-bg-success'>Activo</span>" : "<span class='badge text-bg-danger'>Inactivo</span>" %></td>             		
             		<td>
                         <form action="ServletReporte" method="get"> 
