@@ -1,5 +1,6 @@
 package negocioImpl;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -112,6 +113,110 @@ public class CuotaNegImpl implements CuotaNegocio {
 			throw ex;
 		}
 		return registrado;
+	}
+
+	@Override
+	public ArrayList<Cuota> listarCuotasPagadas(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.listarCuotasPagadas(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public ArrayList<Cuota> listarCuotasPendientes(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.listarCuotasPendientes(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public int contarCuotasPagadas(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.contarCuotasPagadas(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public int contarCuotasPendientes(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.contarCuotasPendientes(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public int contarCuotas(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.contarCuotas(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public BigDecimal sumarCuotasPagadas(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.sumarCuotasPagadas(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public BigDecimal sumarCuotasPendientes(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.sumarCuotasPendientes(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public BigDecimal sumarCuotas(int idPrestamo) throws SQLException {
+		try {
+			return cuotaDao.sumarCuotas(idPrestamo);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 }

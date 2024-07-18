@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import dominio.Cuenta;
+import dominio.Cuota;
 import dominio.Movimiento;
 import dominio.Prestamo;
 import negocioImpl.CuentaNegocioImpl;
+import negocioImpl.CuotaNegImpl;
 import negocioImpl.MovimientoNegImpl;
 import negocio.CuentaNegocio;
+import negocio.CuotaNegocio;
 import negocio.MovimientoNegocio;
 import negocio.PrestamoNegocio;
 import negocioImpl.PrestamoNegImpl;
@@ -72,7 +75,69 @@ String valorParam = request.getParameter("param");
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		if(request.getParameter("btnVerCuota")!= null)
+		{
+			int idPrestamo = Integer.parseInt(request.getParameter("IdVerCuotaPrestamo"));
+			CuotaNegocio cuotaNeg = new CuotaNegImpl();
+			try 
+			{
+				ArrayList<Cuota> cuotasPrestamo = new ArrayList<Cuota>();
+				cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(idPrestamo);
+				request.setAttribute("idPrestamo", idPrestamo);
+	            request.setAttribute("listaCuotas", cuotasPrestamo);
+	            
+	            cargarDatosCuotas(idPrestamo, request, response);
+	            
+				request.getRequestDispatcher("/ReporteCuotasPrestamo.jsp").forward(request, response);
+
+			}
+			catch (SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		if (request.getParameter("btnVerCuotaFiltrada") != null) 
+		{
+	        String idPrestamo = request.getParameter("idPrestamo");
+	        String tipo = request.getParameter("tipo");
+	        
+	        System.out.println("ver dato id: " + idPrestamo);
+	        System.out.println("ver dato tipo: " + tipo);
+			CuotaNegocio cuotaNeg = new CuotaNegImpl();
+			ArrayList<Cuota> cuotasPrestamo = new ArrayList<Cuota>();
+			int prestamoId = Integer.parseInt(idPrestamo);
+			try 
+			{
+				if ("pagada".equals(tipo)) 
+				{	        	
+					cuotasPrestamo = cuotaNeg.listarCuotasPagadas(prestamoId);
+				} 
+				else if ("pendiente".equals(tipo)) 
+				{
+					cuotasPrestamo = cuotaNeg.listarCuotasPendientes(prestamoId);
+				}
+				else if ("todas".equals(tipo)) 
+				{
+					cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(prestamoId);
+				}
+				cargarDatosCuotas(prestamoId, request, response);
+				request.setAttribute("idPrestamo", prestamoId);
+	            request.setAttribute("listaCuotas", cuotasPrestamo);
+				request.getRequestDispatcher("/ReporteCuotasPrestamo.jsp").forward(request, response);
+			}
+        	catch (SQLException ex) 
+			{
+				ex.printStackTrace();
+			}
+			catch (Exception ex) 
+        	{
+				ex.printStackTrace();
+        	}
+			
+		}
 		
 	}
 	
@@ -250,5 +315,40 @@ String valorParam = request.getParameter("param");
 	        request.setAttribute("sumaRechazadosSum", sumaRechazados);
 	        request.setAttribute("sumaEnEvaluacionSum", sumaEnEvaluacion);
 	    }
+		
+		public void cargarDatosCuotas(int idPrestamo, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			int cuotaPagada = 0;
+			int cuotaPendiente = 0;
+			int cuotaTodas = 0; 
+
+			BigDecimal sumaPagas = BigDecimal.ZERO;
+			BigDecimal sumaPendientes = BigDecimal.ZERO;
+			BigDecimal sumaTodas = BigDecimal.ZERO;
+		        
+		        CuotaNegocio NCuota = new CuotaNegImpl();
+
+		        try {
+		        	cuotaPagada = NCuota.contarCuotasPagadas(idPrestamo);
+		        	cuotaPendiente = NCuota.contarCuotasPendientes(idPrestamo);
+		        	cuotaTodas = NCuota.contarCuotas(idPrestamo);
+
+		        	sumaPagas = NCuota.sumarCuotasPagadas(idPrestamo);
+		            sumaPendientes = NCuota.sumarCuotasPendientes(idPrestamo);
+		            sumaTodas = NCuota.sumarCuotas(idPrestamo);
+
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+
+		        request.setAttribute("sumaPagas", sumaPagas);
+		        request.setAttribute("sumaPendientes", sumaPendientes);
+		        request.setAttribute("sumaTodas", sumaTodas);
+
+		        request.setAttribute("cuotaPagada", cuotaPagada);
+		        request.setAttribute("cuotaPendiente", cuotaPendiente);
+		        request.setAttribute("cuotaTodas", cuotaTodas);
+			
+		}
+
 
 }

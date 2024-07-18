@@ -63,7 +63,7 @@
 	            </svg>
 	            <div>
 	            	<h6 class="card-title">En evaluación</h6>
-		            <p class="card-text mb-0"><%= prestamosEvaluacion %></p>
+		            <p class="card-text mb-0 badge text-bg-warning"><%= prestamosEvaluacion %></p>
 		            <p class="card-text"><%= formatoMoneda.format(sumaEnEvaluacion) %></p>
 	            </div>
         	</div>
@@ -78,7 +78,7 @@
 	            </svg>
 	            <div>
 	            	<h6 class="card-title">Aprobados</h6>
-		            <p class="card-text mb-0"><%= prestamosAprobados %></p>
+		            <p class="card-text mb-0 badge text-bg-success"><%= prestamosAprobados %></p>
 		            <p class="card-text"><%= formatoMoneda.format(sumaAprobados) %></p>
 	            </div>
         	</div>
@@ -93,7 +93,7 @@
 	            </svg>
 	            <div>
 	            	<h6 class="card-title">Rechazados</h6>
-		            <p class="card-text mb-0"><%= prestamosRechazados %></p>
+		            <p class="card-text mb-0 badge text-bg-danger"><%= prestamosRechazados %></p>
 		            <p class="card-text"><%= formatoMoneda.format(sumaRechazados) %></p>
 	            </div>
         	</div>
@@ -119,6 +119,7 @@
                     <th scope="col">Importe solicitado</th>
                     <th scope="col">Cuotas</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Ver Cuotas</th>
                     
                 </tr>
             </thead>
@@ -150,6 +151,26 @@
     		<% } else { %>
         		<span class='badge text-bg-warning'>EN EVALUACIÓN</span>
     		<% } %>
+		</td>
+		<td class="d-flex justify-content-center align-items-center gap-2">
+    	<% if (pre.isEstadoValidacion() != null && pre.isEstadoValidacion()) { %>
+        <form action="ServletReporte" method="post">
+            <input type="hidden" name="IdVerCuotaPrestamo" value="<%= pre.getId() %>">
+            <button type="submit" name="btnVerCuota" id="btnVerCuota" class="btn btn-primary btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                </svg>
+            </button>
+        </form>
+    	<% } else { %>
+        <button type="button" class="btn btn-secondary btn-sm" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+  				<path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+  				<path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+			</svg>
+        </button>
+    <% } %>        	
 		</td>
     </tr>
     <% } %>
