@@ -76,7 +76,7 @@ CREATE TABLE prestamos(
     plazoDePago INT NOT NULL,
     importePedido DECIMAL NOT NULL,
     cuotas INT NOT NULL,
-    importeMensual DECIMAL NOT NULL,
+    importeMensual DECIMAL(10, 2) NOT NULL,
     estadoValidacion BIT,
     fechaValidacion DATETIME,
     FOREIGN KEY (idCliente) REFERENCES clientes(id),

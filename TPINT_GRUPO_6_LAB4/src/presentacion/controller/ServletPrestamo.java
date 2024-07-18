@@ -2,6 +2,7 @@ package presentacion.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -99,14 +100,12 @@ public class ServletPrestamo extends HttpServlet {
 		if(request.getParameter("confirmarAprobacion")!= null)
 		{
 			int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
-			System.out.println("ID PRESTAMO: "+idPrestamo + " SERVLETPRESTAMO");
 			ArrayList<Prestamo> prestamosActualizados =new ArrayList<Prestamo>();
 
 			try {
 				Prestamo prestamoAprob = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
 				prestamoNeg.aprobarPrestamo(prestamoAprob);
 				prestamosActualizados = cargarSolicitudesPrestamos();
-				System.out.println("SE APROBO EL PRESTAMO");
 
 				request.setAttribute("listaPrestamosCliente", prestamosActualizados);
 				request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
@@ -129,8 +128,7 @@ public class ServletPrestamo extends HttpServlet {
 
 				prestamoNeg.actualizarEstadoSolicitud(idPrestamo, false);
 				prestamosActualizados = cargarSolicitudesPrestamos();
-				System.out.println("SE RECHAZO EL PRESTAMO");
-
+				
 				request.setAttribute("listaPrestamosCliente", prestamosActualizados);
 				request.getRequestDispatcher("/Prestamos.jsp").forward(request, response);
 			} 
@@ -148,7 +146,7 @@ public class ServletPrestamo extends HttpServlet {
 				int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
 				Prestamo prestamoADetallar = new Prestamo();
 				prestamoADetallar = prestamoNeg.obtenerPrestamoPorId(idPrestamo);
-				System.out.println("ID PRESTAMO A DETALLAR: "+idPrestamo + " SERVLETPRESTAMO");
+				
 				request.setAttribute("prestamoADetallar", prestamoADetallar);
 				request.getRequestDispatcher("/DetallePrestamo.jsp").forward(request, response);
 				
@@ -332,7 +330,7 @@ public class ServletPrestamo extends HttpServlet {
 		
 		BigDecimal importeTotalAPagar = importePedido.add(importeInteres);
 
-		BigDecimal importeMensual = importeTotalAPagar.divide(BigDecimal.valueOf(cuotas));
+		BigDecimal importeMensual = importeTotalAPagar.divide(BigDecimal.valueOf(cuotas),2, RoundingMode.HALF_UP);
 		
 		cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
 		prestamo.setCliente(cliente);
