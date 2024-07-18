@@ -10,4 +10,5 @@ public interface CuotaNegocio {
 	public ArrayList<Cuota> listarCuotasPorPrestamo (int idPrestamo) throws SQLException;
 	public boolean generarCuotas (Prestamo prestamo) throws SQLException;
 	public Cuota obtenerCuotaPorId (int idCuota) throws SQLException;
+	public boolean registrarPago(int idCuenta, Cuota cuota) throws Exception, SQLException;
 }

@@ -3,6 +3,7 @@ package datosImpl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,7 +26,7 @@ public class MovimientoDaoImpl implements MovimientoDao {
 	private Connection conexion = Conexion.getConexion().getSQLConexion();
 	private static final String listarMovimientosPorCuenta = "SELECT M.id AS idMovimiento, M.fecha AS fechaMovimiento, M.concepto AS conceptoMovimiento, M.importe AS importeMovimiento, TM.id AS idTipoMovimiento, TM.descripcion AS nombreTipoMovimiento , CU.id AS idCuenta, TC.id AS idTipoCuenta, TC.descripcion AS nombreTipoCuenta, CL.id AS idCliente FROM movimientos AS M INNER JOIN tiposMovimientos AS TM ON M.idTipoMovimiento = TM.id INNER JOIN cuentas AS CU ON M.idCuenta = CU.id INNER JOIN tiposcuentas AS TC ON CU.idTipoCuenta = TC.id INNER JOIN clientes AS CL ON CU.idCliente = CL.id WHERE CU.id = ?";
 	private static final String agregarMovimiento = "INSERT INTO movimientos (idTipoMovimiento, concepto, idCuenta, importe) VALUES (?, ?, ?, ?)";
-
+	
 	@SuppressWarnings("unused")
 	private Movimiento getMovimiento(ResultSet rs) throws SQLException {
 		Movimiento movimiento = new Movimiento();
@@ -144,6 +145,42 @@ public class MovimientoDaoImpl implements MovimientoDao {
 		}
 		
 		return agregado;
+	}
+
+	@Override
+	public int agregarMovimientoConDevolucionDeId(Movimiento movimiento) throws SQLException {
+		int idMovimiento = 0;
+		
+		try {
+			st = conexion.prepareStatement(agregarMovimiento, Statement.RETURN_GENERATED_KEYS);
+			st.setInt(1, movimiento.getTipoMovimiento().getId());
+			st.setString(2, movimiento.getConcepto());
+			st.setInt(3, movimiento.getCuenta().getId());
+			st.setBigDecimal(4, movimiento.getImporte());
+			
+			int filasAfectadas = st.executeUpdate();
+			
+			if (filasAfectadas > 0) {
+				try (ResultSet idGenerada = st.getGeneratedKeys()) {
+					if (idGenerada.next()) {
+						idMovimiento = idGenerada.getInt(1);
+						conexion.commit();
+					}
+				}
+			}
+			else {
+				conexion.rollback();
+				return 0;
+			}
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+		
+		return idMovimiento;
 	}
 
 }

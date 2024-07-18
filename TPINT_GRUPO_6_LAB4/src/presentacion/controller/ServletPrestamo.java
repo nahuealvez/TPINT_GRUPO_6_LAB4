@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
+import Excepciones.SinSaldoException;
 import dominio.Cliente;
 import dominio.Cuenta;
 import dominio.Cuota;
@@ -172,9 +171,7 @@ public class ServletPrestamo extends HttpServlet {
 				cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(idPrestamo);
 				request.setAttribute("idPrestamo", idPrestamo);
 	            request.setAttribute("listaCuotas", cuotasPrestamo);
-	            System.out.println(cuotasPrestamo.toString());
 	            request.getRequestDispatcher("/CuotasPrestamo.jsp").forward(request, response);
-	            System.out.println("SALUDOS DESDE BOTON PAGAR" + idPrestamo);
 			}
 			catch (SQLException ex) 
 			{
@@ -229,8 +226,6 @@ public class ServletPrestamo extends HttpServlet {
 			
 			try {
 				cuota = cuotaNeg.obtenerCuotaPorId(idCuota);
-				System.out.println("IdCUOTA: " + cuota.getId());
-				System.out.println("NroCUOTA: " + cuota.getNroCuota());
 				request.setAttribute("cuota", cuota);
 				
 				ArrayList<Cuenta> cuentas = (ArrayList<Cuenta>)cuentaNegocio.cuentasPorClienteActivas(idCliente);
@@ -248,7 +243,52 @@ public class ServletPrestamo extends HttpServlet {
 			request.getRequestDispatcher("/PagoCuota.jsp").forward(request, response);
 		}
 		
-		
+		if (request.getParameter("btnConfirmarPagoCuota") != null) {
+			String mensaje = "";
+			String claseMensaje = "";
+			int idCuentaSaliente = 0;
+			int idCuota = 0;
+			int idPrestamo = 0;
+			Cuota cuota = new Cuota();
+			ArrayList<Cuota> cuotasPrestamo = new ArrayList<Cuota>();
+			
+			idCuentaSaliente = Integer.parseInt(request.getParameter("ddlCuentaSaliente"));
+			idCuota = Integer.parseInt(request.getParameter("idCuota"));
+			idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
+			
+			try {
+				cuota = cuotaNeg.obtenerCuotaPorId(idCuota);
+				if (cuotaNeg.registrarPago(idCuentaSaliente, cuota)) {
+					mensaje = "Se realizó el pago de la cuota Nro. " + cuota.getNroCuota() + " correctamente";
+					claseMensaje = "alert alert-success";
+				}
+			}
+			catch (SinSaldoException ex) {
+				mensaje = "No se pudo realizar el pago de cuota | " + ex.getMessage();
+				claseMensaje = "alert alert-danger";
+			}
+			catch (SQLException ex) {
+				mensaje = "No se pudo realizar el pago de cuota | " + ex.getMessage();
+				claseMensaje = "alert alert-danger";
+			}
+			catch (Exception ex) {
+				mensaje = "No se pudo realizar el pago de cuota | " + ex.getMessage();
+				claseMensaje = "alert alert-danger";
+			}
+			
+			try {
+				cuotasPrestamo = cuotaNeg.listarCuotasPorPrestamo(idPrestamo);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("mensaje", mensaje);
+			request.setAttribute("claseMensaje", claseMensaje);
+			request.setAttribute("listaCuotas", cuotasPrestamo);
+			request.setAttribute("idPrestamo", idPrestamo);
+			
+			request.getRequestDispatcher("/CuotasPrestamo.jsp").forward(request, response);
+		}
 	}
 	
 	//------------------------FUNCIONES SOBRE EVENTOS--------------------

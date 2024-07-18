@@ -270,7 +270,51 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+=======
+	public int debitarPagoCuotaPrestamo(int idCuenta, Movimiento movimiento) throws Exception, SQLException {
+		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
+		try {
+			if (verificarSaldo(idCuenta, movimiento.getImporte())) {
+				Movimiento aux = new Movimiento();
+				
+				aux.setTipoMovimiento(movimiento.getTipoMovimiento());
+	            aux.setCuenta(movimiento.getCuenta());
+	            aux.setConcepto(movimiento.getConcepto());
+	            aux.setImporte(movimiento.getImporte().negate());
+				
+	            int idMovimiento = movimientoNegocio.agregarMovimientoConDevolucionDeId(aux);
+	            
+	            if (idMovimiento > 0) {
+					if (cuentaDao.afectarSaldo(idCuenta, aux.getImporte())) {
+						return idMovimiento;
+					}
+					else {
+						return idMovimiento;
+					}
+				}
+				else {
+					return idMovimiento;
+				}
+			}
+			else {
+				throw new SinSaldoException();
+			}
+		}
+		catch (SQLException ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+	}
+	
+	@Override
+	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
+>>>>>>> branch 'main' of https://github.com/nahuealvez/TPINT_GRUPO_6_LAB4.git
 
 		return cuentaDao.CuentasxClienteYEstado(idCliente, estado);
 	}

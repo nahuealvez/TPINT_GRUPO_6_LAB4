@@ -26,7 +26,9 @@
 
     <div class="container mt-2 p-1">
         <h2 class="mb-3">Pago de cuota</h2>
-        <form id="pagoDeCuota" class="d-flex flex-column gap-3 camposFormulario" novalidate>
+        <form id="pagoDeCuota" class="d-flex flex-column gap-3 camposFormulario" action="ServletPrestamo" method="post" novalidate>
+        <input type="hidden" name="idCuota" id="idCuota" value="<%= cuota.getId() %>">
+        <input type="hidden" name="idPrestamo" id="idPrestamo" value="<%= cuota.getPrestamo().getId() %>">
 	        <div id="resumenCuota" class="col-md-4 position-relative alert alert-primary mb-0 needs-validation" action="ServletPrestamo" method="post">
 	           	<div>
 	           		<strong>Nro de cuota: </strong>

@@ -8,4 +8,5 @@ import dominio.Movimiento;
 public interface MovimientoDao {
 	public ArrayList<Movimiento> listarMovimientosPorCuenta(int idCuenta) throws SQLException;
 	public boolean agregarMovimiento(Movimiento movimiento) throws SQLException;
+	public int agregarMovimientoConDevolucionDeId(Movimiento movimiento) throws SQLException;
 }

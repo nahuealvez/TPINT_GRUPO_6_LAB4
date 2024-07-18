@@ -37,4 +37,16 @@ public class MovimientoNegImpl implements MovimientoNegocio {
 		}
 	}
 	
+	public int agregarMovimientoConDevolucionDeId(Movimiento movimiento) throws SQLException {
+		try {
+			return movimientoDao.agregarMovimientoConDevolucionDeId(movimiento);
+		}
+		catch (SQLException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
+	}
+	
 }
