@@ -4,6 +4,7 @@
 <%@ page import="java.util.ArrayList" %>
 
 <%@ include file="Header.jsp" %>
+
 <script >
 	//Para validar que las contraseñas coincidan antes de enviar el formulario
 	function validarContrasenias() {
@@ -24,6 +25,11 @@
 </script>
 
 	<%	
+	
+		if (usuarioLogueado.getId() == 2) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
+	
 		ArrayList<Provincia> provincias = null;
 		if (request.getAttribute("provincias") != null) {
 			provincias = (ArrayList<Provincia>)request.getAttribute("provincias");

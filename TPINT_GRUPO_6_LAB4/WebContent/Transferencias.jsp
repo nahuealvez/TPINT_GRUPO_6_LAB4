@@ -6,6 +6,14 @@
 <%@ include file="Header.jsp"%>
 	
 	<%
+		if (usuarioLogueado.getId() == 1) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
+	
+		if (sessionLogueada != null) {
+			cliente = (Cliente) session.getAttribute("cliente");
+		}
+	
 		boolean existeMensaje = false;
 		String mensaje = null;
 		String claseMensaje = null;

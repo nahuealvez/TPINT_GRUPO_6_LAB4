@@ -7,6 +7,10 @@
 <%@ include file="Header.jsp" %>
 
 	<%	
+		if (usuarioLogueado.getId() == 2) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
+	
 		Cliente clienteModificar = (Cliente) request.getAttribute("clienteAModificar");
 		ArrayList<Provincia> provincias = null;
 		if (request.getAttribute("provincias") != null) {

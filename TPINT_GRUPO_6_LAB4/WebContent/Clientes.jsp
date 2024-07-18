@@ -5,6 +5,9 @@
 <%@ include file="Header.jsp" %>
 
 	<%
+		if (usuarioLogueado.getId() == 2) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
 	
 		boolean existeMensaje = false;
 		String mensaje = null;

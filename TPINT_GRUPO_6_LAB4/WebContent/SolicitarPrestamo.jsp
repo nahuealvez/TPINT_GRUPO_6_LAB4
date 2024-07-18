@@ -5,6 +5,10 @@
 <%@ include file="Header.jsp" %>
 
 	<%
+		if (usuarioLogueado.getId() == 1) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
+	
 		ArrayList<Cuenta> cuentasCliente = null;
 		if (request.getAttribute("cuentasCliente") != null) {
 			cuentasCliente = (ArrayList<Cuenta>)request.getAttribute("cuentasCliente");

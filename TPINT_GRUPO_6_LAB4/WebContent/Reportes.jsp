@@ -2,7 +2,13 @@
     pageEncoding="ISO-8859-1"%>
 <%@ include file="Header.jsp" %>
 
+<%
 
+	if (usuarioLogueado.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+
+%>
 
 <section>
 		<h2>Reportes</h3>

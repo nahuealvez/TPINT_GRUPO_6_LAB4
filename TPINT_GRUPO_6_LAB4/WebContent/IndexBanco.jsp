@@ -1,5 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="dominio.Usuario" %>
+
+<%
+
+	HttpSession sessionLogueada2 = request.getSession(false);
+	Usuario usuarioLogueado2 = null;
+	
+	if (sessionLogueada2 != null ) {
+		usuarioLogueado2 = (Usuario) session.getAttribute("sessionUsuario");
+	}
+	
+	if (usuarioLogueado2.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+
+%>
+
 	<section>
-		<h3 class="pt-3">Accesos r·pidos</h3>
+		<h3 class="pt-3">Accesos r√°pidos</h3>
 		<div class="d-flex pt-3 gap-3">
 			<a class="card-accesos" href="ServletCliente?Param=1">
 				<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
@@ -16,7 +34,7 @@
 					  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
 					  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
 					</svg>
-					<p>PrÈstamos</p>
+					<p>Pr√©stamos</p>
 				</button>
 			</form>	
 					

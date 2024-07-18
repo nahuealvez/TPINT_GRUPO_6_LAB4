@@ -4,6 +4,14 @@
 <%@ page import="dominio.Cuenta"%>
 <%@ include file="Header.jsp"%>
 
+<%
+
+	if (usuarioLogueado.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+
+%>
+
 <div class="container mt-2 p-1">
 	<h3 class="mb-3">Agregar cuenta</h3>
 	<form class="row g-2 needs-validation" action="ServletCuenta"

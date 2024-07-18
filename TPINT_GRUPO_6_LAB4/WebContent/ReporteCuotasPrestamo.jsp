@@ -12,6 +12,11 @@
 <%@ include file="Header.jsp" %>
 
 <%
+
+	if (usuarioLogueado.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}	
+
 	int cuotaPagada = 0;
 	int cuotaPendiente = 0;
 	int cuotaTodas = 0; 

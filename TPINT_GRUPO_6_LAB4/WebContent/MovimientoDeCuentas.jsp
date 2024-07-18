@@ -1,8 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dominio.Cuenta" %>
+<%@ page import="dominio.Usuario" %>
 <%@ page import="java.util.ArrayList" %>
 
 <%
+	HttpSession sessionLogueada2 = request.getSession(false);
+	Usuario usuarioLogueado2 = null;
+	
+	if (sessionLogueada2 != null ) {
+		usuarioLogueado2 = (Usuario) session.getAttribute("sessionUsuario");
+	}
+	
+	if (usuarioLogueado2.getId() == 1) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+
 	ArrayList<Cuenta> cuentas = null;
 
 	if (session.getAttribute("cuentasPorCliente") != null) {

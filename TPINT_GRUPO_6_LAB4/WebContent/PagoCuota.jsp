@@ -20,6 +20,10 @@
 		cuentas = (ArrayList<Cuenta>)request.getAttribute("cuentas");
 	}
 	
+	if (usuarioLogueado.getId() == 1) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+	
 	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
 %>

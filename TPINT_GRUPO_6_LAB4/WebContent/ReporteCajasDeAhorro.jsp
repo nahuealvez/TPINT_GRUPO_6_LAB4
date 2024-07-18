@@ -9,6 +9,9 @@
 <%@ include file="Header.jsp" %>
 
 <%
+	if (usuarioLogueado.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
 
 	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
 	NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));

@@ -11,6 +11,10 @@
 <%@ include file="Header.jsp" %>
 
 <%
+	if (usuarioLogueado.getId() == 2) {
+		response.sendRedirect("SinPermisos.jsp");
+	}
+
 	int prestamosAprobados = 0;
 	int prestamosRechazados = 0;
 	int prestamosEvaluacion = 0; 

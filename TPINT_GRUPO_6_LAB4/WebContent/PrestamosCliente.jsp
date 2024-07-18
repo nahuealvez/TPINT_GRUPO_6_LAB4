@@ -4,9 +4,21 @@
 <%@page import="dominio.Prestamo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dominio.Cliente"%>
+<%@ page import="dominio.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 	<%
+		HttpSession sessionLogueada2 = request.getSession(false);
+		Usuario usuarioLogueado2 = null;
+		
+		if (sessionLogueada2 != null ) {
+			usuarioLogueado2 = (Usuario) session.getAttribute("sessionUsuario");
+		}
+		
+		if (usuarioLogueado2.getId() == 1) {
+			response.sendRedirect("SinPermisos.jsp");
+		}
+	
 		Cliente clienteLogueado = (Cliente) session.getAttribute("cliente");
 	    ArrayList<Prestamo> listaPrestamos = null;
 	    if (request.getAttribute("listaPrestamos") != null) {
