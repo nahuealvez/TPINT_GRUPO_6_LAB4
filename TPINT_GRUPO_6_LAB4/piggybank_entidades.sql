@@ -2544,6 +2544,47 @@ VALUES
 	(2380, 25, 'Yánima'),
 	(2381, 25, 'Yerba Buena'),
 	(2382, 25, 'Yerba Buena (S)');
-    
+
+-- Insertar admin
+
 INSERT INTO usuarios (idTipoUsuario, usuario, contrasenia, estado)
 VALUES (1, 'admin', 'admin', 1);
+
+-- Insertar usuarios para 15 clientes
+INSERT INTO usuarios (idTipoUsuario, usuario, contrasenia, estado)
+VALUES 
+(2, 'carlosm', '!Clave1234', 1),
+(2, 'mariag', '!Clave1234', 1),
+(2, 'juana', '!Clave1234', 1),
+(2, 'luiss', '!Clave1234', 1),
+(2, 'analopez', '!Clave1234', 1),
+(2, 'pedrog', '!Clave1234', 1),
+(2, 'rosalinda', '!Clave1234', 1),
+(2, 'ramonv', '!Clave1234', 1),
+(2, 'josefa', '!Clave1234', 1),
+(2, 'franciscop', '!Clave1234', 1),
+(2, 'martac', '!Clave1234', 1),
+(2, 'hectorr', '!Clave1234', 1),
+(2, 'angelat', '!Clave1234', 1),
+(2, 'miguelg', '!Clave1234', 1),
+(2, 'sofiap', '!Clave1234', 1);
+
+-- Insertar clientes 
+
+INSERT INTO clientes (dni, cuil, nombre, apellido, sexo, nacionalidad, fechaNacimiento, idProvincia, idLocalidad, direccion, email, telefono, idUsuario)
+VALUES 
+('20345678', '20203456781', 'Carlos', 'Martínez', 'M', 'Argentina', '1980-01-01', 1, 1, 'Calle Falsa 123', 'carlosm@example.com', '1545678901', (SELECT id FROM usuarios WHERE usuario='carlosm')),
+('20456789', '20204567897', 'María', 'García', 'F', 'Argentina', '1981-02-02', 1, 1, 'Calle Verdadera 456', 'mariag@example.com', '1546789012', (SELECT id FROM usuarios WHERE usuario='mariag')),
+('20567890', '20205678903', 'Juan', 'Álvarez', 'M', 'Argentina', '1982-03-03', 1, 1, 'Avenida Siempreviva 789', 'juana@example.com', '1547890123', (SELECT id FROM usuarios WHERE usuario='juana')),
+('20678901', '20206789015', 'Luis', 'Sánchez', 'M', 'Argentina', '1983-04-04', 1, 1, 'Pasaje Los Andes 101', 'luiss@example.com', '1548901234', (SELECT id FROM usuarios WHERE usuario='luiss')),
+('20789012', '20207890128', 'Ana María', 'López Rodríguez', 'X', 'Extranjera', '1984-05-05', 1, 1, 'Boulevard Avellaneda 202', 'analopez@example.com', '1549012345', (SELECT id FROM usuarios WHERE usuario='analopez')),
+('20890123', '20208901236', 'Pedro Pablo', 'Gómez Álvarez', 'M', 'Argentina', '1985-06-06', 1, 1, 'Calle San Martín 303', 'pedrog@example.com', '1540123456', (SELECT id FROM usuarios WHERE usuario='pedrog')),
+('20901234', '20209012349', 'Rosa Elena', 'López Fernández', 'F', 'Argentina', '1986-07-07', 1, 1, 'Avenida Belgrano 404', 'rosalinda@example.com', '1541234567', (SELECT id FROM usuarios WHERE usuario='rosalinda')),
+('21012345', '20210123452', 'Ramón Alejandro', 'Vega González', 'M', 'Extranjera', '1987-08-08', 1, 1, 'Calle Lavalle 505', 'ramonv@example.com', '1542345678', (SELECT id FROM usuarios WHERE usuario='ramonv')),
+('21123456', '20211234560', 'Josefa María', 'Moreno Torres', 'F', 'Argentina', '1988-09-09', 1, 1, 'Calle Córdoba 606', 'josefa@example.com', '1543456789', (SELECT id FROM usuarios WHERE usuario='josefa')),
+('21234567', '20212345674', 'Francisco', 'Pérez', 'X', 'Argentina', '1989-10-10', 1, 1, 'Calle Mendoza 707', 'franciscop@example.com', '1544567890', (SELECT id FROM usuarios WHERE usuario='franciscop')),
+('21345678', '20213456787', 'Marta', 'Cruz', 'F', 'Argentina', '1990-11-11', 1, 1, 'Calle San Juan 808', 'martac@example.com', '1545678901', (SELECT id FROM usuarios WHERE usuario='martac')),
+('21456789', '20214567893', 'Héctor', 'Rojas', 'M', 'Argentina', '1991-12-12', 1, 1, 'Calle Chacabuco 909', 'hectorr@example.com', '1546789012', (SELECT id FROM usuarios WHERE usuario='hectorr')),
+('21567890', '20215678906', 'Ángela', 'Torres', 'F', 'Extranjera', '1992-01-13', 1, 1, 'Avenida Las Heras 1010', 'angelat@example.com', '1547890123', (SELECT id FROM usuarios WHERE usuario='angelat')),
+('21678901', '20216789019', 'Miguel', 'Gutiérrez', 'M', 'Argentina', '1993-02-14', 1, 1, 'Calle Alem 1111', 'miguelg@example.com', '1548901234', (SELECT id FROM usuarios WHERE usuario='miguelg')),
+('21789012', '20217890121', 'Sofía', 'Pérez', 'X', 'Argentina', '1994-03-15', 1, 1, 'Calle Rivadavia 1212', 'sofiap@example.com', '1549012345', (SELECT id FROM usuarios WHERE usuario='sofiap'));
