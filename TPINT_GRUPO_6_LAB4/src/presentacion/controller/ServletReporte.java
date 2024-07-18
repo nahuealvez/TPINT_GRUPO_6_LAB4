@@ -31,7 +31,7 @@ public class ServletReporte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 String valorParam = request.getParameter("param");
 		
-		System.out.println("valor param: " + valorParam);
+	
 		if ("1".equals(valorParam))
 		{
 			cargarReportePrestamos(request, response);
