@@ -23,8 +23,11 @@ public class ClienteDaoImpl implements ClienteDao{
 	private static final String actualizarRegistro = "UPDATE clientes SET dni = ?, cuil = ?, nombre = ?, apellido = ?, sexo = ?, nacionalidad = ?, fechaNacimiento = ?, idProvincia = ?, idLocalidad = ?, direccion = ?, email = ?, telefono = ? WHERE idUsuario = ?";
 	private static final String existeDniConsulta = "SELECT COUNT(*) from clientes where dni = ?";
 	private static final String existeDniConsultaModificar = "SELECT COUNT(*) FROM clientes WHERE dni = ? AND idUsuario != ?";
+	private static final String existeCuilConsulta ="SELECT COUNT(*) FROM clientes WHERE cuil = ?";
+	private static final String existeCuilConsultaModificar = "SELECT COUNT(*) FROM clientes WHERE cuil = ? AND idUsuario != ?";
 	private static final String buscarClientexDni = "SELECT c.id AS Id, c.dni AS DNI, c.cuil AS CUIL, c.nombre AS Nombre, c.apellido AS Apellido, c.sexo AS Sexo, c.nacionalidad AS Nacionalidad, c.fechaNacimiento AS FechaNacimiento, c.idProvincia AS IdProvincia,  p.nombre AS NombreProvincia, c.idLocalidad AS IdLocalidad, l.nombre AS NombreLocalidad, c.direccion AS Direccion,  c.email AS Email, c.telefono AS Telefono, c.idUsuario AS IdUsuario, u.usuario AS NombreUsuario, u.idTipoUsuario AS IdTipoUsuario,  t.descripcion AS DescripcionTipoUsuario, u.estado AS Estado FROM clientes c  INNER JOIN usuarios u ON c.idUsuario = u.id  iNNER JOIN tiposUsuarios t ON u.idTipoUsuario = t.id INNER JOIN localidades l ON c.idLocalidad = l.id  INNER JOIN provincias p ON c.idProvincia = p.id  WHERE c.dni = ?";
 	private static final String buscarClientexIdUsuario = "SELECT c.id AS Id, c.dni AS DNI, c.cuil AS CUIL, c.nombre AS Nombre, c.apellido AS Apellido, c.sexo AS Sexo, c.nacionalidad AS Nacionalidad, c.fechaNacimiento AS FechaNacimiento, c.idProvincia AS IdProvincia,  p.nombre AS NombreProvincia, c.idLocalidad AS IdLocalidad, l.nombre AS NombreLocalidad, c.direccion AS Direccion,  c.email AS Email, c.telefono AS Telefono, c.idUsuario AS IdUsuario, u.usuario AS NombreUsuario, u.idTipoUsuario AS IdTipoUsuario,  t.descripcion AS DescripcionTipoUsuario, u.estado AS Estado FROM clientes c  INNER JOIN usuarios u ON c.idUsuario = u.id  iNNER JOIN tiposUsuarios t ON u.idTipoUsuario = t.id INNER JOIN localidades l ON c.idLocalidad = l.id  INNER JOIN provincias p ON c.idProvincia = p.id  WHERE c.idUsuario = ?";
+	
 	
 	@Override
 	public boolean insert(Cliente cliente) {
@@ -356,6 +359,47 @@ public class ClienteDaoImpl implements ClienteDao{
 		}
 		
 		return cliente;
+	}
+
+	@Override
+	public boolean existeCuit(String cuil) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			statement = conexion.prepareStatement(existeCuilConsulta);
+			statement.setString(1, cuil);
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				return resultSet.getInt(1) > 0;
+			}
+		}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		return false;
+	}
+
+	@Override
+	public boolean existeCuit(String cuil, int idUsuario) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		try {
+			statement = conexion.prepareStatement(existeCuilConsultaModificar);
+			statement.setString(1, cuil);
+			statement.setInt(2, idUsuario);
+			ResultSet resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				return resultSet.getInt(1) > 0;
+			}
+		}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		return false;
 	}
 
 

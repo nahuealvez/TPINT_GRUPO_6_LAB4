@@ -49,6 +49,10 @@ public class ServletCliente extends HttpServlet {
 		{
 			eventoVerPerfilParam2(request, response);
 		}
+		if(request.getParameter("btnAgregarModificacionCliente")!= null)
+		{
+			eventobtnAgregarModificacionCliente(request, response);
+		}
 	}
 
 	
@@ -58,11 +62,7 @@ public class ServletCliente extends HttpServlet {
 		{
 			eventobtnModificarCliente(request, response);
 		}
-		if(request.getParameter("btnAgregarModificacionCliente")!= null)
-		{
-			eventobtnAgregarModificacionCliente(request, response);
-		}
-		
+				
 		if(request.getParameter("btnDesactivarCliente")!= null)  
 		{
 			
@@ -239,7 +239,7 @@ public class ServletCliente extends HttpServlet {
 			
 			if(modificadoC) {
                 UsuarioNegocio negU = new UsuarioNegImpl();
-                boolean modificadoU = negU.actualizarContraseniaUsuario(cliente.getId(), cliente.getContrasenia());
+                boolean modificadoU = negU.actualizarNombreUsuario(cliente.getId(), cliente.getUsuario());
             }
 			
 			mensaje = "El cliente fue modificado correctamente";

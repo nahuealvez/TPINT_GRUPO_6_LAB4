@@ -13,6 +13,8 @@ public interface ClienteDao {
 	public boolean update (Cliente cliente);
 	public boolean existeDni (String dni);
 	public boolean existeDni (String dni, int idUsuario);
+	public boolean existeCuit(String cuil);
+	public boolean existeCuit (String cuil, int idUsuario);
 	public Cliente buscarClienteXDNI(String dni);
 	public Cliente buscarClienteXidUsuario(int idUsuario) throws SQLException;
 }

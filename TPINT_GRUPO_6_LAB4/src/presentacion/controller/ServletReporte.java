@@ -111,8 +111,7 @@ String valorParam = request.getParameter("param");
 		}
 		private void verMovimientosCuenta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-			int idCuenta= Integer.parseInt(request.getParameter("IdCuentaCte"));
-			System.out.println("Todo bien: " + idCuenta);
+			int idCuenta= Integer.parseInt(request.getParameter("IdCuentaCte"));		
 						
 			ArrayList<Movimiento> listaMovimientoCta = new ArrayList<Movimiento>();
 			MovimientoNegocio NMvto = new MovimientoNegImpl();
@@ -130,7 +129,7 @@ String valorParam = request.getParameter("param");
 		}
 		private void verMovimientosAhorro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			int idCuenta= Integer.parseInt(request.getParameter("IdCuentaCte"));
-			System.out.println("Todo bien: " + idCuenta);
+			
 						
 			ArrayList<Movimiento> listaMovimientoCta = new ArrayList<Movimiento>();
 			MovimientoNegocio NMvto = new MovimientoNegImpl();

@@ -61,7 +61,7 @@
     <div class="container mt-2 p-1">
         <h3 class="mb-3">Modificar cliente</h3>
         <%--  Inicio de controles  --%>
-        <form class="row g-2 needs-validation" action="ServletCliente" method="post" onsubmit="return validarContrasenias();" novalidate>
+        <form class="row g-2 needs-validation" action="ServletCliente" method="get" onsubmit="return validarContrasenias();" novalidate>
         <input type="hidden" id="clienteId" name="clienteId" value="<%= clienteModificar.getIdCliente() %>">
     	<input type="hidden" id="UsuarioID" name="usuarioId" value="<%= clienteModificar.getId() %>">
             <div class="col-md-6 position-relative">
@@ -246,7 +246,7 @@
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
                 	required
-                readonly>
+                disabled>
             </div>
             <div class="col-md-6 position-relative">
             	<label for="txtValidarClave">Validar Clave:</label>
@@ -261,7 +261,7 @@
                 	placeholder="entre 8 y 14 caracteres,una mayúscula,un número y carácter especial(!@#$%^&*)" 
                 	pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]+$" 
             		required
-            readonly>
+            disabled>
         </div>
             <div class="col-md-6 mt-3">
                 <a class="btn btn-dark btn-sm" href="ServletCliente?Param=1"> Volver</a>

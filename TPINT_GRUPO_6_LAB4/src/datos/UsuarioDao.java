@@ -11,5 +11,5 @@ public interface UsuarioDao {
 	public boolean actualizarEstadoUsuario (int idUsuario, boolean nuevoEstado);
 	public Usuario verificarUsuario(String usuario, String contrasenia) throws ErrorUsuarioException, ErrorUsuarioDesactivado ;
 	public boolean actualizarContraseniaUsuario (int idUsurio, String contrasenia);
-
+	public boolean actualizarNombreUsuario (int idUsurio, String usuario);
 }

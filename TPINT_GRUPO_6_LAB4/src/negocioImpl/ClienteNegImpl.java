@@ -22,8 +22,8 @@ public class ClienteNegImpl implements ClienteNegocio{
 		
 		boolean clienteCreado = false;
 
-	    if (cDao.existeDni(cliente.getDni())) {
-	        throw new ErrorMensajeException("El DNI: "+cliente.getDni()+", ya existe en la base de datos!.");
+		if (cDao.existeDni(cliente.getDni()) || cDao.existeCuit(cliente.getCuil())) {
+	        throw new ErrorMensajeException("El DNI: " + cliente.getDni() + " o el CUIT: " + cliente.getCuil() + " ya existe en la base de datos.");
 	    }
 
 	    Usuario nuevoUsuario = new Usuario();
@@ -69,10 +69,10 @@ public class ClienteNegImpl implements ClienteNegocio{
 	public boolean modificarCliente(Cliente cliente) throws ErrorMensajeException{
 		boolean clienteModificado = false;
 
-	    if (!cDao.existeDni(cliente.getDni(), cliente.getId())) {
-	        clienteModificado = cDao.update(cliente);
+	    if (cDao.existeDni(cliente.getDni(), cliente.getId()) || cDao.existeCuit(cliente.getCuil(), cliente.getId())) {
+	        throw new ErrorMensajeException("El DNI o CUIT ya está registrado para otro cliente.");
 	    } else {
-	        throw new ErrorMensajeException("El DNI ya está registrado para otro cliente.");
+	        clienteModificado = cDao.update(cliente);
 	    }
 	    
 	    return clienteModificado;

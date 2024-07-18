@@ -19,6 +19,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	private static final String actualizarEstadoUsuario = "UPDATE usuarios SET estado = ? WHERE id = ?";
 	private static final String readUsuario = "SELECT id, usuario, contrasenia, idTipoUsuario, estado FROM usuarios WHERE usuario = ? AND contrasenia = ?";	
 	private static final String actualizarContraseniaUsuario = "UPDATE usuarios SET contrasenia = ? WHERE id = ?";
+	private static final String actualizarNombreUsuario = "UPDATE usuarios SET usuario = ? WHERE id = ?";
 
 	
 	
@@ -156,11 +157,32 @@ public class UsuarioDaoImpl implements UsuarioDao{
 		
 	}
 
-
-
-	
-	
-	
+	@Override
+	public boolean actualizarNombreUsuario(int idUsurio, String usuario) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean actualizacionExitosa = false;
+		
+		try 
+		{
+			statement = conexion.prepareStatement(actualizarNombreUsuario);
+			statement.setString(1, usuario);
+			statement.setInt(2, idUsurio);
+			
+			int registrosActualizados = statement.executeUpdate();
+			
+			if(registrosActualizados > 0)
+			{
+				conexion.commit();
+				actualizacionExitosa = true;
+			}
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return actualizacionExitosa;
+	}
 
 
 }
