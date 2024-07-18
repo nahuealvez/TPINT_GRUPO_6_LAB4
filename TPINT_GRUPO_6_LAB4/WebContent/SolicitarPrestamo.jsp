@@ -39,10 +39,14 @@
                 	id="txtImporteSolicitado" 
                 	name="txtImporteSolicitado"
                 	value=""
-                	min="0"
+                	min="100000"
+                	max="10000000"
                 	step="0.01" 
                 	placeholder="Ingrese el importe a solicitar" 
                 required>
+                <div class="invalid-feedback">
+			      Puede solicitar entre $100.000 a $10.000.000.
+			    </div>
             </div>
             <div class="col-md-4 position-relative camposFormulario">
                 <label for="txtCuotas">Cuotas:</label>
@@ -50,10 +54,14 @@
                 	class="form-control form-control-sm" 
                 	id="txtCuotas" 
                 	name="txtCuotas"
-					min="0"
+					min="1"
+					max="48"
 					step="1"
                 	placeholder="Ingrese cantidad de cuotas" 
                 required>
+                <div class="invalid-feedback">
+			      Puede solicitar desde 1 a 48 cuotas.
+			    </div>
             </div>
             <div class="col-md-4 position-relative camposFormulario">
                 <label for="ddlCuentasCliente">Cuenta destino:</label>

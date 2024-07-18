@@ -51,10 +51,10 @@ h3 {
 
 .background-layer {
 	witdh: 100%;
-	height: 200px;
 	position: top;
     background-image: url('../images/bk-pgbk.png');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: top;
 }
 
@@ -106,10 +106,6 @@ a {
 .title {
 	font-size: 24px;
 	font-weight: 700;
-}
-
-.container--main {
-	flex: 1 0 auto;
 }
 
 .titleBienvenida {
@@ -166,4 +162,16 @@ a {
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     padding: .5rem 1rem; /* Añade padding para estilizar los botones */
+}
+
+.container--main {
+	flex: 1;
+	display: flex;
+	flex-direction:column;
+}
+
+.main--main {
+	flex: 1;
+	display: flex;
+	flex-direction:column;
 }
