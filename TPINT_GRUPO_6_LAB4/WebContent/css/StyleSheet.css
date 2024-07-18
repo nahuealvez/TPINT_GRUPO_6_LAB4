@@ -128,6 +128,12 @@ a {
 	background-color: white;
 }
 
+.card-background {
+	background-image: url('../images/Back-Cards.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
 .card-accesos p {
 	text-align: center;
 }

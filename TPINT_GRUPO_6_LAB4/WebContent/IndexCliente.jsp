@@ -28,7 +28,7 @@
 					<% if ( cuentas.size() > 0 ) { 
 						for (Cuenta c : cuentas) { %>
 							<div class="card" style="width: 18rem;">
-							  <div class="card-body">
+							  <div class="card-body card-background">
 							    <h5 class="card-title"><%= c.getTipoCuenta().getDescripcion() %></h5>
 							    <h6 class="card-subtitle mb-2 text-body-secondary">Nro de cuenta: <%= c.getId() %></h6>
 							    <p class="card-text"><%= formatoMoneda.format(c.getSaldo()) %></p>
