@@ -3,6 +3,8 @@
 <%@ page import="dominio.Cuenta" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.String" %>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
 
 <%
 	ArrayList<Cuenta> cuentas = null;
@@ -14,6 +16,8 @@
 		cuentas = new ArrayList<Cuenta>();
 	}
 	Cliente clienteLogueado = (Cliente) session.getAttribute("cliente");
+	
+    NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
 %>
 	
 	<div class="d-flex flex-column gap-3">
@@ -27,7 +31,7 @@
 							  <div class="card-body">
 							    <h5 class="card-title"><%= c.getTipoCuenta().getDescripcion() %></h5>
 							    <h6 class="card-subtitle mb-2 text-body-secondary">Nro de cuenta: <%= c.getId() %></h6>
-							    <p class="card-text">$<%= c.getSaldo() %></p>
+							    <p class="card-text"><%= formatoMoneda.format(c.getSaldo()) %></p>
 							  </div>
 							  <div class="card-footer">
 							  	<form action="ServletReporte" method="get">
