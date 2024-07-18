@@ -270,9 +270,6 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
-=======
 	public int debitarPagoCuotaPrestamo(int idCuenta, Movimiento movimiento) throws Exception, SQLException {
 		MovimientoNegocio movimientoNegocio = new MovimientoNegImpl();
 		try {
@@ -313,8 +310,7 @@ public class CuentaNegocioImpl implements CuentaNegocio  {
 	}
 	
 	@Override
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
->>>>>>> branch 'main' of https://github.com/nahuealvez/TPINT_GRUPO_6_LAB4.git
+	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado) throws SQLException {
 
 		return cuentaDao.CuentasxClienteYEstado(idCliente, estado);
 	}

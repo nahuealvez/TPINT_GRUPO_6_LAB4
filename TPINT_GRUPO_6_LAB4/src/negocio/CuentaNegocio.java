@@ -24,12 +24,8 @@ public interface CuentaNegocio {
 	public ArrayList<Cuenta> cuentasActivas(int idCliente)throws SQLException;
 	public boolean acreditar(int idCuenta, Movimiento movimiento) throws SQLException;
 	public boolean debitar(int idCuenta, Movimiento movimiento) throws SQLException, Exception;
-<<<<<<< HEAD
 	public ArrayList<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
-=======
 	public int debitarPagoCuotaPrestamo(int idCuenta, Movimiento movimiento) throws Exception, SQLException;
-	public List<Cuenta> CuentasxClienteYEstado(int idCliente, boolean estado)throws SQLException;
->>>>>>> branch 'main' of https://github.com/nahuealvez/TPINT_GRUPO_6_LAB4.git
 	boolean verificarSaldo(int idCuenta, BigDecimal importe) throws SQLException;
 	Cuenta obtenerCuentaPorId(int idCuenta) throws SQLException;
 	public int obtenerNroCuentaActivaPorCBU(String cbu) throws SQLException;
